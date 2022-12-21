@@ -12,7 +12,7 @@ namespace TestWebbshopCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderDetailsId { get; set; }
+        public int Id { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
         public decimal UnitPrice { get; set; }

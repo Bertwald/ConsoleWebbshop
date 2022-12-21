@@ -17,17 +17,20 @@ namespace TestWebbshopCodeFirst.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
+        public int Id { get; set; }
         public int CustumerId { get; set; }
         public DateTime? OrderDate { get; set; }
-        public string? PayingOption { get; set; }
+        public int PayingOption { get; set; }
         public decimal? TotalPrice { get; set; }
-        public string? ShippingOption { get; set; }
+        public int ShippingOption { get; set; }
+        [StringLength(255)]
         public string? ShippingAdress { get; set; }
+        [StringLength(255)]
         public string? ShippingCity { get; set; }
         public int? ShippingPostalcode { get; set; }
+        [StringLength(255)]
         public string? ShippingCountry { get; set; }
-        public string? Orderstatus { get; set; }
+        public int Orderstatus { get; set; }
 
         public virtual Customer Custumer { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

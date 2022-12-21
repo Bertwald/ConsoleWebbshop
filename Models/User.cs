@@ -18,15 +18,23 @@ namespace TestWebbshopCodeFirst.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
+        [StringLength(11)]
         public string? BirthDate { get; set; }
+        [StringLength(255)]
         public string FirstName { get; set; } = null!;
+        [StringLength(255)]
         public string LastName { get; set; } = null!;
+        [StringLength(255)]
         public string Address { get; set; } = null!;
+        [StringLength(255)]
         public string City { get; set; } = null!;
         public int PostalCode { get; set; }
+        [StringLength(255)]
         public string Country { get; set; } = null!;
+        [StringLength(255)]
         public string Telephone { get; set; } = null!;
+        [StringLength(255)]
         public string MailAdress { get; set; } = null!;
 
         public virtual ICollection<Customer> Customers { get; set; }

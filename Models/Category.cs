@@ -12,8 +12,10 @@ namespace TestWebbshopCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
+        [StringLength(35)]
         public string CategoryName { get; set; } = null!;
+        [StringLength(255)]
         public string? Description { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }

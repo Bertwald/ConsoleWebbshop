@@ -12,9 +12,9 @@ namespace TestWebbshopCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EmployeeId { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
-        public string? HireDate { get; set; }
+        public DateOnly HireDate { get; set; }
 
         public virtual User User { get; set; } = null!;
     }

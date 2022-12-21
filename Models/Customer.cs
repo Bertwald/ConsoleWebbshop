@@ -16,9 +16,11 @@ namespace TestWebbshopCodeFirst.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
+        [StringLength(255)]
         public string? ShippingAdresses { get; set; }
+        [StringLength(16)]
         public string? CreditCardNumber { get; set; }
 
         public virtual User User { get; set; } = null!;

@@ -12,10 +12,11 @@ namespace TestWebbshopCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AccountId { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
+        [StringLength(35)]
         public string Password { get; set; } = null!;
-        public string Privileges { get; set; } = null!;
+        public int Privileges { get; set; }
 
         public virtual User User { get; set; } = null!;
     }
