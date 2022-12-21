@@ -14,7 +14,7 @@ namespace TestWebbshopCodeFirst.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateOnly HireDate { get; set; }
+        public DateTime HireDate { get; set; }
 
         public virtual User User { get; set; } = null!;
     }

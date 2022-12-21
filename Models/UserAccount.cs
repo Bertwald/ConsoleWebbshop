@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Logic;
 
 namespace TestWebbshopCodeFirst.Models
 {
@@ -16,7 +17,7 @@ namespace TestWebbshopCodeFirst.Models
         public int UserId { get; set; }
         [StringLength(35)]
         public string Password { get; set; } = null!;
-        public int Privileges { get; set; }
+        public Privilege Privilege { get; set; }
 
         public virtual User User { get; set; } = null!;
     }
