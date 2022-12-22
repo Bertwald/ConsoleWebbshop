@@ -19,7 +19,7 @@ namespace TestWebbshopCodeFirst.Data
             if (Employees == null || !Employees.Any())
             {
                 Employees = new List<Employee>() {
-                    new Employee() { UserId = 1, HireDate = new DateTime(2021,10,12) }
+                    new Employee() { UserId = 5, HireDate = new DateTime(2021,10,12) }
                 };
             }
 
