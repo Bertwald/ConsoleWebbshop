@@ -6,39 +6,41 @@ using System.Threading.Tasks;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class AdminPage : IPage
+    internal class StartPage : IPage
     {
-        public AdminPage(Models.User user) 
+        public StartPage(Models.User user)
         {
             LoggedInUser = user;
-            headerText = "Welcome admin " + LoggedInUser.FirstName + " " + LoggedInUser.LastName;
-        }  
+            headerText = "Welcome customer " + LoggedInUser.FirstName + " " + LoggedInUser.LastName;
+        }
         private string headerText;
         public Models.User LoggedInUser { get; set; }
         public void PrintHeader()
         {
+
             UserInterface.GUI.PrintHeader(new List<string> { headerText });
         }
         public void PrintMenu()
         {
-            string title = "Admin deluxe menu";
+            string title = "Startpage menu";
             List<string> menu = new()
             {
-                "Manage products",
-                "Manage productcategories",
-                "Add product to startpage",
-                "Manage users"
+                "Choose category",
+                "Search for products",
+                "Log in / log out",
+                "Account information",
+                "Show shopping cart"
             };
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public IPage GetChosenPage()
+        public IPage GetNextPage()
         {
-            return new AdminPage(LoggedInUser);
+            throw new NotImplementedException();
         }
 
         public void PrintFooter()
         {
-
+            throw new NotImplementedException();
         }
 
 

@@ -13,7 +13,18 @@ namespace TestWebbshopCodeFirst.UserInterface
         {
             foreach (string text in headerText)
             {
-                Console.WriteLine($"Id: {slot.Id}\t{slot.CityName}           \t\t{slot.HouseName}           \t\t{(slot.ElectricOutlet ? "Elutttag" : "Ej Eluttag")}");
+                Console.WriteLine(text);
+            }
+        }
+
+        internal static void PrintMenu(string title, List<string> menu)
+        {
+            Console.WriteLine(title);
+            Console.WriteLine("---------------------------");
+
+            foreach (var text in menu)
+            {
+                Console.WriteLine(text);
             }
         }
     }
