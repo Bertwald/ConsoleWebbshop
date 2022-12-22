@@ -17,10 +17,11 @@ namespace TestWebbshopCodeFirst.Data
                 {
                 Categories = new List<Category>() { 
                     new Category() { CategoryName = "T-shirt", Description = "Shirt with short sleeves" },
-                   new Category() { CategoryName = "Trouser", Description = "A garment that covers the lower half of the body" },
-                      new Category() { CategoryName = "Sweater", Description = "A piece of clothing typically with long sleeves" },
-                      new Category() { CategoryName = "Skirt", Description = "The lower part of a dress or a separate outer garment that covers a person from the waist downwards" },
-                         new Category() { CategoryName = "Coat", Description = "A wide robe worn over ones clothes to protect from cold or rain" },
+                    new Category() { CategoryName = "Trouser", Description = "A garment that covers the lower half of the body" },
+                    new Category() { CategoryName = "Sweater", Description = "A piece of clothing typically with long sleeves" },
+                    new Category() { CategoryName = "Skirt", Description = "The lower part of a dress or a separate outer garment that covers a person from the waist downwards" },
+                    new Category() { CategoryName = "Coat", Description = "A wide robe worn over ones clothes to protect from cold or rain" },
+                    new Category() { CategoryName = "Headwear", Description = "Something to put on your head for style or comfort." },
                 };
                 }
 
