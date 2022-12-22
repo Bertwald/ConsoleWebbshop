@@ -20,7 +20,7 @@ namespace TestWebbshopCodeFirst.Models
         public int UserId { get; set; }
         [StringLength(255)]
         public string? ShippingAdresses { get; set; }
-        [StringLength(16)]
+        [StringLength(20)]
         public string? CreditCardNumber { get; set; }
 
         public virtual User User { get; set; } = null!;

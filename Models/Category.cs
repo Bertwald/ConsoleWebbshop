@@ -10,6 +10,9 @@ namespace TestWebbshopCodeFirst.Models
 {
     public class Category
     {
+        public Category() {
+            Products = new HashSet<Product>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

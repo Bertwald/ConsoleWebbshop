@@ -22,6 +22,9 @@ namespace TestWebbshopCodeFirst.Data
                     new Category() { CategoryName = "Skirt", Description = "The lower part of a dress or a separate outer garment that covers a person from the waist downwards" },
                     new Category() { CategoryName = "Coat", Description = "A wide robe worn over ones clothes to protect from cold or rain" },
                     new Category() { CategoryName = "Headwear", Description = "Something to put on your head for style or comfort." },
+                    new Category() { CategoryName = "Footwear", Description = "Something to put on your feet for style or comfort." },
+                    new Category() { CategoryName = "Shirts", Description = "Something to put on your feet for style or comfort." },
+                    new Category() { CategoryName = "Accessories", Description = "No outfit is complete and personalized without these." },
                 };
                 }
 

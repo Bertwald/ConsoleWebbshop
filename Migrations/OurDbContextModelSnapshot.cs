@@ -68,8 +68,8 @@ namespace TestWebbshopCodeFirst.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreditCardNumber")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ShippingAdresses")
                         .HasMaxLength(255)
@@ -235,8 +235,8 @@ namespace TestWebbshopCodeFirst.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("BirthDate")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("City")
                         .IsRequired()

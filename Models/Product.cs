@@ -13,6 +13,7 @@ namespace TestWebbshopCodeFirst.Models
         public Product()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            Categories = new HashSet<Category>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

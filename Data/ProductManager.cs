@@ -10,13 +10,14 @@ namespace TestWebbshopCodeFirst.Data
     public class ProductManager
     {
         public static List<Product> Products { get; set; }
+        public static List<int> Categories { get; set; }
 
         public static List<Product> GetAllProducts()
         {
             if (Products == null || !Products.Any())
             {
                 Products = new List<Product>() {
-                    new Product() { Name = "T-Shirt", Price = 99, Vat = 25, UnitsInStock = 9, Description = "Cool red T-Shirt with a knight.", LongDescription = "Cool red T-Shirt with knights walking to find the Holy Grail." },
+                    (new Product() { Name = "T-Shirt", Price = 99, Vat = 25, UnitsInStock = 9, Description = "Cool red T-Shirt with a knight.", LongDescription = "Cool red T-Shirt with knights walking to find the Holy Grail." }),
                     new Product() { Name = "T-Shirt", Price = 99, Vat = 25, UnitsInStock = 12, Description = "Cool green plain T-Shirt.", LongDescription = "Cool green plain cotton T-Shirt for multiple occasions." },
                     new Product() { Name = "Shorts", Price = 149, Vat = 25, UnitsInStock = 14, Description = "Cotton shorts with a print of a bridge.", LongDescription = "Soft cotton shorts with a bridetheme and its old guardian." },
                     new Product() { Name = "Shorts", Price = 149, Vat = 25, UnitsInStock = 15, Description = "Jeansshorts", LongDescription = "Blue jeansshorts with a mission to make you look good!" },
@@ -33,6 +34,27 @@ namespace TestWebbshopCodeFirst.Data
             }
 
             return Products;
+        }
+        public static List<int> GetCategoryIndices() {
+            if (Categories == null || !Categories.Any()) {
+                Categories = new List<int>() {
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    5,
+                    5,
+                    8,
+                    2,
+                    7,
+                    6,
+                    5
+                };
+            }
+
+            return Categories;
         }
     }
 }

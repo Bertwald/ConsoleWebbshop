@@ -19,7 +19,7 @@ namespace TestWebbshopCodeFirst.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(11)]
+        [StringLength(13)]
         public string? BirthDate { get; set; }
         [StringLength(255)]
         public string FirstName { get; set; } = null!;
