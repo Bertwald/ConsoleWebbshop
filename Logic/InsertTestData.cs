@@ -24,12 +24,12 @@ namespace TestWebbshopCodeFirst.Logic
                     products[productIndex].Categories.Add(categories[categoryIds[productIndex]]);
                     categories[categoryIds[productIndex]].Products.Add(products[productIndex]);
                 }
-                //shopDb.AddRange(users);
-                //shopDb.AddRange(categories);
-                //shopDb.AddRange(products);
-                //shopDb.SaveChanges();
+                shopDb.AddRange(users);
+                shopDb.AddRange(categories);
+                shopDb.AddRange(products);
+                shopDb.SaveChanges();
                 shopDb.AddRange(employees);
-                //shopDb.AddRange(customers);
+                shopDb.AddRange(customers);
                 shopDb.SaveChanges();
             }
         }
