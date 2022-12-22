@@ -25,6 +25,7 @@ namespace TestWebbshopCodeFirst.Data
                     new Category() { CategoryName = "Footwear", Description = "Something to put on your feet for style or comfort." },
                     new Category() { CategoryName = "Shirts", Description = "Something to put on your feet for style or comfort." },
                     new Category() { CategoryName = "Accessories", Description = "No outfit is complete and personalized without these." },
+                    new Category() { CategoryName = "Selected", Description = "Recommended products" },
                 };
                 }
 

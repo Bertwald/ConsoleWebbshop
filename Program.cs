@@ -12,6 +12,8 @@ namespace TestWebbshopCodeFirst
             AdminPage adminPage = new AdminPage(new User() { BirthDate = "19810112-1284", FirstName = "Christina", LastName = "Holm", Address = "Banjovägen 5", City = "Västerås", PostalCode = 72594, Country = "Sweden", Telephone = "0705419863", MailAdress = "c.holm@hotmail.com" });
             adminPage.PrintHeader();
             adminPage.PrintMenu();
+
+            InsertTestData.SetRandomChosen();
         }
     }
 }

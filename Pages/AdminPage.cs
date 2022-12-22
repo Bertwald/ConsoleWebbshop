@@ -31,7 +31,7 @@ namespace TestWebbshopCodeFirst.Pages
             };
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public IPage GetChosenPage()
+        public IPage GetNextPage()
         {
             return new AdminPage(LoggedInUser);
         }
