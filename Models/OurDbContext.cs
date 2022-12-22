@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    internal class OurDbContext : DbContext
+    public class OurDbContext : DbContext
     {
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Customer> Customers { get; set; } = null!;

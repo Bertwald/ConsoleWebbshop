@@ -9,7 +9,7 @@ using TestWebbshopCodeFirst.Logic;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    internal class UserAccount
+    public class UserAccount
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

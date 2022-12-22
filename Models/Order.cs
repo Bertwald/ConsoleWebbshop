@@ -9,7 +9,7 @@ using TestWebbshopCodeFirst.Logic;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    internal class Order
+    public class Order
     {
         public Order()
         {

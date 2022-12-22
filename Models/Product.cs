@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    internal class Product
+    public class Product
     {
         public Product()
         {

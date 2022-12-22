@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    internal class OrderDetail
+    public class OrderDetail
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
