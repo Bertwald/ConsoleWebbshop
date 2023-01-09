@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestWebbshopCodeFirst.Migrations
 {
-    public partial class thirdMigration : Migration
+    public partial class fourthmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -134,9 +134,10 @@ namespace TestWebbshopCodeFirst.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    Privilege = table.Column<int>(type: "int", nullable: false)
+                    Privilege = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -12,8 +12,8 @@ using TestWebbshopCodeFirst.Models;
 namespace TestWebbshopCodeFirst.Migrations
 {
     [DbContext(typeof(OurDbContext))]
-    [Migration("20221222115617_thirdMigration")]
-    partial class thirdMigration
+    [Migration("20230109150618_fourth-migration")]
+    partial class fourthmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -296,6 +296,11 @@ namespace TestWebbshopCodeFirst.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
 
                     b.HasKey("Id");
 

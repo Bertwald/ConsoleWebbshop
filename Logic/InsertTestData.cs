@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using TestWebbshopCodeFirst.Data;
 using TestWebbshopCodeFirst.Models;
 
@@ -29,6 +30,13 @@ namespace TestWebbshopCodeFirst.Logic {
                 shopDb.SaveChanges();
                 shopDb.AddRange(employees);
                 shopDb.AddRange(customers);
+
+                foreach(Employee employee in employees) {
+                    employee.User.Employees.Add(employee);
+                }
+                foreach (Customer customer in customers) {
+                    customer.User.Customers.Add(customer);
+                }
                 shopDb.SaveChanges();
             }
         }
@@ -52,6 +60,20 @@ namespace TestWebbshopCodeFirst.Logic {
                     shopDb.Update(product);
                 }
                 shopDb.SaveChanges();
+            }
+        }
+        internal static void CreateUserAccounts() {
+            using (var db = new OurDbContext()) {
+                //Generate CustomerAccounts
+                var users = db.Users.Where(x => x.Customers.Any() && !x.UserAccounts.Any()).ToList();
+                List<UserAccount> customers = AccountGenerator.GenerateAccountsFor(users, Privilege.Customer);
+                //Generate boss accounts
+                users = db.Users.Where(x => x.Employees.Any() && !x.UserAccounts.Any()).ToList();
+                List<UserAccount> admins = AccountGenerator.GenerateAccountsFor(users, Privilege.Admin);
+
+                db.AddRange(customers);
+                db.AddRange(admins);
+                db.SaveChanges();
             }
         }
 

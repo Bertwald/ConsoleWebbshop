@@ -14,7 +14,9 @@ namespace TestWebbshopCodeFirst.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
+        [StringLength(35)]
+        public string Username { get; set; } = null!;
         [StringLength(35)]
         public string Password { get; set; } = null!;
         public Privilege Privilege { get; set; }

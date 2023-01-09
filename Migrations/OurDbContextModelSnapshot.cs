@@ -295,6 +295,11 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");

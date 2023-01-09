@@ -23,8 +23,8 @@ namespace TestWebbshopCodeFirst.Logic {
         African_Swallow
     }
     public enum Privilege {
-        Admin,
+        Visitor,
         Customer,
-        Visitor
+        Admin
     }
 }
