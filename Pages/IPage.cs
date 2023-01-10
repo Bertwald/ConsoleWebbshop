@@ -11,7 +11,7 @@ namespace TestWebbshopCodeFirst.Pages
 
         void PrintHeader();
         void PrintMenu();
-        IPage GetNextPage();
+        bool Run();
         void PrintFooter();
        
     }

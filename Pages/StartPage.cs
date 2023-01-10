@@ -3,46 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
     internal class StartPage : IPage
     {
-        public StartPage(Models.Person user)
-        {
-            LoggedInUser = user;
-            headerText = "Welcome customer " + LoggedInUser.FirstName + " " + LoggedInUser.LastName;
+        private List<string> menu = new()
+            {
+                "Log in",
+                "New customer(register)",
+                "Continue as visitor",
+                "Quit"
+            };
+
+        public StartPage()
+        {           
+            headerText = "Welcome to the shop";
         }
         private string headerText;
-        public Models.Person LoggedInUser { get; set; }
+        public Models.Person? LoggedInUser { get; set; }
         public void PrintHeader()
         {
-
             UserInterface.GUI.PrintHeader(new List<string> { headerText });
         }
         public void PrintMenu()
         {
-            string title = "Startpage menu";
-            List<string> menu = new()
-            {
-                "Choose category",
-                "Search for products",
-                "Log in / log out",
-                "Account information",
-                "Show shopping cart"
-            };
+            string title = "Start menu";
+            
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public IPage GetNextPage()
+        public bool Run()
         {
-            throw new NotImplementedException();
+       
+            while (true)
+            {
+                bool exit = false;
+                int choice = InputModule.SelectFromList(menu);
+                switch(choice)
+                {
+                    case 1:
+                        exit = new LogInPage().Run();
+                        break;
+                        case 2:
+                        //exit = new NewCustomerRegister();
+                        break;
+                        case 3:
+                        //visitor
+                        exit = CustomerPage();
+                        break;
+                        case 4:
+                        return true;
+                        
+
+                }
+            }
+            //return new StartPage().Run();
         }
 
         public void PrintFooter()
         {
-            throw new NotImplementedException();
+
         }
-
-
     }
 }

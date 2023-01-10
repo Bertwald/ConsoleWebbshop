@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TestWebbshopCodeFirst.UserInterface
@@ -30,6 +31,22 @@ namespace TestWebbshopCodeFirst.UserInterface
                 if (read is not null)
                 {
                     return read;
+                }
+            }
+        }
+
+        internal static string GetCharacterMatching(string pattern = @"[A-Z0-9-_]")
+        {
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (Regex.IsMatch(key.KeyChar.ToString().ToUpperInvariant(), pattern) || key.Key == ConsoleKey.Enter)
+                {
+                    return key.Key == ConsoleKey.Enter ? Environment.NewLine : key.KeyChar.ToString();
+                }
+                else if (key.Key == ConsoleKey.Backspace)
+                {
+                    return key.KeyChar.ToString();
                 }
             }
         }
@@ -63,6 +80,11 @@ namespace TestWebbshopCodeFirst.UserInterface
                 number = GetInt();
             }
             return number;
+        }
+
+        internal static int SelectFromList(List<string> list)
+        {
+            return GetIntInRange(1, list.Count + 1);                
         }
     }
 }
