@@ -15,8 +15,8 @@ namespace TestWebbshopCodeFirst.Models
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<Person> Users { get; set; } = null!;
-        public virtual DbSet<Account> UserAccounts { get; set; } = null!;
+        public virtual DbSet<Person> Persons { get; set; } = null!;
+        public virtual DbSet<Account> Accounts { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

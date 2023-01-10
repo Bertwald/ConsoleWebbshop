@@ -32,10 +32,10 @@ namespace TestWebbshopCodeFirst.Logic {
                 shopDb.AddRange(customers);
 
                 foreach (Employee employee in employees) {
-                    employee.User.Employees.Add(employee);
+                    employee.Person.Employees.Add(employee);
                 }
                 foreach (Customer customer in customers) {
-                    customer.User.Customers.Add(customer);
+                    customer.Person.Customers.Add(customer);
                 }
                 shopDb.SaveChanges();
             }
@@ -65,16 +65,16 @@ namespace TestWebbshopCodeFirst.Logic {
         internal static void CreateUserAccounts() {
             using (var db = new OurDbContext()) {
                 //Generate CustomerAccounts
-                var users = db.Users.Where(x => x.Customers.Any() && !x.UserAccounts.Any()).ToList();
+                var users = db.Persons.Where(x => x.Customers.Any() && !x.Accounts.Any()).ToList();
                 List<Account> customers = AccountGenerator.GenerateAccountsFor(users, Privilege.Customer);
                 //Generate boss accounts
-                users = db.Users.Where(x => x.Employees.Any() && !x.UserAccounts.Any()).ToList();
+                users = db.Persons.Where(x => x.Employees.Any() && !x.Accounts.Any()).ToList();
                 List<Account> admins = AccountGenerator.GenerateAccountsFor(users, Privilege.Admin);
                 Account user = new() {
                     Username = "Cust",
                     Password = "Cust",
                     Privilege = Privilege.Customer,
-                    User = db.Users
+                    User = db.Persons
                     .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
                     .First()
                 };
@@ -82,7 +82,7 @@ namespace TestWebbshopCodeFirst.Logic {
                     Username = "Admin",
                     Password = "Admin",
                     Privilege = Privilege.Admin,
-                    User = db.Users
+                    User = db.Persons
                     .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
                     .First()
                 };

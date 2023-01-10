@@ -14,7 +14,7 @@ namespace TestWebbshopCodeFirst.Models
         {
             Customers = new HashSet<Customer>();
             Employees = new HashSet<Employee>();
-            UserAccounts = new HashSet<Account>();
+            Accounts = new HashSet<Account>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -39,6 +39,6 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
-        public virtual ICollection<Account> UserAccounts { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

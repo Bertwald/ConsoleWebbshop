@@ -23,7 +23,7 @@ namespace TestWebbshopCodeFirst.Models
         [StringLength(20)]
         public string? CreditCardNumber { get; set; }
 
-        public virtual Person User { get; set; } = null!;
+        public virtual Person Person { get; set; } = null!;
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
