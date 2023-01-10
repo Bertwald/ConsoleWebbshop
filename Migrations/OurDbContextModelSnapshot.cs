@@ -37,6 +37,37 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.ToTable("CategoryProduct");
                 });
 
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
+                    b.Property<int>("Privilege")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("TestWebbshopCodeFirst.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -71,6 +102,9 @@ namespace TestWebbshopCodeFirst.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShippingAdresses")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -80,7 +114,7 @@ namespace TestWebbshopCodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Customers");
                 });
@@ -96,12 +130,15 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Employees");
                 });
@@ -183,45 +220,7 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("LongDescription")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UnitsInStock")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Vat")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.User", b =>
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,10 +272,10 @@ namespace TestWebbshopCodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.UserAccount", b =>
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,27 +283,34 @@ namespace TestWebbshopCodeFirst.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("Privilege")
+                    b.Property<string>("LongDescription")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UnitsInStock")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
+                    b.Property<double>("Vat")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserAccounts");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>
@@ -322,10 +328,10 @@ namespace TestWebbshopCodeFirst.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Customer", b =>
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Account", b =>
                 {
-                    b.HasOne("TestWebbshopCodeFirst.Models.User", "User")
-                        .WithMany("Customers")
+                    b.HasOne("TestWebbshopCodeFirst.Models.Person", "User")
+                        .WithMany("Accounts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -333,15 +339,26 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Employee", b =>
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Customer", b =>
                 {
-                    b.HasOne("TestWebbshopCodeFirst.Models.User", "User")
-                        .WithMany("Employees")
-                        .HasForeignKey("UserId")
+                    b.HasOne("TestWebbshopCodeFirst.Models.Person", "Person")
+                        .WithMany("Customers")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Employee", b =>
+                {
+                    b.HasOne("TestWebbshopCodeFirst.Models.Person", "Person")
+                        .WithMany("Employees")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("TestWebbshopCodeFirst.Models.Order", b =>
@@ -374,17 +391,6 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.UserAccount", b =>
-                {
-                    b.HasOne("TestWebbshopCodeFirst.Models.User", "User")
-                        .WithMany("UserAccounts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TestWebbshopCodeFirst.Models.Customer", b =>
                 {
                     b.Navigation("Orders");
@@ -395,18 +401,18 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Product", b =>
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Person", b =>
                 {
-                    b.Navigation("OrderDetails");
-                });
+                    b.Navigation("Accounts");
 
-            modelBuilder.Entity("TestWebbshopCodeFirst.Models.User", b =>
-                {
                     b.Navigation("Customers");
 
                     b.Navigation("Employees");
+                });
 
-                    b.Navigation("UserAccounts");
+            modelBuilder.Entity("TestWebbshopCodeFirst.Models.Product", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

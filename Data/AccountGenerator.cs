@@ -26,7 +26,7 @@ namespace TestWebbshopCodeFirst.Data {
                     Privilege = privilege,
                     User = user
                 };
-                user.UserAccounts.Add(account);
+                user.Accounts.Add(account);
                 accounts.Add(account);
             }
             return accounts;
