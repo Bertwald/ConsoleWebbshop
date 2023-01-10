@@ -53,7 +53,7 @@ namespace TestWebbshopCodeFirst.Pages
                         exit = new LogInPage().Run();
                         break;
                         case 2:
-                        //exit = new NewCustomerRegister();
+                        exit = new NewCustomer().Run();
                         break;
                         case 3:
                         //visitor
