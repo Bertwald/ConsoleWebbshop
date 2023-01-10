@@ -8,10 +8,10 @@ using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.Data {
     internal class AccountGenerator {
-        public static List<UserAccount> GenerateAccountsFor(List<User> users, Privilege privilege) {
-            List<UserAccount> accounts = new();
-            foreach (User user in users) {
-                UserAccount account = new UserAccount() {
+        public static List<Account> GenerateAccountsFor(List<Person> users, Privilege privilege) {
+            List<Account> accounts = new();
+            foreach (Person user in users) {
+                Account account = new Account() {
                     Username = user.FirstName.PadRight(3, user.FirstName.LastOrDefault('x'))[0..3] +
                                                                      user.LastName.PadRight(6, user.LastName.LastOrDefault('y'))[3..6] +
                                                                      (user.BirthDate != null ? user.BirthDate.Replace("-", string.Empty)![^6..].ToString() : "1234"),

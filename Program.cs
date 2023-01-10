@@ -18,8 +18,8 @@ namespace TestWebbshopCodeFirst {
             //    }
             //}
 
-            //InsertTestData.InsertData();
-            //InsertTestData.SetRandomChosen();
+            InsertTestData.InsertData();
+            InsertTestData.SetRandomChosen();
             InsertTestData.CreateUserAccounts();
         }
     }

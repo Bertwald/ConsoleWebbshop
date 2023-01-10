@@ -13,7 +13,7 @@ namespace TestWebbshopCodeFirst.Logic {
         internal static void InsertData() {
 
             using (var shopDb = new OurDbContext()) {
-                List<User> users = UserManager.GetAllUsers();
+                List<Person> users = UserManager.GetAllUsers();
                 List<Employee> employees = EmployeeManager.GetAllEmployees();
                 List<Customer> customers = CustomerManager.GetAllCustomers();
                 List<Category> categories = CategoryManager.GetAllCategories();
@@ -31,7 +31,7 @@ namespace TestWebbshopCodeFirst.Logic {
                 shopDb.AddRange(employees);
                 shopDb.AddRange(customers);
 
-                foreach(Employee employee in employees) {
+                foreach (Employee employee in employees) {
                     employee.User.Employees.Add(employee);
                 }
                 foreach (Customer customer in customers) {
@@ -53,10 +53,10 @@ namespace TestWebbshopCodeFirst.Logic {
                     products[productIndex].Categories.Add(categories[categories.Count - 1]);
                     categories[categories.Count - 1].Products.Add(products[productIndex]);
                 }
-                foreach(Category category in categories) {
+                foreach (Category category in categories) {
                     shopDb.Update(category);
                 }
-                foreach(Product product in products) {
+                foreach (Product product in products) {
                     shopDb.Update(product);
                 }
                 shopDb.SaveChanges();
@@ -66,10 +66,28 @@ namespace TestWebbshopCodeFirst.Logic {
             using (var db = new OurDbContext()) {
                 //Generate CustomerAccounts
                 var users = db.Users.Where(x => x.Customers.Any() && !x.UserAccounts.Any()).ToList();
-                List<UserAccount> customers = AccountGenerator.GenerateAccountsFor(users, Privilege.Customer);
+                List<Account> customers = AccountGenerator.GenerateAccountsFor(users, Privilege.Customer);
                 //Generate boss accounts
                 users = db.Users.Where(x => x.Employees.Any() && !x.UserAccounts.Any()).ToList();
-                List<UserAccount> admins = AccountGenerator.GenerateAccountsFor(users, Privilege.Admin);
+                List<Account> admins = AccountGenerator.GenerateAccountsFor(users, Privilege.Admin);
+                Account user = new() {
+                    Username = "Cust",
+                    Password = "Cust",
+                    Privilege = Privilege.Customer,
+                    User = db.Users
+                    .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
+                    .First()
+                };
+                Account admin = new() {
+                    Username = "Admin",
+                    Password = "Admin",
+                    Privilege = Privilege.Admin,
+                    User = db.Users
+                    .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
+                    .First()
+                };
+                customers.Add(user);
+                customers.Add(admin);
 
                 db.AddRange(customers);
                 db.AddRange(admins);

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    public class User
+    public class Person
     {
-        public User()
+        public Person()
         {
             Customers = new HashSet<Customer>();
             Employees = new HashSet<Employee>();
-            UserAccounts = new HashSet<UserAccount>();
+            UserAccounts = new HashSet<Account>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -39,6 +39,6 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
-        public virtual ICollection<UserAccount> UserAccounts { get; set; }
+        public virtual ICollection<Account> UserAccounts { get; set; }
     }
 }

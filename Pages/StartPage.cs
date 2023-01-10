@@ -8,13 +8,13 @@ namespace TestWebbshopCodeFirst.Pages
 {
     internal class StartPage : IPage
     {
-        public StartPage(Models.User user)
+        public StartPage(Models.Person user)
         {
             LoggedInUser = user;
             headerText = "Welcome customer " + LoggedInUser.FirstName + " " + LoggedInUser.LastName;
         }
         private string headerText;
-        public Models.User LoggedInUser { get; set; }
+        public Models.Person LoggedInUser { get; set; }
         public void PrintHeader()
         {
 

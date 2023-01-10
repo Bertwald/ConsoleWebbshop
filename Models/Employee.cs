@@ -16,6 +16,6 @@ namespace TestWebbshopCodeFirst.Models
         public int UserId { get; set; }
         public DateTime HireDate { get; set; }
 
-        public virtual User User { get; set; } = null!;
+        public virtual Person User { get; set; } = null!;
     }
 }

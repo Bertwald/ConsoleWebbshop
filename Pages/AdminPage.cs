@@ -8,13 +8,13 @@ namespace TestWebbshopCodeFirst.Pages
 {
     internal class AdminPage : IPage
     {
-        public AdminPage(Models.User user) 
+        public AdminPage(Models.Person user) 
         {
             LoggedInUser = user;
             headerText = "Welcome admin " + LoggedInUser.FirstName + " " + LoggedInUser.LastName;
         }  
         private string headerText;
-        public Models.User LoggedInUser { get; set; }
+        public Models.Person LoggedInUser { get; set; }
         public void PrintHeader()
         {
             UserInterface.GUI.PrintHeader(new List<string> { headerText });

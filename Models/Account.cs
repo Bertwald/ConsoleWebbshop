@@ -9,7 +9,7 @@ using TestWebbshopCodeFirst.Logic;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    public class UserAccount
+    public class Account
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,6 +21,6 @@ namespace TestWebbshopCodeFirst.Models
         public string Password { get; set; } = null!;
         public Privilege Privilege { get; set; }
 
-        public virtual User User { get; set; } = null!;
+        public virtual Person User { get; set; } = null!;
     }
 }
