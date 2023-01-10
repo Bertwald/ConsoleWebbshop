@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
@@ -32,10 +33,17 @@ namespace TestWebbshopCodeFirst.Pages
                 Console.Write("Enter password: ");
                 string passWord = InputModule.GetString();
 
-                Models.Account account = Logic.Validation.ValidateUser(userName, passWord);
+                Models.Account? account = Logic.Validation.ValidateUser(userName, passWord);
 
+                if(account == null) {
+                    return false;
+                } 
+                if(account.Privilege == Logic.Privilege.Customer) {
+                    return new CustomerPage(account).Run();
+                } else { // Privilege.Admin
+                    return new AdminPage(account).Run();
+                }
             }
-            //return new StartPage().Run();
         }
 
         public void PrintFooter()

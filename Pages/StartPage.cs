@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
@@ -35,11 +36,17 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public bool Run()
         {
-       
+            bool exit = false;
+            PrintHeader();
+            PrintMenu();
+            PrintFooter();
             while (true)
             {
-                bool exit = false;
+                if (exit) {
+                    return true;
+                }
                 int choice = InputModule.SelectFromList(menu);
+
                 switch(choice)
                 {
                     case 1:
@@ -50,7 +57,8 @@ namespace TestWebbshopCodeFirst.Pages
                         break;
                         case 3:
                         //visitor
-                        exit = CustomerPage();
+                        Account visitor = new Account() { Username = "Just browsing clothes"};
+                        exit = new CustomerPage(visitor).Run();
                         break;
                         case 4:
                         return true;
@@ -60,6 +68,7 @@ namespace TestWebbshopCodeFirst.Pages
             }
             //return new StartPage().Run();
         }
+
 
         public void PrintFooter()
         {

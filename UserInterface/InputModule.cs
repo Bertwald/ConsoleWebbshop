@@ -77,10 +77,14 @@ namespace TestWebbshopCodeFirst.UserInterface
             int number = int.MaxValue;
             while (number < lower || number > upper)
             {
-                number = GetInt();
+                number = GetShortInt();
             }
             return number;
         }
+        internal static int GetShortInt() {
+            return Console.ReadKey(true).KeyChar - 48;
+        }
+
 
         internal static int SelectFromList(List<string> list)
         {

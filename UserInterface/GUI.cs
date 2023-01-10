@@ -22,9 +22,9 @@ namespace TestWebbshopCodeFirst.UserInterface
             Console.WriteLine(title);
             Console.WriteLine("---------------------------");
 
-            foreach (var text in menu)
+            for (int row = 0; row < menu.Count; row++)
             {
-                Console.WriteLine(text);
+                Console.WriteLine($"[{row+1}] " + menu[row]);
             }
         }
     }
