@@ -13,7 +13,7 @@ namespace TestWebbshopCodeFirst.Logic {
         internal static void InsertData() {
 
             using (var shopDb = new OurDbContext()) {
-                List<Person> users = UserManager.GetAllUsers();
+                List<Person> people = UserManager.GetAllUsers();
                 List<Employee> employees = EmployeeManager.GetAllEmployees();
                 List<Customer> customers = CustomerManager.GetAllCustomers();
                 List<Category> categories = CategoryManager.GetAllCategories();
@@ -24,7 +24,7 @@ namespace TestWebbshopCodeFirst.Logic {
                     products[productIndex].Categories.Add(categories[categoryIds[productIndex]]);
                     categories[categoryIds[productIndex]].Products.Add(products[productIndex]);
                 }
-                shopDb.AddRange(users);
+                shopDb.AddRange(people);
                 shopDb.AddRange(categories);
                 shopDb.AddRange(products);
                 shopDb.SaveChanges();
@@ -32,9 +32,11 @@ namespace TestWebbshopCodeFirst.Logic {
                 shopDb.AddRange(customers);
 
                 foreach (Employee employee in employees) {
+                    employee.Person = people.Where(x => x.Id == employee.UserId).FirstOrDefault();
                     employee.Person.Employees.Add(employee);
                 }
                 foreach (Customer customer in customers) {
+                    customer.Person = people.Where(x => x.Id == customer.UserId).FirstOrDefault();
                     customer.Person.Customers.Add(customer);
                 }
                 shopDb.SaveChanges();
