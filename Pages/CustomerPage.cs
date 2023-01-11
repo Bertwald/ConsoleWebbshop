@@ -122,6 +122,8 @@ namespace TestWebbshopCodeFirst.Pages
                             case 1:
                                 var personalInformation = db.Persons
                                                 .Where(p => p.Id == LoggedInUser.Id)
+                                                .Include("Accounts")
+                                                .Include("Employees")
                                                 .Include(p => p.Customers).ToList();
 
                                 ItemSelector<Person>.GetItemFromList(personalInformation);

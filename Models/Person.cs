@@ -50,6 +50,27 @@ namespace TestWebbshopCodeFirst.Models
                 Telephone + Environment.NewLine +
                 MailAdress + Environment.NewLine;
 
+            if (Customers.Any()) {
+                personalInfo += "Customer information: " + Environment.NewLine;
+                foreach(Customer customer in Customers) {
+                    personalInfo += "CreditCard number: " + customer.CreditCardNumber + Environment.NewLine;
+                    personalInfo += "Shipping Adress: " + customer.ShippingAdresses + Environment.NewLine;
+                }
+            }
+            if (Employees.Any()) {
+                personalInfo += "Employee information: " + Environment.NewLine;
+                foreach (Employee employee in Employees) {
+                    personalInfo += "HireDate: " + employee.HireDate + Environment.NewLine;
+                }
+            }
+            if (Accounts.Any()) {
+                personalInfo += "Account information: " + Environment.NewLine;
+                foreach (Account account in Accounts ) {
+                    personalInfo += "Username: " + account.Username + " with ";
+                    personalInfo += "privilege: " + account.Privilege + Environment.NewLine;
+                }
+            }
+
             return personalInfo;
         }
     }
