@@ -108,9 +108,35 @@ namespace TestWebbshopCodeFirst.Pages
                     }
                     break;
                 case 3:
-                    break;
-                case 4:
                     return true;
+
+                case 4:
+                    using (var db = new OurDbContext())
+                    {
+                        var miniMenu = new List<string> { "Personal details", "Order details" };
+                        GUI.PrintMenu("Your account", miniMenu);
+                        int menuChoice = InputModule.SelectFromList(miniMenu);
+
+                        switch (menuChoice)
+                        {
+                            case 1:
+                                var personalInformation = db.Persons
+                                                .Where(p => p.Id == LoggedInUser.Id)
+                                                .Include(p => p.Customers).ToList();
+
+                                ItemSelector<Person>.GetItemFromList(personalInformation);
+                                                
+                                break;
+                            case 2:
+                                //Orderdetails
+                                break;
+
+                        }
+
+
+
+                    }
+                    break;
 
             }
             Console.ReadKey();

@@ -40,5 +40,14 @@ namespace TestWebbshopCodeFirst.Models
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
+
+        public override string ToString()
+        {
+            return BirthDate + Environment.NewLine + 
+                FirstName + " " + LastName + Environment.NewLine + 
+                Address + " " + PostalCode + " " + City + " " + Country + Environment.NewLine + 
+                Telephone + Environment.NewLine +
+                MailAdress;
+        }
     }
 }
