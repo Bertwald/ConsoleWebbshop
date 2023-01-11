@@ -21,5 +21,9 @@ namespace TestWebbshopCodeFirst.Models
         [StringLength(255)]
         public string? Description { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+
+        public override string ToString() {
+            return CategoryName;
+        }
     }
 }
