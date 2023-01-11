@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TestWebbshopCodeFirst.UserInterface;
 using TestWebbshopCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
+using TestWebbshopCodeFirst.Logic;
 
 namespace TestWebbshopCodeFirst.Pages
 {
@@ -27,27 +28,32 @@ namespace TestWebbshopCodeFirst.Pages
         public Account LoggedInUser { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public CustomerPage(Account user) {
+        public CustomerPage(Account user)
+        {
             LoggedInUser = user;
             SetHeaderText();
-            if (user.Privilege == Logic.Privilege.Visitor) {
+            if (user.Privilege == Logic.Privilege.Visitor)
+            {
                 menu = menu.Take(3).ToList();
             }
             RetrieveSelectedItems();
         }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        private void SetHeaderText() {
+        private void SetHeaderText()
+        {
             headerText = LoggedInUser.Privilege == Logic.Privilege.Visitor ?
                 "Welcome Honored Guest" + Environment.NewLine +
                 "Feel free to browse out exquisite inventory!" + Environment.NewLine + "When you decide to buy one or many of our excellent " +
                 "products" + Environment.NewLine + "You will need a registered account to purchase said items from our collection of fine merchandise" :
-                "Welcome back dear " + LoggedInUser.Privilege + " " + LoggedInUser.Username + Environment.NewLine + 
+                "Welcome back dear " + LoggedInUser.Privilege + " " + LoggedInUser.Username + Environment.NewLine +
                 "We eagerly await your next order";
         }
 
-        private void RetrieveSelectedItems() {
-            using (var db = new OurDbContext()) {
+        private void RetrieveSelectedItems()
+        {
+            using (var db = new OurDbContext())
+            {
                 selectedProducts = db.Products
                                      .Where(p => p.Categories
                                                   .Where(category => category.Id == 10)
@@ -76,6 +82,37 @@ namespace TestWebbshopCodeFirst.Pages
             PrintFooter();
             int choice = InputModule.SelectFromList(menu);
 
+            switch (choice)
+            {
+                case 1:
+                    using (var db = new OurDbContext())
+                    {
+                        List<Category> categories = db.Categories.ToList();
+                        Category? category = ItemSelector<Category>.GetItemFromList(categories);
+                        List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
+                        Product? product = ItemSelector<Product>.GetItemFromList(products);
+                    }
+                    break;
+                case 2:
+                    using (var db = new OurDbContext())
+                    {
+                        Console.Write("Search: ");
+                        var search = InputModule.GetString();
+                        List<Product> products = db.Products
+                                                .Where(x => x.Name
+                                                    .Contains(search) || x.Description
+                                                    .Contains(search) || x.LongDescription
+                                                    .Contains(search))
+                                                .ToList();
+                        Product? product = ItemSelector<Product>.GetItemFromList(products);
+                    }
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    return true;
+
+            }
             Console.ReadKey();
             return true;
         }

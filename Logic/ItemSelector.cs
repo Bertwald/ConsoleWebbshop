@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Logic {
@@ -16,8 +18,9 @@ namespace TestWebbshopCodeFirst.Logic {
             foreach (T item in items) {
                 itemStrings.Add(item.ToString()!);
             }
+            GUI.PrintMenu(typeof(T).Name, itemStrings);
             int itemIndex = InputModule.SelectFromList(itemStrings);
-            return items[itemIndex];
+            return items[itemIndex -1];
         }
     }
 }
