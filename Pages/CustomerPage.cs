@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.UserInterface;
+using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.Pages
 {
@@ -17,25 +18,33 @@ namespace TestWebbshopCodeFirst.Pages
                 "Account information",
                 "Show shopping cart"
             };
-        public CustomerPage(Models.Account user)
+        private List<Product> selectedProducts = new();
+
+        private string headerText;
+        public Account LoggedInUser { get; set; }
+
+        public CustomerPage(Account user)
         {
             LoggedInUser = user;
-            headerText = "Welcome customer " + LoggedInUser.Username + " " + LoggedInUser.Privilege;
-            if (user.Privilege == Logic.Privilege.Visitor) {
+            headerText = "Welcome " + user.Username + " " + user.Privilege;
+            if (user.Privilege == Logic.Privilege.Visitor)
+            {
                 menu = menu.Take(3).ToList();
             }
+            using (var db = new OurDbContext())
+            {
+                selectedProducts = db.Products.Where(p => p.Categories.Select(x => x.Id ==10).SingleOrDefault()).Take(3).ToList();
+            }
         }
-        private string headerText;
-        public Models.Account LoggedInUser { get; set; }
         public void PrintHeader()
         {
-
-            UserInterface.GUI.PrintHeader(new List<string> { headerText });
+            GUI.PrintHeader(new List<string> { headerText });
+            GUI.PrintSelectedProducts(selectedProducts);
         }
         public void PrintMenu()
         {
             string title = "Startpage menu";
-            UserInterface.GUI.PrintMenu(title, menu);
+            GUI.PrintMenu(title, menu);
         }
         public bool Run()
         {

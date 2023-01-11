@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Interfaces;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    public class Product
+    public class Product : IPrintable
     {
         public Product()
         {
@@ -31,5 +32,15 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
+
+        public void Print()
+        {
+           
+        }
+
+        public override string ToString()
+        {
+            return Name + " " + Price;
+        }
     }
 }
