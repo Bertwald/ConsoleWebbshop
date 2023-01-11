@@ -43,11 +43,14 @@ namespace TestWebbshopCodeFirst.Models
 
         public override string ToString()
         {
-            return BirthDate + Environment.NewLine + 
+            
+            string personalInfo = BirthDate + Environment.NewLine + 
                 FirstName + " " + LastName + Environment.NewLine + 
-                Address + " " + PostalCode + " " + City + " " + Country + Environment.NewLine + 
+                Address + ", " + PostalCode + ", " + City + ", " + Country + Environment.NewLine + 
                 Telephone + Environment.NewLine +
-                MailAdress;
+                MailAdress + Environment.NewLine;
+
+            return personalInfo;
         }
     }
 }

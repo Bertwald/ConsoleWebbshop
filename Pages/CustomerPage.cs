@@ -125,6 +125,7 @@ namespace TestWebbshopCodeFirst.Pages
                                                 .Include(p => p.Customers).ToList();
 
                                 ItemSelector<Person>.GetItemFromList(personalInformation);
+
                                                 
                                 break;
                             case 2:
