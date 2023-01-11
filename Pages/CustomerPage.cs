@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.UserInterface;
 using TestWebbshopCodeFirst.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestWebbshopCodeFirst.Pages
 {
@@ -21,21 +22,41 @@ namespace TestWebbshopCodeFirst.Pages
         private List<Product> selectedProducts = new();
 
         private string headerText;
+        private readonly int numberOfSelectedToDisplay = 3;
+
         public Account LoggedInUser { get; set; }
 
-        public CustomerPage(Account user)
-        {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public CustomerPage(Account user) {
             LoggedInUser = user;
-            headerText = "Welcome " + user.Username + " " + user.Privilege;
-            if (user.Privilege == Logic.Privilege.Visitor)
-            {
+            SetHeaderText();
+            if (user.Privilege == Logic.Privilege.Visitor) {
                 menu = menu.Take(3).ToList();
             }
-            using (var db = new OurDbContext())
-            {
-                selectedProducts = db.Products.Where(p => p.Categories.Select(x => x.Id ==10).SingleOrDefault()).Take(3).ToList();
+            RetrieveSelectedItems();
+        }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        private void SetHeaderText() {
+            headerText = LoggedInUser.Privilege == Logic.Privilege.Visitor ?
+                "Welcome Honored Guest" + Environment.NewLine +
+                "Feel free to browse out exquisite inventory!" + Environment.NewLine + "When you decide to buy one or many of our excellent " +
+                "products" + Environment.NewLine + "You will need a registered account to purchase said items from our collection of fine merchandise" :
+                "Welcome back dear " + LoggedInUser.Privilege + " " + LoggedInUser.Username + Environment.NewLine + 
+                "We eagerly await your next order";
+        }
+
+        private void RetrieveSelectedItems() {
+            using (var db = new OurDbContext()) {
+                selectedProducts = db.Products
+                                     .Where(p => p.Categories
+                                                  .Where(category => category.Id == 10)
+                                                  .Count() > 0)
+                                     .Take(numberOfSelectedToDisplay)
+                                     .ToList();
             }
         }
+
         public void PrintHeader()
         {
             GUI.PrintHeader(new List<string> { headerText });
@@ -43,11 +64,13 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public void PrintMenu()
         {
-            string title = "Startpage menu";
+            string title = "Customer Shopping menu";
             GUI.PrintMenu(title, menu);
         }
         public bool Run()
         {
+            GUI.ClearWindow();
+            GUI.SetWindowTitle(this, LoggedInUser.Privilege);
             PrintHeader();
             PrintMenu();
             PrintFooter();
