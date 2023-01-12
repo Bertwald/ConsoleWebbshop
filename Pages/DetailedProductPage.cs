@@ -3,6 +3,7 @@ using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.Pages {
     internal class DetailedProductPage :IPage {
+        private List<string> menu = new List<string>() { "Back to search results", "Back to Customer Page", "Add to Cart"};
         private UserData loggedInUser;
         private Product? chosen;
 
