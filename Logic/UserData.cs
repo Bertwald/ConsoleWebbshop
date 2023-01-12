@@ -19,5 +19,30 @@ namespace TestWebbshopCodeFirst.Logic {
         internal Privilege Privilege { get; set; }
         internal Person Person { get; set; }
         internal Order ShoppingCart { get; set; }
+
+        internal List<Product> ProductsInShoppingCart()
+        {
+            return ShoppingCart.Products;          
+        }
+        internal List<string> ProductsAsStrings()
+        {
+            List<string> listOfStrings = new List<string>();
+            foreach (var product in ProductsInShoppingCart())
+            {
+                listOfStrings.Add(product.ToString());
+            }
+            return listOfStrings;
+        }
+        internal string GetSummary()
+        {
+            decimal totalPrice = 0;
+            foreach (var product in ProductsInShoppingCart())
+            {
+                totalPrice += product.Price;
+            }
+            int nrOfItems = ProductsInShoppingCart().Count;
+
+            return $"You have {nrOfItems} in your cart for a total price of {totalPrice}.";
+        }
     }
 }

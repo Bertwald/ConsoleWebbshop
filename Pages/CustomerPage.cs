@@ -135,10 +135,15 @@ namespace TestWebbshopCodeFirst.Pages
                                 break;
 
                         }
-
-
-
                     }
+                    break;
+                case 5:
+                    var shoppingCart = LoggedInUser.ProductsAsStrings();
+                    foreach (var product in shoppingCart)
+                    {
+                        Console.WriteLine(product);
+                    }
+                    string cartInfo = LoggedInUser.GetSummary();
                     break;
 
             }
