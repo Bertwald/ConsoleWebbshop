@@ -20,7 +20,7 @@ namespace TestWebbshopCodeFirst.Pages
             };
 
         public StartPage()
-        {           
+        {
             headerText = "Welcome to the shop";
         }
         private string headerText;
@@ -32,42 +32,41 @@ namespace TestWebbshopCodeFirst.Pages
         public void PrintMenu()
         {
             string title = "Start menu";
-            
+
             UserInterface.GUI.PrintMenu(title, menu);
         }
         public bool Run()
         {
             bool exit = false;
-            PrintHeader();
-            PrintMenu();
-            PrintFooter();
-            while (true)
+            while (!exit)
             {
-                if (exit) {
-                    return true;
-                }
+                PrintHeader();
+                PrintMenu();
+                PrintFooter();
+                //if (exit)
+                //{
+                //    return true;
+                //}
                 int choice = InputModule.SelectFromList(menu);
 
-                switch(choice)
+                switch (choice)
                 {
                     case 1:
                         exit = new LogInPage().Run();
                         break;
-                        case 2:
+                    case 2:
                         exit = new NewCustomer().Run();
                         break;
-                        case 3:
+                    case 3:
                         //visitor
-                        UserData visitor = new UserData(new Account() { Username = "Just browsing clothes"}, new Person(), new Customer());
+                        UserData visitor = new UserData(new Account() { Username = "Just browsing clothes" }, new Person(), new Customer());
                         exit = new CustomerPage(visitor).Run();
                         break;
-                        case 4:
+                    case 4:
                         return true;
-                        
-
                 }
             }
-            //return new StartPage().Run();
+            return true;
         }
 
 

@@ -26,7 +26,8 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public bool Run()
         {
-            while (true)
+            bool exit = false;
+            while (!exit)
             {
                 Console.Write("Enter username: ");
                 string userName = InputModule.GetString();
@@ -39,11 +40,12 @@ namespace TestWebbshopCodeFirst.Pages
                     return false;
                 }
                 if(acp.Privilege == Logic.Privilege.Customer) {
-                    return new CustomerPage(acp).Run();
+                    exit = new CustomerPage(acp).Run();
                 } else { // Privilege.Admin
-                    return new AdminPage(acp).Run();
+                    exit = new AdminPage(acp).Run();
                 }
             }
+            return false;
         }
 
         public void PrintFooter()

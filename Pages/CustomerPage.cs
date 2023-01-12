@@ -80,17 +80,15 @@ namespace TestWebbshopCodeFirst.Pages
             while (true) {
                 GUI.ClearWindow();
                 PrintHeader();
-                PrintMenu();
+                PrintMenu();                
                 PrintFooter();
                 int choice = InputModule.SelectFromList(menu);
-
+                GUI.ClearWindow();
                 switch (choice) {
                     case 1: //choose category
                         using (var db = new OurDbContext()) {
                             List<Category> categories = db.Categories.ToList();
-                            Category? category = ItemSelector<Category>.GetItemFromList(categories);
-                            //List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
-                            //Product? product = ItemSelector<Product>.GetItemFromList(products);
+                            Category? category = ItemSelector<Category>.GetItemFromList(categories);                          
                             bool ret = new ProductPage(LoggedInUser, category).Run();
                             if (ret) {
                                 return false;
@@ -99,26 +97,14 @@ namespace TestWebbshopCodeFirst.Pages
                             }
                         }
                         break;
-                    case 2: //search
-                            //using (var db = new OurDbContext())
-                            //{
-                            //    Console.Write("Search: ");
-                            //    var search = InputModule.GetString();
-                            //    List<Product> products = db.Products
-                            //                            .Where(x => x.Name
-                            //                                .Contains(search) || x.Description
-                            //                                .Contains(search) || x.LongDescription
-                            //                                .Contains(search))
-                            //                            .ToList();
-                            //    Product? product = ItemSelector<Product>.GetItemFromList(products);
-                            //}
+                    case 2: //search                           
                         Console.Write("Search: ");
                         var search = InputModule.GetString();
                         var result = ItemSelector<Product>.GetMatchingProducts(search);
                         GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
                         break;
                     case 3: //login/logout
-                        return true;
+                        return false;
 
                     case 4: //account info
                         using (var db = new OurDbContext()) {

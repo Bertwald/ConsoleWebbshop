@@ -4,7 +4,7 @@ using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages {
     internal class DetailedProductPage :IPage {
-        private List<string> menu = new List<string>() { "Back to search results", "Back to Customer Page", "Add to Cart"};
+        private List<string> menu = new List<string>() { "Back one step", "Back to Customer Page", "Add to Cart"};
         private UserData loggedInUser;
         private Product? chosen;
 
@@ -13,6 +13,7 @@ namespace TestWebbshopCodeFirst.Pages {
             this.chosen = chosen;
         }
         public bool Run() {
+            Console.Clear();
             PrintHeader();
             GUI.PrintSelectedProduct(chosen);
             PrintMenu();
@@ -41,6 +42,8 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
         public void PrintMenu() {
+            string title = "Menu";
+            GUI.PrintMenu(title, menu);
             
         }
         public void PrintFooter() {

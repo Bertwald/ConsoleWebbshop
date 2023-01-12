@@ -47,11 +47,12 @@ namespace TestWebbshopCodeFirst.Pages
         {
             while (true)
             {
+                GUI.ClearWindow();
                 PrintHeader();
                 PrintMenu();
                 PrintFooter();
                 int choice = InputModule.SelectFromList(menu);
-
+                GUI.ClearWindow();
                 switch (choice)
                 {
                     case 1: //add to shopping cart
@@ -59,7 +60,7 @@ namespace TestWebbshopCodeFirst.Pages
                         LoggedInUser.ShoppingCart.Products.Add(chosen);
                         Console.WriteLine($"1 {chosen} has been added to your shopping cart");
                         Console.ReadKey(true);
-                        return false;
+                        //return false;
                         break;
                     case 2:
                         chosen = ItemSelector<Product>.GetItemFromList(products);//show info
@@ -80,6 +81,14 @@ namespace TestWebbshopCodeFirst.Pages
                         GUI.PrintSelectedProducts(result, "Your search result for " + search);
                         break;
                     case 4: //back one step
+                        var shoppingCart = LoggedInUser.ProductsAsStrings();
+                        foreach (var product in shoppingCart)
+                        {
+                            Console.WriteLine(product);
+                        }
+                        string cartInfo = LoggedInUser.GetSummary();
+                        Console.WriteLine(cartInfo);
+                        Console.ReadKey(true);
                         break;
                     case 5:
                         return true;

@@ -23,7 +23,7 @@ namespace TestWebbshopCodeFirst.Logic
             {
                 itemStrings.Add(item.ToString()!);
             }
-            GUI.PrintMenu(typeof(T).Name, itemStrings);
+            GUI.PrintMenu("Please select from " + typeof(T).Name + " menu", itemStrings);
             int itemIndex = InputModule.SelectFromList(itemStrings);
             return items[itemIndex - 1];
         }

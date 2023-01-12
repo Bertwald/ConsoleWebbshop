@@ -51,8 +51,7 @@ namespace TestWebbshopCodeFirst.UserInterface
             Console.ResetColor();
             Console.WriteLine();
             Console.WriteLine("Units in stock: " + chosen.UnitsInStock);
-            Console.ReadKey();
-            Console.WriteLine("Press any key to continue");
+           
         }
 
         internal static void PrintSelectedProducts<T>(List<T> products, string text = "Make sure to check out these products before you leave:") where T : IPrintable  
