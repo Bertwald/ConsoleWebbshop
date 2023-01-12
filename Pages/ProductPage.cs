@@ -11,6 +11,7 @@ namespace TestWebbshopCodeFirst.Pages
 {
     internal class ProductPage : IPage
     {
+        private List<Product> products;
         private Category chosenCategory;
         private string headerText;
         private List<string> menu = new()
@@ -25,7 +26,7 @@ namespace TestWebbshopCodeFirst.Pages
         public ProductPage(UserData user, Category chosenCategory)
         {
             LoggedInUser = user;
-            chosenCategory = chosenCategory;
+            this.chosenCategory = chosenCategory;
             headerText = $"";
         }
         public void PrintHeader()
@@ -33,9 +34,8 @@ namespace TestWebbshopCodeFirst.Pages
             GUI.PrintHeader(new List<string> { headerText });
             using (var db = new OurDbContext())
             {
-                List<Product> products = db.Products.Where(x => x.Categories.Contains(chosenCategory)).ToList();
-                Product? product = ItemSelector<Product>.GetItemFromList(products);
-                GUI.PrintSelectedProducts(products, "Our fantastic clothes: ");
+                products = db.Products.Where(x => x.Categories.Contains(chosenCategory)).ToList();
+                GUI.PrintSelectedProducts(products, $"Our fantastic {chosenCategory}: ");
             }
         }
         public void PrintMenu()
@@ -53,8 +53,14 @@ namespace TestWebbshopCodeFirst.Pages
             switch (choice)
             {
                 case 1: //add to shopping cart
+                    Product chosen = ItemSelector<Product>.GetItemFromList(products);
+                    LoggedInUser.ShoppingCart.Products.Add(chosen);
+                    Console.WriteLine($"1 {chosen} has been added to your shopping cart");
+                    Console.ReadKey(true);
                     break;
-                case 2: //show info
+                case 2:
+                    chosen = ItemSelector<Product>.GetItemFromList(products);//show info
+                    return new DetailedProductPage(LoggedInUser, chosen).Run();
                     break;
                 case 3: //search
                     Console.Write("Search: ");
