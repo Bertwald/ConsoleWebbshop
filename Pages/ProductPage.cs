@@ -57,6 +57,7 @@ namespace TestWebbshopCodeFirst.Pages
                     LoggedInUser.ShoppingCart.Products.Add(chosen);
                     Console.WriteLine($"1 {chosen} has been added to your shopping cart");
                     Console.ReadKey(true);
+                    return false;
                     break;
                 case 2:
                     chosen = ItemSelector<Product>.GetItemFromList(products);//show info

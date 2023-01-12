@@ -40,7 +40,7 @@ namespace TestWebbshopCodeFirst.Models
 
         public override string ToString()
         {
-            return Name + " " + Price;
+            return Name + "  " + Description + "  " + Price;
         }
     }
 }

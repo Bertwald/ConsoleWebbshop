@@ -7,6 +7,7 @@ using TestWebbshopCodeFirst.UserInterface;
 using TestWebbshopCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using TestWebbshopCodeFirst.Logic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TestWebbshopCodeFirst.Pages
 {
@@ -75,85 +76,89 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public bool Run()
         {
-            GUI.ClearWindow();
-            GUI.SetWindowTitle(this, LoggedInUser.Privilege);
-            PrintHeader();
-            PrintMenu();
-            PrintFooter();
-            int choice = InputModule.SelectFromList(menu);
+                GUI.SetWindowTitle(this, LoggedInUser.Privilege);
+            while (true) {
+                GUI.ClearWindow();
+                PrintHeader();
+                PrintMenu();
+                PrintFooter();
+                int choice = InputModule.SelectFromList(menu);
 
-            switch (choice)
-            {
-                case 1: //choose category
-                    using (var db = new OurDbContext())
-                    {
-                        List<Category> categories = db.Categories.ToList();
-                        Category? category = ItemSelector<Category>.GetItemFromList(categories);
-                        //List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
-                        //Product? product = ItemSelector<Product>.GetItemFromList(products);
-                        return new ProductPage(LoggedInUser, category).Run();
-                    }
-                    break;
-                case 2: //search
-                    //using (var db = new OurDbContext())
-                    //{
-                    //    Console.Write("Search: ");
-                    //    var search = InputModule.GetString();
-                    //    List<Product> products = db.Products
-                    //                            .Where(x => x.Name
-                    //                                .Contains(search) || x.Description
-                    //                                .Contains(search) || x.LongDescription
-                    //                                .Contains(search))
-                    //                            .ToList();
-                    //    Product? product = ItemSelector<Product>.GetItemFromList(products);
-                    //}
-                    Console.Write("Search: ");
-                    var search = InputModule.GetString();
-                    var result = ItemSelector<Product>.GetMatchingProducts(search);
-                    GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
-                    break;
-                case 3: //login/logout
-                    return true;
-
-                case 4: //account info
-                    using (var db = new OurDbContext())
-                    {
-                        var miniMenu = new List<string> { "Personal details", "Order details" };
-                        GUI.PrintMenu("Your account", miniMenu);
-                        int menuChoice = InputModule.SelectFromList(miniMenu);
-
-                        switch (menuChoice)
-                        {
-                            case 1:
-                                var personalInformation = db.Persons
-                                                .Where(p => p.Id == LoggedInUser.Person.Id)
-                                                .Include("Accounts")
-                                                .Include("Employees")
-                                                .Include(p => p.Customers).ToList();
-
-                                ItemSelector<Person>.GetItemFromList(personalInformation);
-
-                                                
-                                break;
-                            case 2:
-                                //Orderdetails
-                                break;
-
+                switch (choice) {
+                    case 1: //choose category
+                        using (var db = new OurDbContext()) {
+                            List<Category> categories = db.Categories.ToList();
+                            Category? category = ItemSelector<Category>.GetItemFromList(categories);
+                            //List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
+                            //Product? product = ItemSelector<Product>.GetItemFromList(products);
+                            bool ret = new ProductPage(LoggedInUser, category).Run();
+                            if (ret) {
+                                return false;
+                            } else {
+                                continue;
+                            }
                         }
-                    }
-                    break;
-                case 5: //shoppingcart
-                    var shoppingCart = LoggedInUser.ProductsAsStrings();
-                    foreach (var product in shoppingCart)
-                    {
-                        Console.WriteLine(product);
-                    }
-                    string cartInfo = LoggedInUser.GetSummary();
-                    break;
+                        break;
+                    case 2: //search
+                            //using (var db = new OurDbContext())
+                            //{
+                            //    Console.Write("Search: ");
+                            //    var search = InputModule.GetString();
+                            //    List<Product> products = db.Products
+                            //                            .Where(x => x.Name
+                            //                                .Contains(search) || x.Description
+                            //                                .Contains(search) || x.LongDescription
+                            //                                .Contains(search))
+                            //                            .ToList();
+                            //    Product? product = ItemSelector<Product>.GetItemFromList(products);
+                            //}
+                        Console.Write("Search: ");
+                        var search = InputModule.GetString();
+                        var result = ItemSelector<Product>.GetMatchingProducts(search);
+                        GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
+                        break;
+                    case 3: //login/logout
+                        return true;
 
+                    case 4: //account info
+                        using (var db = new OurDbContext()) {
+                            var miniMenu = new List<string> { "Personal details", "Order details" };
+                            GUI.PrintMenu("Your account", miniMenu);
+                            int menuChoice = InputModule.SelectFromList(miniMenu);
+
+                            switch (menuChoice) {
+                                case 1:
+                                    var personalInformation = db.Persons
+                                                    .Where(p => p.Id == LoggedInUser.Person.Id)
+                                                    .Include("Accounts")
+                                                    .Include("Employees")
+                                                    .Include(p => p.Customers).ToList();
+
+                                    ItemSelector<Person>.GetItemFromList(personalInformation);
+
+
+                                    break;
+                                case 2:
+                                    //Orderdetails
+                                    break;
+
+                            }
+                        }
+                        break;
+                    case 5: //shoppingcart
+                        var shoppingCart = LoggedInUser.ProductsAsStrings();
+                        foreach (var product in shoppingCart) {
+                            Console.WriteLine(product);
+                        }
+                        string cartInfo = LoggedInUser.GetSummary();
+                        Console.WriteLine(cartInfo);
+                        Console.ReadKey(true);
+                        break;
+
+                }
+                //Console.ReadKey();
+                //return true;
             }
-            Console.ReadKey();
-            return true;
         }
 
         public void PrintFooter()

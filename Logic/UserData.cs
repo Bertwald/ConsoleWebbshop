@@ -42,7 +42,7 @@ namespace TestWebbshopCodeFirst.Logic {
             }
             int nrOfItems = ProductsInShoppingCart().Count;
 
-            return $"You have {nrOfItems} in your cart for a total price of {totalPrice}.";
+            return $"You have {nrOfItems} Items in your cart for a total price of {totalPrice}.";
         }
     }
 }
