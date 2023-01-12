@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
@@ -57,7 +58,7 @@ namespace TestWebbshopCodeFirst.Pages
                         break;
                         case 3:
                         //visitor
-                        Account visitor = new Account() { Username = "Just browsing clothes"};
+                        UserData visitor = new UserData(new Account() { Username = "Just browsing clothes"}, new Person(), new Customer());
                         exit = new CustomerPage(visitor).Run();
                         break;
                         case 4:

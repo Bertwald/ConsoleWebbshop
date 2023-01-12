@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
@@ -16,13 +17,13 @@ namespace TestWebbshopCodeFirst.Pages
                 "Add product to startpage",
                 "Manage users"
             };
-        public AdminPage(Models.Account user) 
+        public AdminPage(UserData user) 
         {
             LoggedInUser = user;
             headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }  
         private string headerText;
-        public Models.Account LoggedInUser { get; set; }
+        public UserData LoggedInUser { get; set; }
         public void PrintHeader()
         {
             UserInterface.GUI.PrintHeader(new List<string> { headerText });

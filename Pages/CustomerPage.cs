@@ -25,10 +25,10 @@ namespace TestWebbshopCodeFirst.Pages
         private string headerText;
         private readonly int numberOfSelectedToDisplay = 3;
 
-        public Account LoggedInUser { get; set; }
+        public UserData LoggedInUser { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public CustomerPage(Account user)
+        public CustomerPage(UserData user)
         {
             LoggedInUser = user;
             SetHeaderText();
@@ -121,7 +121,7 @@ namespace TestWebbshopCodeFirst.Pages
                         {
                             case 1:
                                 var personalInformation = db.Persons
-                                                .Where(p => p.Id == LoggedInUser.Id)
+                                                .Where(p => p.Id == LoggedInUser.Person.Id)
                                                 .Include("Accounts")
                                                 .Include("Employees")
                                                 .Include(p => p.Customers).ToList();

@@ -14,6 +14,7 @@ namespace TestWebbshopCodeFirst.Models
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            Products = new List<Product>();
         }
 
         [Key]
@@ -35,5 +36,7 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual Customer Custumer { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [NotMapped]
+        internal List<Product> Products { get; set; }
     }
 }

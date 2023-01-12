@@ -33,15 +33,15 @@ namespace TestWebbshopCodeFirst.Pages
                 Console.Write("Enter password: ");
                 string passWord = InputModule.GetString();
 
-                Models.Account? account = Logic.Validation.ValidateUser(userName, passWord);
+                UserData? acp = Logic.Validation.ValidateUser(userName, passWord);
 
-                if(account == null) {
+                if(acp == null) {
                     return false;
-                } 
-                if(account.Privilege == Logic.Privilege.Customer) {
-                    return new CustomerPage(account).Run();
+                }
+                if(acp.Privilege == Logic.Privilege.Customer) {
+                    return new CustomerPage(acp).Run();
                 } else { // Privilege.Admin
-                    return new AdminPage(account).Run();
+                    return new AdminPage(acp).Run();
                 }
             }
         }
