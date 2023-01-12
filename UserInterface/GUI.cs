@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.Interfaces;
 using TestWebbshopCodeFirst.Logic;
+using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.UserInterface
 {
@@ -35,6 +36,23 @@ namespace TestWebbshopCodeFirst.UserInterface
             {
                 Console.WriteLine($"[{row+1}] " + menu[row]);
             }
+        }
+
+        internal static void PrintSelectedProduct(Product? chosen)
+        {
+            Console.WriteLine($"{chosen.Name}");
+            Console.WriteLine();
+            Console.WriteLine(chosen.Description);
+            Console.WriteLine();
+            Console.WriteLine(chosen.LongDescription);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Price: " + chosen.Price);
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.WriteLine("Units in stock: " + chosen.UnitsInStock);
+            Console.ReadKey();
+            Console.WriteLine("Press any key to continue");
         }
 
         internal static void PrintSelectedProducts<T>(List<T> products, string text = "Make sure to check out these products before you leave:") where T : IPrintable  

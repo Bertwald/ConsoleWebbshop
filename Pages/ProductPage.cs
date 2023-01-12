@@ -45,35 +45,48 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public bool Run()
         {
-            PrintHeader();
-            PrintMenu();
-            PrintFooter();
-            int choice = InputModule.SelectFromList(menu);
-
-            switch (choice)
+            while (true)
             {
-                case 1: //add to shopping cart
-                    Product chosen = ItemSelector<Product>.GetItemFromList(products);
-                    LoggedInUser.ShoppingCart.Products.Add(chosen);
-                    Console.WriteLine($"1 {chosen} has been added to your shopping cart");
-                    Console.ReadKey(true);
-                    return false;
-                    break;
-                case 2:
-                    chosen = ItemSelector<Product>.GetItemFromList(products);//show info
-                    return new DetailedProductPage(LoggedInUser, chosen).Run();
-                    break;
-                case 3: //search
-                    Console.Write("Search: ");
-                    var search = InputModule.GetString();
-                    var result = ItemSelector<Product>.GetMatchingProductsInCategory(search, chosenCategory);
-                    GUI.PrintSelectedProducts(result, "Your search result for " + search);
-                    break;
-                case 4: //back one step
-                    break;
+                PrintHeader();
+                PrintMenu();
+                PrintFooter();
+                int choice = InputModule.SelectFromList(menu);
+
+                switch (choice)
+                {
+                    case 1: //add to shopping cart
+                        Product chosen = ItemSelector<Product>.GetItemFromList(products);
+                        LoggedInUser.ShoppingCart.Products.Add(chosen);
+                        Console.WriteLine($"1 {chosen} has been added to your shopping cart");
+                        Console.ReadKey(true);
+                        return false;
+                        break;
+                    case 2:
+                        chosen = ItemSelector<Product>.GetItemFromList(products);//show info
+                        bool ret = new DetailedProductPage(LoggedInUser, chosen).Run();
+                        if (ret)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
+                    case 3: //search
+                        Console.Write("Search: ");
+                        var search = InputModule.GetString();
+                        var result = ItemSelector<Product>.GetMatchingProductsInCategory(search, chosenCategory);
+                        GUI.PrintSelectedProducts(result, "Your search result for " + search);
+                        break;
+                    case 4: //back one step
+                        break;
+                    case 5:
+                        return true;
+                }
             }
-            Console.ReadKey();
-            return true;
+            //Console.ReadKey();
+            //return true;
         }
 
         public void PrintFooter()
