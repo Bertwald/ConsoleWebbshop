@@ -29,12 +29,13 @@ namespace TestWebbshopCodeFirst.Pages
             bool exit = false;
             while (!exit)
             {
+                GUI.ClearWindow();
                 Console.Write("Enter username: ");
                 string userName = InputModule.GetString();
                 Console.Write("Enter password: ");
                 string passWord = InputModule.GetString();
 
-                UserData? acp = Logic.Validation.ValidateUser(userName, passWord);
+                UserData? acp = Logic.Validator.ValidateUser(userName, passWord);
 
                 if(acp == null) {
                     return false;

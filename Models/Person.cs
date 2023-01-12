@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Interfaces;
 
 namespace TestWebbshopCodeFirst.Models
 {
-    public class Person
+    public class Person : IPrintable
     {
         public Person()
         {
@@ -40,6 +41,10 @@ namespace TestWebbshopCodeFirst.Models
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
+
+        public void Print() {
+            Console.WriteLine(this.ToString());
+        }
 
         public override string ToString()
         {

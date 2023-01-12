@@ -17,6 +17,11 @@ namespace TestWebbshopCodeFirst.UserInterface
             Console.Clear();
         }
 
+        internal static void Delay() {
+            Console.WriteLine("Press ANY key to continue");
+            Console.ReadKey(true);
+        }
+
         //printmetoder
         internal static void PrintHeader(List<string> headerText)
         {

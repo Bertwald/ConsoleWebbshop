@@ -9,7 +9,7 @@ using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class NewCustomer
+    internal class RegistrationPage
     {
         internal bool Run()
         {
@@ -66,13 +66,12 @@ namespace TestWebbshopCodeFirst.Pages
                     Privilege = Logic.Privilege.Customer,
                     User = newPerson
                 };
-                //newPerson.Customers.Add(newCustomer);
                 db.Add(newPerson);
                 db.Add(newCustomer);
                 db.Add(newAccount);
                 db.SaveChanges();
             }
-            return true;
+            return false;
         }
     }
 }

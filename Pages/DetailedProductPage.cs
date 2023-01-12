@@ -11,6 +11,9 @@ namespace TestWebbshopCodeFirst.Pages {
         public DetailedProductPage(UserData loggedInUser, Product? chosen) {
             this.loggedInUser = loggedInUser;
             this.chosen = chosen;
+            if(loggedInUser.Privilege == Privilege.Visitor) {
+                menu = menu.Take(2).ToList();
+            }
         }
         public bool Run() {
             Console.Clear();

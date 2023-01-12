@@ -40,13 +40,10 @@ namespace TestWebbshopCodeFirst.Pages
             bool exit = false;
             while (!exit)
             {
+                GUI.ClearWindow();
                 PrintHeader();
                 PrintMenu();
                 PrintFooter();
-                //if (exit)
-                //{
-                //    return true;
-                //}
                 int choice = InputModule.SelectFromList(menu);
 
                 switch (choice)
@@ -55,7 +52,7 @@ namespace TestWebbshopCodeFirst.Pages
                         exit = new LogInPage().Run();
                         break;
                     case 2:
-                        exit = new NewCustomer().Run();
+                        exit = new RegistrationPage().Run();
                         break;
                     case 3:
                         //visitor

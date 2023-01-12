@@ -9,15 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using TestWebbshopCodeFirst.Logic;
 using System.Reflection.Metadata.Ecma335;
 
-namespace TestWebbshopCodeFirst.Pages
-{
-    internal class CustomerPage : IPage
-    {
+namespace TestWebbshopCodeFirst.Pages {
+    internal class CustomerPage : IPage {
         private List<string> menu = new()
             {
-                "Choose category",
+                "Browse Inventory by category",
                 "Search for products",
-                "Log in / log out",
+                "PlaceHolder",
                 "Account information",
                 "Show shopping cart"
             };
@@ -29,20 +27,20 @@ namespace TestWebbshopCodeFirst.Pages
         public UserData LoggedInUser { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public CustomerPage(UserData user)
-        {
+        public CustomerPage(UserData user) {
             LoggedInUser = user;
             SetHeaderText();
-            if (user.Privilege == Logic.Privilege.Visitor)
-            {
+            if (user.Privilege == Logic.Privilege.Visitor) {
+                menu[2] = "To Login Page";
                 menu = menu.Take(3).ToList();
+            } else {
+                menu[2] = "Logout";
             }
             RetrieveSelectedItems();
         }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        private void SetHeaderText()
-        {
+        private void SetHeaderText() {
             headerText = LoggedInUser.Privilege == Logic.Privilege.Visitor ?
                 "Welcome Honored Guest" + Environment.NewLine +
                 "Feel free to browse out exquisite inventory!" + Environment.NewLine + "When you decide to buy one or many of our excellent " +
@@ -51,10 +49,8 @@ namespace TestWebbshopCodeFirst.Pages
                 "We eagerly await your next order";
         }
 
-        private void RetrieveSelectedItems()
-        {
-            using (var db = new OurDbContext())
-            {
+        private void RetrieveSelectedItems() {
+            using (var db = new OurDbContext()) {
                 selectedProducts = db.Products
                                      .Where(p => p.Categories
                                                   .Where(category => category.Id == 10)
@@ -64,91 +60,98 @@ namespace TestWebbshopCodeFirst.Pages
             }
         }
 
-        public void PrintHeader()
-        {
+        public void PrintHeader() {
             GUI.PrintHeader(new List<string> { headerText });
             GUI.PrintSelectedProducts(selectedProducts);
         }
-        public void PrintMenu()
-        {
+        public void PrintMenu() {
             string title = "Customer Shopping menu";
             GUI.PrintMenu(title, menu);
         }
-        public bool Run()
-        {
-                GUI.SetWindowTitle(this, LoggedInUser.Privilege);
+        public bool Run() {
+            GUI.SetWindowTitle(this, LoggedInUser.Privilege);
             while (true) {
                 GUI.ClearWindow();
                 PrintHeader();
-                PrintMenu();                
+                PrintMenu();
                 PrintFooter();
                 int choice = InputModule.SelectFromList(menu);
                 GUI.ClearWindow();
                 switch (choice) {
                     case 1: //choose category
-                        using (var db = new OurDbContext()) {
-                            List<Category> categories = db.Categories.ToList();
-                            Category? category = ItemSelector<Category>.GetItemFromList(categories);                          
-                            bool ret = new ProductPage(LoggedInUser, category).Run();
-                            if (ret) {
-                                return false;
-                            } else {
-                                continue;
-                            }
+                        bool ret = ChooseCategory();
+                        if (ret) {
+                            return false;
                         }
                         break;
                     case 2: //search                           
-                        Console.Write("Search: ");
-                        var search = InputModule.GetString();
-                        var result = ItemSelector<Product>.GetMatchingProducts(search);
-                        GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
+                        Search();
                         break;
                     case 3: //login/logout
                         return false;
-
                     case 4: //account info
-                        using (var db = new OurDbContext()) {
-                            var miniMenu = new List<string> { "Personal details", "Order details" };
-                            GUI.PrintMenu("Your account", miniMenu);
-                            int menuChoice = InputModule.SelectFromList(miniMenu);
-
-                            switch (menuChoice) {
-                                case 1:
-                                    var personalInformation = db.Persons
-                                                    .Where(p => p.Id == LoggedInUser.Person.Id)
-                                                    .Include("Accounts")
-                                                    .Include("Employees")
-                                                    .Include(p => p.Customers).ToList();
-
-                                    ItemSelector<Person>.GetItemFromList(personalInformation);
-
-
-                                    break;
-                                case 2:
-                                    //Orderdetails
-                                    break;
-
-                            }
-                        }
+                        DisplayAccountInformation();
                         break;
                     case 5: //shoppingcart
-                        var shoppingCart = LoggedInUser.ProductsAsStrings();
-                        foreach (var product in shoppingCart) {
-                            Console.WriteLine(product);
-                        }
-                        string cartInfo = LoggedInUser.GetSummary();
-                        Console.WriteLine(cartInfo);
-                        Console.ReadKey(true);
+                        DisplayShoppingCart();
                         break;
-
                 }
-                //Console.ReadKey();
-                //return true;
             }
         }
 
-        public void PrintFooter()
-        {
+        private void DisplayShoppingCart() {
+            var shoppingCart = LoggedInUser.ProductsAsStrings();
+            foreach (var product in shoppingCart) {
+                Console.WriteLine(product);
+            }
+            string cartInfo = LoggedInUser.GetSummary();
+            Console.WriteLine(cartInfo);
+            GUI.Delay();
+        }
+
+        private void DisplayAccountInformation() {
+            var miniMenu = new List<string> { "Personal details", "Order details" };
+            GUI.PrintMenu("Your account", miniMenu);
+            int menuChoice = InputModule.SelectFromList(miniMenu);
+
+            switch (menuChoice) {
+                case 1:
+                    List<Person> personalInformation;
+                    using (var db = new OurDbContext()) {
+                        personalInformation = db.Persons
+                                        .Where(p => p.Id == LoggedInUser.Person.Id)
+                                        .Include(p => p.Accounts)
+                                        .Include(p => p.Employees)
+                                        .Include(p => p.Customers).ToList();
+                    }
+                    GUI.PrintSelectedProducts<Person>(personalInformation);
+                    GUI.Delay();
+                    break;
+                case 2:
+                    //Orderdetails
+                    break;
+
+            }
+        }
+
+        private bool ChooseCategory() {
+            List<Category> categories;
+            using (var db = new OurDbContext()) {
+                categories = db.Categories.ToList();
+            }
+            Category? category = ItemSelector<Category>.GetItemFromList(categories);
+            return new BrowseCategoryPage(LoggedInUser, category).Run();
+        }
+
+        private static void Search() {
+            Console.Write("Search: ");
+            var search = InputModule.GetString();
+            var result = ItemSelector<Product>.GetMatchingProducts(search);
+            GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
+            GUI.Delay();
+        }
+
+        public void PrintFooter() {
         }
 
 
