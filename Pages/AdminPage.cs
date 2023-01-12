@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.Logic;
+using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
@@ -19,7 +20,7 @@ namespace TestWebbshopCodeFirst.Pages
             };
         public AdminPage(UserData user) 
         {
-            LoggedInUser = user;
+            LoggedInUser = user;          
             headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }  
         private string headerText;

@@ -37,10 +37,10 @@ namespace TestWebbshopCodeFirst.UserInterface
             }
         }
 
-        internal static void PrintSelectedProducts<T>(List<T> products) where T : IPrintable  
+        internal static void PrintSelectedProducts<T>(List<T> products, string text = "Make sure to check out these products before you leave:") where T : IPrintable  
         {
             Console.WriteLine();
-            Console.WriteLine("Make sure to check out these products before you leave:");
+            Console.WriteLine(text);
             foreach (var p in products)
             {
                 //TODO: Fix pretty print

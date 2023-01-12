@@ -84,33 +84,38 @@ namespace TestWebbshopCodeFirst.Pages
 
             switch (choice)
             {
-                case 1:
+                case 1: //choose category
                     using (var db = new OurDbContext())
                     {
                         List<Category> categories = db.Categories.ToList();
                         Category? category = ItemSelector<Category>.GetItemFromList(categories);
-                        List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
-                        Product? product = ItemSelector<Product>.GetItemFromList(products);
+                        //List<Product> products = db.Products.Where(x => x.Categories.Contains(category)).ToList();
+                        //Product? product = ItemSelector<Product>.GetItemFromList(products);
+                        return new ProductPage(LoggedInUser, category).Run();
                     }
                     break;
-                case 2:
-                    using (var db = new OurDbContext())
-                    {
-                        Console.Write("Search: ");
-                        var search = InputModule.GetString();
-                        List<Product> products = db.Products
-                                                .Where(x => x.Name
-                                                    .Contains(search) || x.Description
-                                                    .Contains(search) || x.LongDescription
-                                                    .Contains(search))
-                                                .ToList();
-                        Product? product = ItemSelector<Product>.GetItemFromList(products);
-                    }
+                case 2: //search
+                    //using (var db = new OurDbContext())
+                    //{
+                    //    Console.Write("Search: ");
+                    //    var search = InputModule.GetString();
+                    //    List<Product> products = db.Products
+                    //                            .Where(x => x.Name
+                    //                                .Contains(search) || x.Description
+                    //                                .Contains(search) || x.LongDescription
+                    //                                .Contains(search))
+                    //                            .ToList();
+                    //    Product? product = ItemSelector<Product>.GetItemFromList(products);
+                    //}
+                    Console.Write("Search: ");
+                    var search = InputModule.GetString();
+                    var result = ItemSelector<Product>.GetMatchingProducts(search);
+                    GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
                     break;
-                case 3:
+                case 3: //login/logout
                     return true;
 
-                case 4:
+                case 4: //account info
                     using (var db = new OurDbContext())
                     {
                         var miniMenu = new List<string> { "Personal details", "Order details" };
@@ -137,7 +142,7 @@ namespace TestWebbshopCodeFirst.Pages
                         }
                     }
                     break;
-                case 5:
+                case 5: //shoppingcart
                     var shoppingCart = LoggedInUser.ProductsAsStrings();
                     foreach (var product in shoppingCart)
                     {
