@@ -48,7 +48,9 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public bool Run()
         {
-            while (true)
+            bool exit = false;
+
+            while (!exit)
             {
                 GUI.ClearWindow();
                 PrintHeader();
@@ -59,11 +61,7 @@ namespace TestWebbshopCodeFirst.Pages
                 switch (choice)
                 {
                     case 1: // Show detailed information
-                        bool ret = ShowInfo();
-                        if (ret)
-                        {
-                            return false;
-                        }
+                        exit = ShowInfo();
                         break;
                     case 2: // Search within category
                         Search();
@@ -74,14 +72,17 @@ namespace TestWebbshopCodeFirst.Pages
                         AddToShoppingCart();
                         break;
                     case 5: // Show Cart
-                        List<string> strings= new();
-                        strings.AddRange(LoggedInUser.ProductsAsStrings());
-                        strings.Add(LoggedInUser.GetSummary());
-                        GUI.ShowShoppingCartItems(strings);
+                        exit = new ShoppingCartPage(LoggedInUser).Run();
+
+                        //List<string> strings= new();
+                        //strings.AddRange(LoggedInUser.ProductsAsStrings());
+                        //strings.Add(LoggedInUser.GetSummary());
+                        //GUI.ShowShoppingCartItems(strings);
 
                         break;
                 }
             }
+            return false;
         }
 
    

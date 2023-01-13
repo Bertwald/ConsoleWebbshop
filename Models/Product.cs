@@ -24,7 +24,7 @@ namespace TestWebbshopCodeFirst.Models
         public string Name { get; set; } = null!;
         public decimal Price { get; set; }
         public double Vat { get; set; }
-        public int? UnitsInStock { get; set; }
+        public int UnitsInStock { get; set; }
         [StringLength(255)]
         public string? Description { get; set; }
         [StringLength(4000)]

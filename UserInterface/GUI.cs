@@ -59,7 +59,7 @@ namespace TestWebbshopCodeFirst.UserInterface
            
         }
 
-        internal static void PrintSelectedProducts<T>(List<T> products, string text = "Make sure to check out these products before you leave:") where T : IPrintable  
+        internal static void PrintSelectedProducts<T>(List<T> products, string text = "") where T : IPrintable  
         {
             Console.WriteLine();
             Console.WriteLine(text);

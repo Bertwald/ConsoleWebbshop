@@ -7,7 +7,6 @@ using TestWebbshopCodeFirst.UserInterface;
 using TestWebbshopCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using TestWebbshopCodeFirst.Logic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace TestWebbshopCodeFirst.Pages {
     internal class CustomerPage : IPage {
@@ -70,7 +69,8 @@ namespace TestWebbshopCodeFirst.Pages {
         }
         public bool Run() {
             GUI.SetWindowTitle(this, LoggedInUser.Privilege);
-            while (true) {
+            bool exit = false;
+            while (!exit) {
                 GUI.ClearWindow();
                 PrintHeader();
                 PrintMenu();
@@ -79,10 +79,7 @@ namespace TestWebbshopCodeFirst.Pages {
                 GUI.ClearWindow();
                 switch (choice) {
                     case 1: //choose category
-                        bool ret = ChooseCategory();
-                        if (ret) {
-                            return false;
-                        }
+                        exit = ChooseCategory();
                         break;
                     case 2: //search                           
                         Search();
@@ -93,13 +90,16 @@ namespace TestWebbshopCodeFirst.Pages {
                         DisplayAccountInformation();
                         break;
                     case 5: //shoppingcart
-                        List<string> strings = new();
-                        strings.AddRange(LoggedInUser.ProductsAsStrings());
-                        strings.Add(LoggedInUser.GetSummary());
-                        GUI.ShowShoppingCartItems(strings);
+                        exit = new ShoppingCartPage(LoggedInUser).Run();
+
+                        //List<string> strings = new();
+                        //strings.AddRange(LoggedInUser.ProductsAsStrings());
+                        //strings.Add(LoggedInUser.GetSummary());
+                        //GUI.ShowShoppingCartItems(strings);
                         break;
                 }
             }
+            return false;
         }
 
         private void DisplayShoppingCart() {

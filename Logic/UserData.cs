@@ -12,40 +12,44 @@ namespace TestWebbshopCodeFirst.Logic {
             Username = account.Username;
             Privilege = account.Privilege;
             Person = person;
-            ShoppingCart = new ();
-            ShoppingCart.Orderstatus = OrderStatus.InShoppingCart;
-            ShoppingCart.Custumer = customer;
+            ShoppingCart = new() {
+                Orderstatus = OrderStatus.InShoppingCart,
+                Custumer = customer
+            };
         }
         internal string Username { get; set; }
         internal Privilege Privilege { get; set; }
         internal Person Person { get; set; }
         internal Order ShoppingCart { get; set; }
 
-        internal List<Product> ProductsInShoppingCart()
-        {
-            return ShoppingCart.Products;          
+        internal List<Product> ProductsInShoppingCart() {
+            return ShoppingCart.Products;
         }
-        internal List<string> ProductsAsStrings()
-        {
+        internal List<string> ProductsAsStrings() {
             List<string> listOfStrings = new List<string>();
-            foreach (var product in ProductsInShoppingCart())
-            {
+            foreach (var product in ProductsInShoppingCart()) {
                 listOfStrings.Add(product.ToString());
             }
             return listOfStrings;
         }
-        internal string GetSummary()
-        {
-            decimal totalPrice = 0;
-            foreach (var product in ProductsInShoppingCart())
-            {
-                totalPrice += product.Price;
+        internal string GetSummary() {
+            if (ShoppingCart.OrderDetails.Any()) {
+                decimal totalPrice = 0;
+                for (int index = 0; index < ProductsInShoppingCart().Count; index++) {
+                    if (ShoppingCart.OrderDetails.Any()) {
+                        totalPrice += ProductsInShoppingCart()[index].Price * ShoppingCart.OrderDetails.ToList()[index].Quantity;
+                    } else {
+                        totalPrice += ProductsInShoppingCart()[index].Price;
+                    }
+                }
+                int nrOfItems = ProductsInShoppingCart().Count;
+                return $"You have {nrOfItems} Items in your cart for a total price of {totalPrice}.";
+            } else {
+                int nrOfItems = ProductsInShoppingCart().Count;
+                return $"You have {nrOfItems} Items in your cart";
             }
-            int nrOfItems = ProductsInShoppingCart().Count;
-
-            return $"You have {nrOfItems} Items in your cart for a total price of {totalPrice}.";
         }
 
-    
+
     }
 }
