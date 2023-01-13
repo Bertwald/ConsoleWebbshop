@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.Models;
+using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Logic {
     internal class UserData {
@@ -44,5 +45,7 @@ namespace TestWebbshopCodeFirst.Logic {
 
             return $"You have {nrOfItems} Items in your cart for a total price of {totalPrice}.";
         }
+
+    
     }
 }

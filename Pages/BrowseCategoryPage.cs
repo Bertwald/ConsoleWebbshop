@@ -74,21 +74,19 @@ namespace TestWebbshopCodeFirst.Pages
                         AddToShoppingCart();
                         break;
                     case 5: // Show Cart
-                        ShowShoppingCart();
+                        List<string> strings= new();
+                        strings.AddRange(LoggedInUser.ProductsAsStrings());
+                        strings.Add(LoggedInUser.GetSummary());
+                        GUI.ShowShoppingCartItems(strings);
+
                         break;
                 }
             }
         }
 
-        private void ShowShoppingCart() {
-            var shoppingCart = LoggedInUser.ProductsAsStrings();
-            foreach (var product in shoppingCart) {
-                Console.WriteLine(product);
-            }
-            string cartInfo = LoggedInUser.GetSummary();
-            Console.WriteLine(cartInfo);
-            GUI.Delay();
-        }
+   
+
+  
 
         private void Search() {
             Console.Write("Search: ");

@@ -93,7 +93,10 @@ namespace TestWebbshopCodeFirst.Pages {
                         DisplayAccountInformation();
                         break;
                     case 5: //shoppingcart
-                        DisplayShoppingCart();
+                        List<string> strings = new();
+                        strings.AddRange(LoggedInUser.ProductsAsStrings());
+                        strings.Add(LoggedInUser.GetSummary());
+                        GUI.ShowShoppingCartItems(strings);
                         break;
                 }
             }

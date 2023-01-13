@@ -75,5 +75,15 @@ namespace TestWebbshopCodeFirst.UserInterface
         internal static void SetWindowTitle<T>(T instance, Privilege privilege = Privilege.Visitor) {
             Console.Title = instance.GetType().Name + " AS " + privilege;
         }
+
+        internal static void ShowShoppingCartItems(List<string> shoppingCart)
+        {
+            foreach (var product in shoppingCart)
+            {
+                Console.WriteLine(product);
+            }
+            
+            GUI.Delay();
+        }
     }
 }
