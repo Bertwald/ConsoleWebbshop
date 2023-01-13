@@ -46,25 +46,42 @@ namespace TestWebbshopCodeFirst.Pages
 
         public void PrintHeader()
         {
+            var items = loggedInUser.ProductsInShoppingCart();
             List<string> strings = new();
             strings.AddRange(loggedInUser.ProductsAsStrings());
-            for (int index = 0; index < details.Count; index++)
+            for (int index = 0; index < items.Count; index++)
             {
-                strings[index] += " Unit Cost | total amount : " + details[index].Quantity + " | Sum: " + loggedInUser.ProductsInShoppingCart()[index].Price * details[index].Quantity;
+                strings[index] += " Unit Cost | total amount : " + items[index].OrderDetails.First().Quantity;
             }
             strings.Add(loggedInUser.GetSummary());
             GUI.ShowShoppingCartItems(strings);
+
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("Your billing address: ");
+            loggedInUser.Person.Print();
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------------");
+            if (loggedInUser.ShoppingCart.ShippingAdress != null)
+            {
+                Console.WriteLine("Alternative delivery address: ");
+                Console.WriteLine(loggedInUser.ShoppingCart.GetAlternativeAddress());
+            }
         }
 
         public void PrintMenu()
         {
-            string title = "Please take a look at your shopping cart and then make a choice: ";
+            string title = "Customize your shipping: ";
             GUI.PrintMenu(title, menu);
 
         }
         public void PrintFooter()
         {
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            //Console.SetCursorPosition(0, 15);
+            Console.WriteLine(loggedInUser.GetSummary()); 
+            Console.ResetColor();
+            //Console.SetCursorPosition(0, 0);
         }
         private void SetShippingOption()
         {
@@ -87,6 +104,7 @@ namespace TestWebbshopCodeFirst.Pages
             Console.WriteLine("Please enter alternative country: ");
             string newCountry = InputModule.GetString();
             loggedInUser.ShoppingCart.ShippingCountry = newCountry;
+
         }
     }
 }

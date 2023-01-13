@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestWebbshopCodeFirst.Logic;
+using System.Diagnostics.Metrics;
+using System.Net.Mail;
+using System.Net;
 
 namespace TestWebbshopCodeFirst.Models
 {
@@ -38,5 +41,14 @@ namespace TestWebbshopCodeFirst.Models
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [NotMapped]
         internal List<Product> Products { get; set; }
+
+
+        internal string GetAlternativeAddress()
+        {
+            string alternativeAddress = 
+            ShippingAdress + ", " + ShippingPostalcode + ", " + ShippingCity + ", " + ShippingCountry + Environment.NewLine;
+               
+            return alternativeAddress;
+        }
     }
 }

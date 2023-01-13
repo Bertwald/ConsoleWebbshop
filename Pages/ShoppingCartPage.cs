@@ -27,11 +27,16 @@ namespace TestWebbshopCodeFirst.Pages
                     Quantity = 1,
                     UnitPrice = product.Price
                 };
+                product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);
                 loggedInUser.ShoppingCart.OrderDetails.Add(newDetail);
             }
         }
         private void CleanOrderDetails() {
+            foreach (var product in loggedInUser.ShoppingCart.Products)
+            {
+                product.OrderDetails.Clear();
+            }
             details.Clear();
             loggedInUser.ShoppingCart.OrderDetails.Clear();
         }
@@ -73,7 +78,7 @@ namespace TestWebbshopCodeFirst.Pages
                         CleanOrderDetails();
                         return true;
                     case 5: // continue to checkout
-                        exit = new CheckOutPage().Run();
+                        exit = new ShippingPage(loggedInUser).Run();
                         break;
                 }
 
@@ -99,11 +104,11 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public void PrintFooter()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(10, 50);
-            loggedInUser.GetSummary();
+            Console.WriteLine("----------------------------");
+            Console.ForegroundColor = ConsoleColor.Yellow;          
+            Console.WriteLine(loggedInUser.GetSummary()); 
             Console.ResetColor();
-            Console.SetCursorPosition(0, 0);
+            
         }
     }
 }

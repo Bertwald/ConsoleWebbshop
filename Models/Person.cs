@@ -43,17 +43,22 @@ namespace TestWebbshopCodeFirst.Models
         public virtual ICollection<Account> Accounts { get; set; }
 
         public void Print() {
-            Console.WriteLine(this.ToString());
+            Console.WriteLine(GetPersonalInfo());
         }
+        public string GetPersonalInfo()
+        {
+            string personalInfo = BirthDate + Environment.NewLine +
+                FirstName + " " + LastName + Environment.NewLine +
+                Address + ", " + PostalCode + ", " + City + ", " + Country + Environment.NewLine +
+                Telephone + Environment.NewLine +
+                MailAdress + Environment.NewLine;
 
+            return personalInfo;
+        }
         public override string ToString()
         {
             
-            string personalInfo = BirthDate + Environment.NewLine + 
-                FirstName + " " + LastName + Environment.NewLine + 
-                Address + ", " + PostalCode + ", " + City + ", " + Country + Environment.NewLine + 
-                Telephone + Environment.NewLine +
-                MailAdress + Environment.NewLine;
+            string personalInfo = GetPersonalInfo();
 
             if (Customers.Any()) {
                 personalInfo += "Customer information: " + Environment.NewLine;
