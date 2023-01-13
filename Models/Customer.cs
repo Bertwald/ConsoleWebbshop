@@ -19,6 +19,8 @@ namespace TestWebbshopCodeFirst.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         [StringLength(255)]
+
+        //TA BORT SHIPPINGADDRESSES
         public string? ShippingAdresses { get; set; }
         [StringLength(20)]
         public string? CreditCardNumber { get; set; }

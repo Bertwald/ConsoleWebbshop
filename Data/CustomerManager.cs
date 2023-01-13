@@ -16,6 +16,7 @@ namespace TestWebbshopCodeFirst.Data
             if (Customers == null || !Customers.Any())
             {
                 Customers = new List<Customer>() {
+                    //TA BORT SHIPPINGADDRESSES och ändra till Person.Address
                     new Customer() { UserId = 1, ShippingAdresses  = "Kungsgatan 15, 10432, Stockholm, Sverige", CreditCardNumber = "1234 5678 9874 5612"},
                     new Customer() { UserId = 2, ShippingAdresses  = "Spjutvägen 2, 34568, Kiruna, Sverige", CreditCardNumber = "9874 5678 9874 6541"  },
                     new Customer() { UserId = 3, ShippingAdresses  = "Östanvägen 14, 61170, Jönåker, Sverige", CreditCardNumber = "9635 8521 1257 2148"},

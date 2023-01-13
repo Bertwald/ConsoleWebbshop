@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -87,7 +88,6 @@ namespace TestWebbshopCodeFirst.Pages
             for(int index = 0; index < details.Count; index++) {
                 strings[index] += " Unit Cost | total amount : " + details[index].Quantity + " | Sum: " + loggedInUser.ProductsInShoppingCart()[index].Price * details[index].Quantity;
             }
-            strings.Add(loggedInUser.GetSummary());
             GUI.ShowShoppingCartItems(strings);
         }
 
@@ -99,7 +99,11 @@ namespace TestWebbshopCodeFirst.Pages
         }
         public void PrintFooter()
         {
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(10, 50);
+            loggedInUser.GetSummary();
+            Console.ResetColor();
+            Console.SetCursorPosition(0, 0);
         }
     }
 }
