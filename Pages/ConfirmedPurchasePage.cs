@@ -25,17 +25,19 @@ namespace TestWebbshopCodeFirst.Pages {
         }
         public bool Run() {
             Order newOrder = CreateOrder();
-            
-            //int affectedRows;
-            //using (var db = new OurDbContext()) {
-            //    db.Add<Order>(newOrder);
-            //    affectedRows = db.SaveChanges();
-            //    db.Dispose();
-            //}
-            //if(affectedRows < 1) {
-            //    Console.WriteLine("Fuckup in database");
-            //    GUI.Delay();
-            //}
+
+            int affectedRows;
+            using (var db = new OurDbContext())
+            {
+                db.Add<Order>(newOrder);
+                affectedRows = db.SaveChanges();
+                db.Dispose();
+            }
+            if (affectedRows < 1)
+            {
+                Console.WriteLine("Fuckup in database");
+                GUI.Delay();
+            }
 
             GUI.ClearWindow();
             PrintHeader();
@@ -54,15 +56,25 @@ namespace TestWebbshopCodeFirst.Pages {
             }
 
             Order newOrder = new Order() {
+                //Custumer = loggedInUser.Person.Customers.First(),
+                //OrderDate = DateTime.Now,
+                //PayingOption = loggedInUser.ShoppingCart.PayingOption,
+                //TotalPrice = loggedInUser.GetTotalPrice(),
+                //ShippingOption = loggedInUser.ShoppingCart.ShippingOption,
+                //ShippingAdress = alt ? adress[0] : loggedInUser.Person.Address,
+                //ShippingCity = alt ? adress[1] : loggedInUser.Person.City,
+                //ShippingPostalcode = alt ? int.Parse(adress[2].Trim()) : loggedInUser.Person.PostalCode,
+                //ShippingCountry = alt ? adress[3] : loggedInUser.Person.Country,
+                //Orderstatus = OrderStatus.Recieved
                 Custumer = loggedInUser.Person.Customers.First(),
                 OrderDate = DateTime.Now,
                 PayingOption = loggedInUser.ShoppingCart.PayingOption,
-                TotalPrice = loggedInUser.GetTotalPrice(),
+                TotalPrice = loggedInUser.GetTotalPrice() + ItemSelector<Order>.GetShippingCost(loggedInUser.ShoppingCart.ShippingOption),
                 ShippingOption = loggedInUser.ShoppingCart.ShippingOption,
-                ShippingAdress = alt ? adress[0] : loggedInUser.Person.Address,
-                ShippingCity = alt ? adress[1] : loggedInUser.Person.City,
-                ShippingPostalcode = alt ? int.Parse(adress[2].Trim()) : loggedInUser.Person.PostalCode,
-                ShippingCountry = alt ? adress[3] : loggedInUser.Person.Country,
+                ShippingAdress = loggedInUser.ShoppingCart.ShippingAdress ?? loggedInUser.Person.Address,
+                ShippingCity = loggedInUser.ShoppingCart.ShippingCity ?? loggedInUser.Person.City,
+                ShippingPostalcode = loggedInUser.ShoppingCart.ShippingPostalcode ?? loggedInUser.Person.PostalCode,
+                ShippingCountry = loggedInUser.ShoppingCart.ShippingCountry ?? loggedInUser.Person.Country,
                 Orderstatus = OrderStatus.Recieved
             };
             foreach(var detail in loggedInUser.ShoppingCart.OrderDetails) {
