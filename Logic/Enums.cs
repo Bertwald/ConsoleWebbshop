@@ -13,7 +13,7 @@ namespace TestWebbshopCodeFirst.Logic {
         Completed
     }
     public enum PayingOption {
-        Creditcard,
+        Creditcard = 1,
         Swish,
         Klarna
     }

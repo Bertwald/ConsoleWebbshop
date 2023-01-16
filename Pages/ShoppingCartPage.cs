@@ -15,24 +15,27 @@ namespace TestWebbshopCodeFirst.Pages
         private List<string> menu = new List<string>() { "Change amount", "Remove item", "Back one step", "Back to Customer Page", "Go to shipping option" };
         private UserData loggedInUser;
         private List<OrderDetail> details = new();
-        
+
         public ShoppingCartPage(UserData loggedInUser)
         {
             this.loggedInUser = loggedInUser;
 
-            foreach (var product in loggedInUser.ProductsInShoppingCart()) {
-                var newDetail = new OrderDetail() {
+            foreach (var product in loggedInUser.ProductsInShoppingCart())
+            {
+                var newDetail = new OrderDetail()
+                {
                     Order = loggedInUser.ShoppingCart,
                     Product = product,
                     Quantity = 1,
-                    UnitPrice = product.Price * (1d + product.Vat/100)
+                    UnitPrice = product.Price * (1d + product.Vat / 100)
                 };
                 //product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);
                 //loggedInUser.ShoppingCart.OrderDetails.Add(newDetail);
             }
         }
-        private void CleanOrderDetails() {
+        private void CleanOrderDetails()
+        {
             foreach (var product in loggedInUser.ShoppingCart.Products)
             {
                 product.OrderDetails.Clear();
@@ -45,15 +48,16 @@ namespace TestWebbshopCodeFirst.Pages
             bool exit = false;
             while (!exit)
             {
-                if (!loggedInUser.ShoppingCart.Products.Any()) {
+                if (!loggedInUser.ShoppingCart.Products.Any())
+                {
                     CleanOrderDetails();
                     return false;
                 }
                 Console.Clear();
-                PrintHeader();               
+                PrintHeader();
                 PrintMenu();
                 PrintFooter();
-                
+
                 loggedInUser.ShoppingCart.OrderDetails = details;
 
                 int choice = InputModule.SelectFromList(menu);
@@ -64,14 +68,17 @@ namespace TestWebbshopCodeFirst.Pages
                         Console.WriteLine("Choose index to change quantity");
                         //GUI.PrintMenu("Change quantity for:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}" ).ToList());
                         GUI.PrintMenu("Change quantity for:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
-                        int index = InputModule.SelectFromList(details.Select(x => " ").ToList()) -1;
+                        int index = InputModule.SelectFromList(details.Select(x => " ").ToList()) - 1;
                         OrderDetail chosenDetail = details[index];
                         Console.WriteLine("+/- to change quantity");
                         ConsoleKey key = Console.ReadKey().Key;
-                        if(key == ConsoleKey.Add || key == ConsoleKey.OemPlus) {
-                            chosenDetail.Quantity = Math.Min( details[index].Product.UnitsInStock, chosenDetail.Quantity+1);
-                        } else if (key == ConsoleKey.Subtract || key == ConsoleKey.OemMinus) {
-                            chosenDetail.Quantity = Math.Max(0,chosenDetail.Quantity-1);
+                        if (key == ConsoleKey.Add || key == ConsoleKey.OemPlus)
+                        {
+                            chosenDetail.Quantity = Math.Min(details[index].Product.UnitsInStock, chosenDetail.Quantity + 1);
+                        }
+                        else if (key == ConsoleKey.Subtract || key == ConsoleKey.OemMinus)
+                        {
+                            chosenDetail.Quantity = Math.Max(0, chosenDetail.Quantity - 1);
                         }
                         break;
                     case 2:// delete item
@@ -79,8 +86,8 @@ namespace TestWebbshopCodeFirst.Pages
                         //GUI.PrintMenu("Delete at:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}").ToList());
                         GUI.PrintMenu("Delete at:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
                         int delete = InputModule.SelectFromList(details.Select(x => " ").ToList()) - 1;
-                        details.RemoveAt(delete);
-                        //loggedInUser.ShoppingCart.Products.RemoveAt(delete);
+                        details.RemoveAt(delete);                     
+                        loggedInUser.ShoppingCart.Products.RemoveAt(delete);
                         break;
                     case 3: // back one step
                         CleanOrderDetails();
@@ -89,19 +96,24 @@ namespace TestWebbshopCodeFirst.Pages
                         CleanOrderDetails();
                         return true;
                     case 5: // continue to checkout
+                        if (loggedInUser.ShoppingCart.OrderDetails.Select(x => x.Quantity).Max() < 1)
+                        {
+                             break;
+                        }
                         exit = new ShippingPage(loggedInUser).Run();
                         break;
                 }
 
             }
-                return false;
+            return false;
         }
 
         public void PrintHeader()
         {
             List<string> strings = new();
             strings.AddRange(loggedInUser.ProductsAsStrings());
-            for(int index = 0; index < details.Count; index++) {
+            for (int index = 0; index < details.Count; index++)
+            {
                 strings[index] += " § | total amount : " + details[index].Quantity /*+ " | Sum: " + loggedInUser.ProductsInShoppingCart()[index].Price * details[index].Quantity*/;
             }
             GUI.ShowShoppingCartItems(strings);
@@ -116,10 +128,10 @@ namespace TestWebbshopCodeFirst.Pages
         public void PrintFooter()
         {
             Console.WriteLine("----------------------------");
-            Console.ForegroundColor = ConsoleColor.Yellow;          
-            Console.WriteLine(loggedInUser.GetSummary(true)); 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(loggedInUser.GetSummary(true));
             Console.ResetColor();
-            
+
         }
     }
 }

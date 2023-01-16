@@ -18,6 +18,10 @@ namespace TestWebbshopCodeFirst.Pages
             bool exit = false;
             while (!exit)
             {
+                if (!loggedInUser.ShoppingCart.OrderDetails.Any() || !loggedInUser.ShoppingCart.Products.Any())
+                {                   
+                    return false;
+                }
                 Console.Clear();
                 PrintHeader();
                 PrintMenu();
@@ -35,9 +39,10 @@ namespace TestWebbshopCodeFirst.Pages
                         SetAlternativeShippingAddress();
                         break;
                     case 3: // continue to checkout
+                        exit = new CheckOutPage(loggedInUser).Run();
                         break;
                     case 4: // back to shoppingcart
-                        return true;
+                        return false;
                 }
 
             }
@@ -51,7 +56,7 @@ namespace TestWebbshopCodeFirst.Pages
             strings.AddRange(loggedInUser.ProductsAsStrings());
             for (int index = 0; index < items.Count; index++)
             {
-                strings[index] += " § | total amount : " + items[index].OrderDetails.First().Quantity;
+                strings[index] += " § | total amount : " + loggedInUser.ShoppingCart.OrderDetails.First().Quantity;
             }
             //strings.Add(loggedInUser.GetSummary(true, true));
             GUI.ShowShoppingCartItems(strings);
