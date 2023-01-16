@@ -63,13 +63,14 @@ namespace TestWebbshopCodeFirst.UserInterface
         {
             Console.WriteLine();
             Console.WriteLine(text);
-            foreach (var p in products)
+            foreach (var p in products.Take(3))
             {
-                //TODO: Fix pretty print
-                //p.Print();
+                p.Print();
+                Console.SetCursorPosition(Console.GetCursorPosition().Left + 20, Console.GetCursorPosition().Top - 1);
 
-                Console.Write(p.ToString() + "\t\t"); 
+                //Console.Write(p.ToString() + "\t\t"); 
             }
+            Console.SetCursorPosition(0, Console.GetCursorPosition().Top +2);
         }
 
         internal static void SetWindowTitle<T>(T instance, Privilege privilege = Privilege.Visitor) {

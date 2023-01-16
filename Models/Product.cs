@@ -35,7 +35,14 @@ namespace TestWebbshopCodeFirst.Models
 
         public void Print()
         {
-           
+            Random rand = new Random();
+            Console.ForegroundColor = ConsoleColor.Red;
+            string[] exclamations = new string[] { "Wow!!!!!", "Super!!!", "Megasale!!", "Chosen!" };
+            (int left, int top) = Console.GetCursorPosition();
+            Console.Write(exclamations[rand.Next(0, exclamations.Length)]);
+            Console.SetCursorPosition(left, top+1);
+            Console.Write(Name + " " + Price * (1d + Vat / 100) + "§");
+            Console.ResetColor();
         }
 
         public override string ToString()

@@ -77,10 +77,10 @@ namespace TestWebbshopCodeFirst.Pages
                     case 2:// delete item
                         Console.WriteLine("Choose to delete");
                         //GUI.PrintMenu("Delete at:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}").ToList());
-                        GUI.PrintMenu("Delet at:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
+                        GUI.PrintMenu("Delete at:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
                         int delete = InputModule.SelectFromList(details.Select(x => " ").ToList()) - 1;
                         details.RemoveAt(delete);
-                        loggedInUser.ShoppingCart.Products.RemoveAt(delete);
+                        //loggedInUser.ShoppingCart.Products.RemoveAt(delete);
                         break;
                     case 3: // back one step
                         CleanOrderDetails();

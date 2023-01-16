@@ -44,7 +44,7 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Welcome Honored Guest" + Environment.NewLine +
                 "Feel free to browse out exquisite inventory!" + Environment.NewLine + "When you decide to buy one or many of our excellent " +
                 "products" + Environment.NewLine + "You will need a registered account to purchase said items from our collection of fine merchandise" :
-                "Welcome back dear " + LoggedInUser.Privilege + " " + LoggedInUser.Username + Environment.NewLine +
+                "Welcome back dear " + LoggedInUser.Privilege + " " + LoggedInUser.Person.FirstName + " " + LoggedInUser.Person.LastName + Environment.NewLine +
                 "We eagerly await your next order";
         }
 
