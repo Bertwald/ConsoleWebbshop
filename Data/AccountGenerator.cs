@@ -24,7 +24,7 @@ namespace TestWebbshopCodeFirst.Data {
                                                                             user.LastName[x / 2] :
                                                                             (char)('f' + x))),
                     Privilege = privilege,
-                    User = user
+                    Person = user
                 };
                 user.Accounts.Add(account);
                 accounts.Add(account);

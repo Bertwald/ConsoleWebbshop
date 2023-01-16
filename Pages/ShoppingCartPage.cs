@@ -25,7 +25,7 @@ namespace TestWebbshopCodeFirst.Pages
                     Order = loggedInUser.ShoppingCart,
                     Product = product,
                     Quantity = 1,
-                    UnitPrice = product.Price * 1 + (product.Vat)
+                    UnitPrice = product.Price * (1d + product.Vat/100)
                 };
                 product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);
@@ -106,7 +106,7 @@ namespace TestWebbshopCodeFirst.Pages
         {
             Console.WriteLine("----------------------------");
             Console.ForegroundColor = ConsoleColor.Yellow;          
-            Console.WriteLine(loggedInUser.GetSummary()); 
+            Console.WriteLine(loggedInUser.GetSummary(true)); 
             Console.ResetColor();
             
         }

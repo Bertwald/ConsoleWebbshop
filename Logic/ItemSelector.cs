@@ -65,5 +65,9 @@ namespace TestWebbshopCodeFirst.Logic
             }
             return items;
         }
+
+        internal static double GetShippingCost(ShippingOption option) {
+            return (double)(option-1) * 50d;
+        }
     }
 }

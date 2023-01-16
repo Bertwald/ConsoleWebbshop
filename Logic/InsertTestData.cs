@@ -76,7 +76,7 @@ namespace TestWebbshopCodeFirst.Logic {
                     Username = "Cust",
                     Password = "Cust",
                     Privilege = Privilege.Customer,
-                    User = db.Persons
+                    Person = db.Persons
                     .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
                     .First()
                 };
@@ -84,7 +84,7 @@ namespace TestWebbshopCodeFirst.Logic {
                     Username = "Admin",
                     Password = "Admin",
                     Privilege = Privilege.Admin,
-                    User = db.Persons
+                    Person = db.Persons
                     .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
                     .First()
                 };

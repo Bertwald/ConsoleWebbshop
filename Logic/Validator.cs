@@ -16,8 +16,8 @@ namespace TestWebbshopCodeFirst.Logic
             using (var db = new OurDbContext())
             {
                 if (db.Accounts.Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).Any()) {
-                    Account account = db.Accounts.Include(x => x.User).ThenInclude(x => x.Customers).Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).First();
-                    Person person = account.User;
+                    Account account = db.Accounts.Include(x => x.Person).ThenInclude(x => x.Customers).Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).First();
+                    Person person = account.Person;
                     Customer? customer = person.Customers.FirstOrDefault();  //db.Customers.Where(x => x.Person.Equals(person)).FirstOrDefault();
                     if(customer == null) {
                         customer = new Customer();

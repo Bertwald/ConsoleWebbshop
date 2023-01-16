@@ -32,18 +32,20 @@ namespace TestWebbshopCodeFirst.Logic {
             }
             return listOfStrings;
         }
-        internal string GetSummary() {
+        internal string GetSummary(bool vatIncluded = false, bool shippingIncluded = false) {
             if (ShoppingCart.OrderDetails.Any()) {
                 double totalPrice = 0;
                 for (int index = 0; index < ProductsInShoppingCart().Count; index++) {
                     if (ShoppingCart.OrderDetails.Any()) {
-                        totalPrice += ProductsInShoppingCart()[index].Price * ShoppingCart.OrderDetails.ToList()[index].Quantity;
+                        totalPrice += ProductsInShoppingCart()[index].Price * (vatIncluded ? (1d + ProductsInShoppingCart()[index].Vat / 100) : 1d) * ShoppingCart.OrderDetails.ToList()[index].Quantity;
                     } else {
-                        totalPrice += ProductsInShoppingCart()[index].Price;
+                        totalPrice += ProductsInShoppingCart()[index].Price * (vatIncluded ? (1d + ProductsInShoppingCart()[index].Vat / 100) : 1d);
                     }
                 }
                 int nrOfItems = ProductsInShoppingCart().Count;
-                return $"You have {nrOfItems} Items in your cart for a total price of {totalPrice}.";
+                return $"You have {nrOfItems} Items in your cart for a total price of " +
+                    $"{(shippingIncluded ? totalPrice + ItemSelector<Product>.GetShippingCost(ShoppingCart.ShippingOption) : totalPrice)} " +
+                    $"{(vatIncluded ? (shippingIncluded ? " Inc VAT and Shipping." : " Inc VAT." ) : "." )}";
             } else {
                 int nrOfItems = ProductsInShoppingCart().Count;
                 return $"You have {nrOfItems} Items in your cart";

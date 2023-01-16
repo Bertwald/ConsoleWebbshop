@@ -53,7 +53,7 @@ namespace TestWebbshopCodeFirst.Pages
             {
                 strings[index] += " Unit Cost | total amount : " + items[index].OrderDetails.First().Quantity;
             }
-            strings.Add(loggedInUser.GetSummary());
+            strings.Add(loggedInUser.GetSummary(true, true));
             GUI.ShowShoppingCartItems(strings);
 
             Console.WriteLine();
@@ -94,6 +94,9 @@ namespace TestWebbshopCodeFirst.Pages
         private void SetShippingOption()
         {
             var names = Enum.GetNames(typeof(ShippingOption)).ToList();
+            for (ShippingOption option = ShippingOption.Tortoise; option <= ShippingOption.African_Swallow; option++) {
+                names[(int)option-1] += (" - " + ItemSelector<Person>.GetShippingCost(option) + "§");
+            }
             GUI.PrintMenu("Shipping options", names);
             int input = InputModule.GetIntInRange(0, names.Count);
             loggedInUser.ShoppingCart.ShippingOption = (ShippingOption)input;

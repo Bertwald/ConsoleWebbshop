@@ -82,7 +82,6 @@ namespace TestWebbshopCodeFirst.UserInterface
             {
                 Console.WriteLine(product);
             }
-            
             //GUI.Delay();
         }
     }

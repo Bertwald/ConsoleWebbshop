@@ -21,6 +21,6 @@ namespace TestWebbshopCodeFirst.Models
         public string Password { get; set; } = null!;
         public Privilege Privilege { get; set; }
 
-        public virtual Person User { get; set; } = null!;
+        public virtual Person Person { get; set; } = null!;
     }
 }

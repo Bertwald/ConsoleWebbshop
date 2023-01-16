@@ -64,7 +64,7 @@ namespace TestWebbshopCodeFirst.Pages
                     Username = userName,
                     Password = password,
                     Privilege = Logic.Privilege.Customer,
-                    User = newPerson
+                    Person = newPerson
                 };
                 db.Add(newPerson);
                 db.Add(newCustomer);
