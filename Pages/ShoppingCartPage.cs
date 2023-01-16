@@ -27,9 +27,9 @@ namespace TestWebbshopCodeFirst.Pages
                     Quantity = 1,
                     UnitPrice = product.Price * (1d + product.Vat/100)
                 };
-                product.OrderDetails.Add(newDetail);
+                //product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);
-                loggedInUser.ShoppingCart.OrderDetails.Add(newDetail);
+                //loggedInUser.ShoppingCart.OrderDetails.Add(newDetail);
             }
         }
         private void CleanOrderDetails() {
@@ -45,10 +45,16 @@ namespace TestWebbshopCodeFirst.Pages
             bool exit = false;
             while (!exit)
             {
+                if (!loggedInUser.ShoppingCart.Products.Any()) {
+                    CleanOrderDetails();
+                    return false;
+                }
                 Console.Clear();
                 PrintHeader();               
                 PrintMenu();
                 PrintFooter();
+                
+                loggedInUser.ShoppingCart.OrderDetails = details;
 
                 int choice = InputModule.SelectFromList(menu);
 
@@ -56,18 +62,23 @@ namespace TestWebbshopCodeFirst.Pages
                 {
                     case 1: //change amount
                         Console.WriteLine("Choose index to change quantity");
-                        int index = InputModule.SelectFromList(menu) -1;
+                        //GUI.PrintMenu("Change quantity for:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}" ).ToList());
+                        GUI.PrintMenu("Change quantity for:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
+                        int index = InputModule.SelectFromList(details.Select(x => " ").ToList()) -1;
                         OrderDetail chosenDetail = details[index];
                         Console.WriteLine("+/- to change quantity");
                         ConsoleKey key = Console.ReadKey().Key;
                         if(key == ConsoleKey.Add || key == ConsoleKey.OemPlus) {
-                            chosenDetail.Quantity = Math.Min( loggedInUser.ShoppingCart.Products[index].UnitsInStock, chosenDetail.Quantity+1);
+                            chosenDetail.Quantity = Math.Min( details[index].Product.UnitsInStock, chosenDetail.Quantity+1);
                         } else if (key == ConsoleKey.Subtract || key == ConsoleKey.OemMinus) {
                             chosenDetail.Quantity = Math.Max(0,chosenDetail.Quantity-1);
                         }
                         break;
                     case 2:// delete item
-                        int delete = InputModule.SelectFromList(menu) - 1;
+                        Console.WriteLine("Choose to delete");
+                        //GUI.PrintMenu("Delete at:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}").ToList());
+                        GUI.PrintMenu("Delet at:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
+                        int delete = InputModule.SelectFromList(details.Select(x => " ").ToList()) - 1;
                         details.RemoveAt(delete);
                         loggedInUser.ShoppingCart.Products.RemoveAt(delete);
                         break;
