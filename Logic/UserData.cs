@@ -34,7 +34,7 @@ namespace TestWebbshopCodeFirst.Logic {
         }
         internal string GetSummary() {
             if (ShoppingCart.OrderDetails.Any()) {
-                decimal totalPrice = 0;
+                double totalPrice = 0;
                 for (int index = 0; index < ProductsInShoppingCart().Count; index++) {
                     if (ShoppingCart.OrderDetails.Any()) {
                         totalPrice += ProductsInShoppingCart()[index].Price * ShoppingCart.OrderDetails.ToList()[index].Quantity;

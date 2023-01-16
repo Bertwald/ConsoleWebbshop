@@ -67,6 +67,14 @@ namespace TestWebbshopCodeFirst.Pages
                 Console.WriteLine("Alternative delivery address: ");
                 Console.WriteLine(loggedInUser.ShoppingCart.GetAlternativeAddress());
             }
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------------"); ;
+            if (loggedInUser.ShoppingCart.ShippingOption == 0)
+            {
+                loggedInUser.ShoppingCart.ShippingOption = (ShippingOption)1;
+            }
+            Console.WriteLine("Your shipping option:");
+            Console.WriteLine(loggedInUser.ShoppingCart.ShippingOption);
         }
 
         public void PrintMenu()
@@ -79,7 +87,7 @@ namespace TestWebbshopCodeFirst.Pages
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             //Console.SetCursorPosition(0, 15);
-            Console.WriteLine(loggedInUser.GetSummary()); 
+            Console.WriteLine(loggedInUser.GetSummary());
             Console.ResetColor();
             //Console.SetCursorPosition(0, 0);
         }
@@ -101,7 +109,7 @@ namespace TestWebbshopCodeFirst.Pages
             Console.Write("Please enter alternative city: ");
             string newCity = InputModule.GetString();
             loggedInUser.ShoppingCart.ShippingCity = newCity;
-            Console.WriteLine("Please enter alternative country: ");
+            Console.Write("Please enter alternative country: ");
             string newCountry = InputModule.GetString();
             loggedInUser.ShoppingCart.ShippingCountry = newCountry;
 

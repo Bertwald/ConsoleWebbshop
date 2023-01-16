@@ -12,7 +12,7 @@ namespace TestWebbshopCodeFirst.Pages
 {
     internal class ShoppingCartPage : IPage
     {
-        private List<string> menu = new List<string>() { "Change amount", "Remove item", "Back one step", "Back to Customer Page", "Go to checkout" };
+        private List<string> menu = new List<string>() { "Change amount", "Remove item", "Back one step", "Back to Customer Page", "Go to shipping option" };
         private UserData loggedInUser;
         private List<OrderDetail> details = new();
         
@@ -25,7 +25,7 @@ namespace TestWebbshopCodeFirst.Pages
                     Order = loggedInUser.ShoppingCart,
                     Product = product,
                     Quantity = 1,
-                    UnitPrice = product.Price
+                    UnitPrice = product.Price * 1 + (product.Vat)
                 };
                 product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);

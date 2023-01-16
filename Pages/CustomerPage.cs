@@ -109,7 +109,6 @@ namespace TestWebbshopCodeFirst.Pages {
             }
             string cartInfo = LoggedInUser.GetSummary();
             Console.WriteLine(cartInfo);
-            GUI.Delay();
         }
 
         private void DisplayAccountInformation() {

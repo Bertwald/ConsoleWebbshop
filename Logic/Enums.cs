@@ -18,7 +18,7 @@ namespace TestWebbshopCodeFirst.Logic {
         Klarna
     }
     public enum ShippingOption {
-        Tortoise,
+        Tortoise = 1,
         Hare,
         African_Swallow
     }

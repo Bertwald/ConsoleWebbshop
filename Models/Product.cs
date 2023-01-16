@@ -22,7 +22,7 @@ namespace TestWebbshopCodeFirst.Models
         public int? SupplierId { get; set; }
         [StringLength(255)]
         public string Name { get; set; } = null!;
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public double Vat { get; set; }
         public int UnitsInStock { get; set; }
         [StringLength(255)]

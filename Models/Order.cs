@@ -26,7 +26,7 @@ namespace TestWebbshopCodeFirst.Models
         public int CustumerId { get; set; }
         public DateTime? OrderDate { get; set; }
         public PayingOption PayingOption { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public double? TotalPrice { get; set; }
         public ShippingOption ShippingOption { get; set; }
         [StringLength(255)]
         public string? ShippingAdress { get; set; }
