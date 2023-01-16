@@ -29,7 +29,8 @@ namespace TestWebbshopCodeFirst.Pages {
             int affectedRows;
             using (var db = new OurDbContext())
             {
-                db.Add<Order>(newOrder);
+                db.Attach(newOrder);
+                db.Add(newOrder);            
                 affectedRows = db.SaveChanges();
                 db.Dispose();
             }
