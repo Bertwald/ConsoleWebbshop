@@ -48,11 +48,23 @@ namespace TestWebbshopCodeFirst.Logic {
                 //int nrOfItems = ProductsInShoppingCart().Count;
                 return $"You have {nrOfItems} Items in your cart for a total price of " +
                     $"{(shippingIncluded ? totalPrice + ItemSelector<Product>.GetShippingCost(ShoppingCart.ShippingOption) : totalPrice)}" +
-                    $"{(vatIncluded ? (shippingIncluded ? " § Inc VAT and Shipping." : " § Inc VAT." ) : " §." )}";
+                    $"{(vatIncluded ? (shippingIncluded ? " § Inc VAT and Shipping." : " § Inc VAT.") : " §.")}";
             } else {
                 int nrOfItems = ProductsInShoppingCart().Count;
                 return $"You have {nrOfItems} Items in your cart";
             }
+        }
+
+        internal double GetTotalPrice() {
+            double totalPrice = 0;
+            if (ShoppingCart.OrderDetails.Any()) {
+                for (int index = 0; index < ProductsInShoppingCart().Count; index++) {
+                    totalPrice += ProductsInShoppingCart()[index].Price *
+                                 (1d + ProductsInShoppingCart()[index].Vat / 100) *
+                                  ShoppingCart.OrderDetails.ToList()[index].Quantity;
+                }
+            }
+            return totalPrice;
         }
 
 

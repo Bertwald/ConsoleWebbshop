@@ -91,8 +91,7 @@ namespace TestWebbshopCodeFirst.Pages
                         exit = new ConfirmedPurchasePage(loggedInUser).Run();
                         break;
                     case 3: //back one step
-
-                        break;
+                        return false;
                     case 4: //back to start page
                         return true;
                 }
