@@ -20,10 +20,17 @@ namespace TestWebbshopCodeFirst.Pages {
             Console.WriteLine("Thank you for your purchase, we congratulate you for your excellent choice!");
         }
 
-        public void PrintMenu() {
-            //throw new NotImplementedException();
-        }
+        public void PrintMenu() {}
         public bool Run() {
+            if (!loggedInUser.Person.Customers.Any()) {
+                GUI.ClearWindow();
+                Console.SetCursorPosition(40, 5);
+                Console.WriteLine("F@ckµp with account, contact Admin!");
+                Console.SetCursorPosition(40, 6);
+                GUI.Delay();
+                return true;
+            }
+
             Order newOrder = CreateOrder();
 
             int affectedRows;
@@ -49,24 +56,7 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
         private Order CreateOrder() {
-            bool alt = false;
-            string[] adress = new string[5];
-            alt = loggedInUser.ShoppingCart.GetAlternativeAddress().Any();
-            if (alt) {
-                adress = loggedInUser.ShoppingCart.GetAlternativeAddress().Split(',');
-            }
-
             Order newOrder = new Order() {
-                //Custumer = loggedInUser.Person.Customers.First(),
-                //OrderDate = DateTime.Now,
-                //PayingOption = loggedInUser.ShoppingCart.PayingOption,
-                //TotalPrice = loggedInUser.GetTotalPrice(),
-                //ShippingOption = loggedInUser.ShoppingCart.ShippingOption,
-                //ShippingAdress = alt ? adress[0] : loggedInUser.Person.Address,
-                //ShippingCity = alt ? adress[1] : loggedInUser.Person.City,
-                //ShippingPostalcode = alt ? int.Parse(adress[2].Trim()) : loggedInUser.Person.PostalCode,
-                //ShippingCountry = alt ? adress[3] : loggedInUser.Person.Country,
-                //Orderstatus = OrderStatus.Recieved
                 Custumer = loggedInUser.Person.Customers.First(),
                 OrderDate = DateTime.Now,
                 PayingOption = loggedInUser.ShoppingCart.PayingOption,

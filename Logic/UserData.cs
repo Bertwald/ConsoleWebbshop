@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace TestWebbshopCodeFirst.Logic {
                         nrOfItems++;
                     }
                 }
-                //int nrOfItems = ProductsInShoppingCart().Count;
+                totalPrice = Math.Round(totalPrice, 2);
                 return $"You have {nrOfItems} Items in your cart for a total price of " +
                     $"{(shippingIncluded ? totalPrice + ItemSelector<Product>.GetShippingCost(ShoppingCart.ShippingOption) : totalPrice)}" +
                     $"{(vatIncluded ? (shippingIncluded ? " § Inc VAT and Shipping." : " § Inc VAT.") : " §.")}";

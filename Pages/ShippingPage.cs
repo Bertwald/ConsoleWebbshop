@@ -46,7 +46,7 @@ namespace TestWebbshopCodeFirst.Pages
                 }
 
             }
-            return false;
+            return true;
         }
 
         public void PrintHeader()
@@ -103,7 +103,7 @@ namespace TestWebbshopCodeFirst.Pages
                 names[(int)option-1] += (" - " + ItemSelector<Person>.GetShippingCost(option) + "§");
             }
             GUI.PrintMenu("Shipping options", names);
-            int input = InputModule.GetIntInRange(0, names.Count);
+            int input = InputModule.GetIntInRange(1, names.Count+1);
             loggedInUser.ShoppingCart.ShippingOption = (ShippingOption)input;
         }
         private void SetAlternativeShippingAddress()

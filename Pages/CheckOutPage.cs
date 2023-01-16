@@ -25,7 +25,6 @@ namespace TestWebbshopCodeFirst.Pages
         {
             this.loggedInUser = user;
         }
-        private string headerText;
         public void PrintHeader()
         {
             var items = loggedInUser.ProductsInShoppingCart();
@@ -35,7 +34,6 @@ namespace TestWebbshopCodeFirst.Pages
             {
                 strings[index] += " § | total amount : " + loggedInUser.ShoppingCart.OrderDetails.First().Quantity;
             }
-            //strings.Add(loggedInUser.GetSummary(true, true));
             GUI.ShowShoppingCartItems(strings);
 
             Console.WriteLine();
@@ -50,7 +48,7 @@ namespace TestWebbshopCodeFirst.Pages
                 Console.WriteLine(loggedInUser.ShoppingCart.GetAlternativeAddress());
             }
             Console.WriteLine();
-            Console.WriteLine("-----------------------------------------------------------------"); ;
+            Console.WriteLine("-----------------------------------------------------------------");
             if (loggedInUser.ShoppingCart.ShippingOption == 0)
             {
                 loggedInUser.ShoppingCart.ShippingOption = (ShippingOption)1;
@@ -61,6 +59,8 @@ namespace TestWebbshopCodeFirst.Pages
             {
                 loggedInUser.ShoppingCart.PayingOption = (PayingOption)1;
             }
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("Your payment option:");
             Console.WriteLine(loggedInUser.ShoppingCart.PayingOption);
 
@@ -69,7 +69,7 @@ namespace TestWebbshopCodeFirst.Pages
         {
             string title = "Payment menu";
 
-            UserInterface.GUI.PrintMenu(title, menu);
+            GUI.PrintMenu(title, menu);
         }
         public bool Run()
         {
@@ -103,16 +103,14 @@ namespace TestWebbshopCodeFirst.Pages
         public void PrintFooter()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            //Console.SetCursorPosition(0, 15);
             Console.WriteLine(loggedInUser.GetSummary(true, true));
             Console.ResetColor();
-            //Console.SetCursorPosition(0, 0);
         }
         private void SetPayingOption()
         {
             var names = Enum.GetNames(typeof(PayingOption)).ToList();           
             GUI.PrintMenu("Paying options", names);
-            int input = InputModule.GetIntInRange(0, names.Count);
+            int input = InputModule.GetIntInRange(1, names.Count+1);
             loggedInUser.ShoppingCart.PayingOption = (PayingOption)input;
         }
     }

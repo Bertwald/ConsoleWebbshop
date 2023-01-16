@@ -11,6 +11,7 @@ namespace TestWebbshopCodeFirst.Models
 {
     public class Product : IPrintable
     {
+        private static Random rand = new();
         public Product()
         {
             OrderDetails = new HashSet<OrderDetail>();
@@ -35,19 +36,19 @@ namespace TestWebbshopCodeFirst.Models
 
         public void Print()
         {
-            Random rand = new Random();
-            Console.ForegroundColor = ConsoleColor.Red;
-            string[] exclamations = new string[] { "Wow!!!!!", "Super!!!", "Megasale!!", "Chosen!" };
+            string[] exclamations = new string[] { "Wow!!!!!", "Super!!!", "Megasale!!", "Chosen!", "Unbelievable!", "Impressive", "Ultralow", "#!@F&>&" };
+            ConsoleColor[] colors = new ConsoleColor[] { ConsoleColor.Red, ConsoleColor.Magenta, ConsoleColor.Blue };
+            Console.ForegroundColor = colors[rand.Next(0, colors.Length)];
             (int left, int top) = Console.GetCursorPosition();
             Console.Write(exclamations[rand.Next(0, exclamations.Length)]);
             Console.SetCursorPosition(left, top+1);
-            Console.Write(Name + " " + Price * (1d + Vat / 100) + "§");
+            Console.Write(Name + " " + Math.Round(Price * (1d + Vat / 100), 2));
             Console.ResetColor();
         }
 
         public override string ToString()
         {
-            return Name + "  " + Description + "  " + Price*(1d + Vat/100);
+            return Name + "  " + Description + "  " + Math.Round(Price * (1d + Vat / 100), 2);
         }
     }
 }

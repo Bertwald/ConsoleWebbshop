@@ -67,8 +67,6 @@ namespace TestWebbshopCodeFirst.UserInterface
             {
                 p.Print();
                 Console.SetCursorPosition(Console.GetCursorPosition().Left + 20, Console.GetCursorPosition().Top - 1);
-
-                //Console.Write(p.ToString() + "\t\t"); 
             }
             Console.SetCursorPosition(0, Console.GetCursorPosition().Top +2);
         }

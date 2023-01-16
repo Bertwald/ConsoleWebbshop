@@ -91,11 +91,6 @@ namespace TestWebbshopCodeFirst.Pages {
                         break;
                     case 5: //shoppingcart
                         exit = new ShoppingCartPage(LoggedInUser).Run();
-
-                        //List<string> strings = new();
-                        //strings.AddRange(LoggedInUser.ProductsAsStrings());
-                        //strings.Add(LoggedInUser.GetSummary());
-                        //GUI.ShowShoppingCartItems(strings);
                         break;
                 }
             }

@@ -105,7 +105,8 @@ namespace TestWebbshopCodeFirst.Pages
                 }
 
             }
-            return false;
+            CleanOrderDetails();
+            return true;
         }
 
         public void PrintHeader()
