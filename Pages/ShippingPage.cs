@@ -51,9 +51,9 @@ namespace TestWebbshopCodeFirst.Pages
             strings.AddRange(loggedInUser.ProductsAsStrings());
             for (int index = 0; index < items.Count; index++)
             {
-                strings[index] += " Unit Cost | total amount : " + items[index].OrderDetails.First().Quantity;
+                strings[index] += " § | total amount : " + items[index].OrderDetails.First().Quantity;
             }
-            strings.Add(loggedInUser.GetSummary(true, true));
+            //strings.Add(loggedInUser.GetSummary(true, true));
             GUI.ShowShoppingCartItems(strings);
 
             Console.WriteLine();
@@ -74,7 +74,7 @@ namespace TestWebbshopCodeFirst.Pages
                 loggedInUser.ShoppingCart.ShippingOption = (ShippingOption)1;
             }
             Console.WriteLine("Your shipping option:");
-            Console.WriteLine(loggedInUser.ShoppingCart.ShippingOption);
+            Console.WriteLine(loggedInUser.ShoppingCart.ShippingOption + " - " + ItemSelector<Person>.GetShippingCost(loggedInUser.ShoppingCart.ShippingOption) + " §");
         }
 
         public void PrintMenu()
@@ -87,7 +87,7 @@ namespace TestWebbshopCodeFirst.Pages
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             //Console.SetCursorPosition(0, 15);
-            Console.WriteLine(loggedInUser.GetSummary());
+            Console.WriteLine(loggedInUser.GetSummary(true, true));
             Console.ResetColor();
             //Console.SetCursorPosition(0, 0);
         }

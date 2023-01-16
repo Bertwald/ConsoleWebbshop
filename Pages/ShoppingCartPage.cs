@@ -91,7 +91,7 @@ namespace TestWebbshopCodeFirst.Pages
             List<string> strings = new();
             strings.AddRange(loggedInUser.ProductsAsStrings());
             for(int index = 0; index < details.Count; index++) {
-                strings[index] += " Unit Cost | total amount : " + details[index].Quantity + " | Sum: " + loggedInUser.ProductsInShoppingCart()[index].Price * details[index].Quantity;
+                strings[index] += " § | total amount : " + details[index].Quantity /*+ " | Sum: " + loggedInUser.ProductsInShoppingCart()[index].Price * details[index].Quantity*/;
             }
             GUI.ShowShoppingCartItems(strings);
         }
