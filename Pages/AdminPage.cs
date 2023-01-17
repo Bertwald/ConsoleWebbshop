@@ -249,7 +249,7 @@ namespace TestWebbshopCodeFirst.Pages {
         public static bool AlterItem(int id, string tableName, string column, string newValue) {
             int affectedRow = 0;
 
-            string sql = $"UPDATE {tableName} SET {column} = {newValue} WHERE Id = {id}";
+            string sql = $"UPDATE [{tableName}] SET [{column}] = '{newValue}' WHERE Id = {id}";
 
             using (var connection = new SqlConnection(connString)) {
                 affectedRow = connection.Execute(sql);
