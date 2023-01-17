@@ -60,6 +60,13 @@ namespace TestWebbshopCodeFirst.UserInterface {
             } while (number < lower || number >= upper);
             return number;
         }
+        internal static int GetBigIntInRange(int lower, int upper) {
+            int number;
+            do {
+                number = GetInt();
+            } while (number < lower || number >= upper);
+            return number;
+        }
         internal static int GetShortInt() {
             return Console.ReadKey(true).KeyChar - 48;
         }

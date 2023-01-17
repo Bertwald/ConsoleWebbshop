@@ -31,7 +31,7 @@ namespace TestWebbshopCodeFirst.Logic
             }
             else
             {
-                itemIndex = InputModule.GetIntInRange(1, items.Count + 1);
+                itemIndex = InputModule.GetBigIntInRange(1, items.Count + 1);
             }
             return items[itemIndex - 1];
         }
