@@ -85,7 +85,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         Search();
                         break;
                     case 3: //login/logout
-                        return false;
+                        return true;
                     case 4: //account info
                         DisplayAccountInformation();
                         break;
