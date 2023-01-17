@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,16 @@ using System.Threading.Tasks;
 using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
+using Dapper;
+using System.Net.Http.Headers;
 
-namespace TestWebbshopCodeFirst.Pages {
-    internal class AdminPage {
+namespace TestWebbshopCodeFirst.Pages
+{
+    internal class AdminPage
+    {
+
+        static readonly string connString = "data source=.\\SQLEXPRESS; initial catalog=TestWebbshopCodeFirst; persist security info=True; Integrated Security=True";
+
         private List<string> menu = new()
             {
                 "Manage products",
@@ -18,21 +26,26 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Statistics",
                 "Quit"
             };
-        public AdminPage(UserData user) {
+        public AdminPage(UserData user)
+        {
             LoggedInUser = user;
             //headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }
         public UserData LoggedInUser { get; set; }
-        public void PrintMenu() {
+        public void PrintMenu()
+        {
             string title = "Admin deluxe menu";
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public bool Run() {
-            while (true) {
+        public bool Run()
+        {
+            while (true)
+            {
                 GUI.ClearWindow();
                 PrintMenu();
                 int choice = InputModule.SelectFromList(menu);
-                switch (choice) {
+                switch (choice)
+                {
                     case 1: // "Manage products"
                         ManageProducts();
                         break;
@@ -55,7 +68,8 @@ namespace TestWebbshopCodeFirst.Pages {
             }
         }
 
-        private void ShowStatistics() {
+        private void ShowStatistics()
+        {
             List<string> optionmenu = new(){
                 "Low in stock",
                 "Surplus stock",
@@ -64,7 +78,8 @@ namespace TestWebbshopCodeFirst.Pages {
             };
         }
 
-        private void ManageUsers() {
+        private void ManageUsers()
+        {
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
@@ -73,13 +88,15 @@ namespace TestWebbshopCodeFirst.Pages {
             };
         }
 
-        private void AddToStartPage() {
+        private void AddToStartPage()
+        {
             //Select from category
             //select product
             //set new category for product
         }
 
-        private void ManageCategories() {
+        private void ManageCategories()
+        {
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
@@ -88,14 +105,63 @@ namespace TestWebbshopCodeFirst.Pages {
             };
         }
 
-        private void ManageProducts() {
+        private void ManageProducts()
+        {
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
                 "Alter",
                 "Return"
             };
+            while (true)
+            {
+
+                GUI.ClearWindow();
+                List<Product> products;
+                using (var db = new OurDbContext())
+                {
+                    products = db.Products.ToList();
+                }
+                var chosenProduct = ItemSelector<Product>.GetItemFromList(products);
+                GUI.ClearWindow();
+                GUI.PrintSelectedProduct(chosenProduct);
+                GUI.PrintMenu("Product menu", optionmenu);
+                int choice = InputModule.SelectFromList(optionmenu);
+                switch (choice)
+                {
+                    case 1: // Add
+
+                        break;
+                    case 2: //Delete
+                        break;
+                    case 3: //Alter
+                        Console.Write("Choose a column to alter: ");
+                        string column = InputModule.GetString();
+                        Console.Write("Enter the new value: ");
+                        string newValue = InputModule.GetString();
+                        AlterItem(chosenProduct.Id, "products", column, newValue);
+                        break;
+                    case 4:
+                        return;
+
+                }
+
+            }
+
         }
+        public static bool AlterItem(int id, string tableName, string column, string newValue)
+        {
+            int affectedRow = 0;
+
+            string sql = $"UPDATE {tableName} SET {column} = {newValue} WHERE Id = {id}";
+
+            using (var connection = new SqlConnection(connString))
+            {
+                affectedRow = connection.Execute(sql);
+            }
+            return affectedRow > 0;
+        }
+
 
 
     }

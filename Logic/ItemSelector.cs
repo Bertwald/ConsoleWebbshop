@@ -13,6 +13,7 @@ namespace TestWebbshopCodeFirst.Logic
     {
         internal static T? GetItemFromList(List<T> items)
         {
+            int itemIndex = 0;
             if (!items.Any())
             {
                 return null;
@@ -24,7 +25,14 @@ namespace TestWebbshopCodeFirst.Logic
                 itemStrings.Add(item.ToString()!);
             }
             GUI.PrintMenu("Please select from " + typeof(T).Name + " menu", itemStrings);
-            int itemIndex = InputModule.SelectFromList(itemStrings);
+            if (items.Count < 10)
+            {
+                itemIndex = InputModule.SelectFromList(itemStrings);
+            }
+            else
+            {
+                itemIndex = InputModule.GetIntInRange(1, items.Count + 1);
+            }
             return items[itemIndex - 1];
         }
 
@@ -32,16 +40,16 @@ namespace TestWebbshopCodeFirst.Logic
         {
             List<Product> items = new List<Product>();
             using (var db = new OurDbContext())
-            {   
-              
+            {
+
                 List<Product> products = db.Products
-                                        .Where(x => x.Name                                       
+                                        .Where(x => x.Name
                                             .Contains(search) || x.Description
                                             .Contains(search) || x.LongDescription
                                             .Contains(search))
                                         .ToList();
                 items.AddRange(products);
-               
+
 
             }
             return items;
@@ -53,21 +61,22 @@ namespace TestWebbshopCodeFirst.Logic
             using (var db = new OurDbContext())
             {
 
-                List<Product> products = db.Products                                       
-                                        .Where(x => x.Categories.Contains(category) && (x.Name 
+                List<Product> products = db.Products
+                                        .Where(x => x.Categories.Contains(category) && (x.Name
                                             .Contains(search) || x.Description
                                             .Contains(search) || x.LongDescription
                                             .Contains(search)))
                                         .ToList();
                 items.AddRange(products);
-                
+
 
             }
             return items;
         }
 
-        internal static double GetShippingCost(ShippingOption option) {
-            return (double)(option-1) * 50d;
+        internal static double GetShippingCost(ShippingOption option)
+        {
+            return (double)(option - 1) * 50d;
         }
     }
 }
