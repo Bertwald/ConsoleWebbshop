@@ -94,7 +94,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         break;
                 }
             }
-            return false;
+            return true;
         }
 
         private void DisplayShoppingCart() {

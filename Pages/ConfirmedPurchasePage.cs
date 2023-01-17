@@ -72,10 +72,7 @@ namespace TestWebbshopCodeFirst.Pages
                 Console.SetCursorPosition(30, 26);
                 GUI.Delay();
                 return true;
-
-            }
-
-            
+            }           
         }
 
         private static void UpdateProductStock(Order newOrder) {
