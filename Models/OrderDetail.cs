@@ -20,5 +20,19 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual Order Order { get; set; } = null!;
         public virtual Product Product { get; set; } = null!;
+
+
+        public override string ToString()
+        {
+            string orderDetails;
+            using (var db = new OurDbContext())
+            {
+                var product = db.Products.Where(p => p.Id == ProductId).First();
+                orderDetails = $"Product: {product.Name} Unitprice: {UnitPrice} Quantity: {Quantity}";
+            }
+            return orderDetails;
+        }
     }
+
+
 }

@@ -131,6 +131,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         orders = db.Orders.Where(x => x.Custumer == LoggedInUser.GetCustomer()).Include(y => y.OrderDetails).ToList();
                     }
                     GUI.PrintMenu("Your orders", orders.Select(x => x.ToString()).ToList());
+                    GUI.Delay();
                     break;
             }
         }

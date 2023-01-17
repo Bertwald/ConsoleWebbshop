@@ -52,10 +52,11 @@ namespace TestWebbshopCodeFirst.Models
         }
         public override string ToString()
         {
-            string orderInfo = $"{Id} {OrderDate} {Orderstatus} {TotalPrice}";
+            string orderInfo = $"OrderId: {Id} Order Date:{OrderDate} Order Status: {Orderstatus} Total Price: {TotalPrice} §" +Environment.NewLine;
             foreach (var order in OrderDetails)
             {
-                orderInfo += order.ToString();
+                orderInfo += order.ToString()
+                +Environment.NewLine;
             }
             return orderInfo;
         }
