@@ -67,6 +67,10 @@ namespace TestWebbshopCodeFirst.Logic {
             }
             return totalPrice;
         }
+        internal Customer GetCustomer()
+        {
+            return Person.Customers.FirstOrDefault(new Customer());           
+        }
 
 
     }

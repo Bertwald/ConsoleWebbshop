@@ -50,5 +50,14 @@ namespace TestWebbshopCodeFirst.Models
                
             return alternativeAddress;
         }
+        public override string ToString()
+        {
+            string orderInfo = $"{Id} {OrderDate} {Orderstatus} {TotalPrice}";
+            foreach (var order in OrderDetails)
+            {
+                orderInfo += order.ToString();
+            }
+            return orderInfo;
+        }
     }
 }
