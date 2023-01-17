@@ -61,7 +61,10 @@ namespace TestWebbshopCodeFirst.Pages
                 switch (choice)
                 {
                     case 1: // Show detailed information
-                        exit = ShowInfo();
+                        bool back = ShowInfo();
+                        if (back){
+                            return false;
+                        }
                         break;
                     case 2: // Search within category
                         Search();

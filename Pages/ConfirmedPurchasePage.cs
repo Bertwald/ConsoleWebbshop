@@ -42,11 +42,11 @@ namespace TestWebbshopCodeFirst.Pages
             }
 
             Order newOrder = CreateOrder();
-
             int affectedRows;
             using (var db = new OurDbContext())
             {
                 db.Attach(newOrder);
+                UpdateProductStock(newOrder);
                 db.Add(newOrder);
                 affectedRows = db.SaveChanges();
                 db.Dispose();
@@ -76,6 +76,12 @@ namespace TestWebbshopCodeFirst.Pages
             }
 
             
+        }
+
+        private static void UpdateProductStock(Order newOrder) {
+            foreach(OrderDetail od in newOrder.OrderDetails) {
+                od.Product.UnitsInStock -= od.Quantity;
+            }
         }
 
         private Order CreateOrder()
@@ -108,7 +114,7 @@ namespace TestWebbshopCodeFirst.Pages
             return newOrder;
         }
 
-        private void PrintReturnPolicy()
+        private static void PrintReturnPolicy()
         {
             DateTime orderDate = DateTime.Now;
             Console.SetCursorPosition(40, 20);

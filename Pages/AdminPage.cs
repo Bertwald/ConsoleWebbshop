@@ -7,47 +7,94 @@ using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
-namespace TestWebbshopCodeFirst.Pages
-{
-    internal class AdminPage : IPage
-    {
+namespace TestWebbshopCodeFirst.Pages {
+    internal class AdminPage {
         private List<string> menu = new()
             {
                 "Manage products",
-                "Manage productcategories",
+                "Manage categories",
                 "Add product to startpage",
-                "Manage users"
+                "Manage users",
+                "Statistics",
+                "Quit"
             };
-        public AdminPage(UserData user) 
-        {
-            LoggedInUser = user;          
-            headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
-        }  
-        private string headerText;
-        public UserData LoggedInUser { get; set; }
-        public void PrintHeader()
-        {
-            UserInterface.GUI.PrintHeader(new List<string> { headerText });
+        public AdminPage(UserData user) {
+            LoggedInUser = user;
+            //headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }
-        public void PrintMenu()
-        {
+        public UserData LoggedInUser { get; set; }
+        public void PrintMenu() {
             string title = "Admin deluxe menu";
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public bool Run()
-        {
-            PrintHeader();
-            PrintMenu();
-            PrintFooter();
-            int choice = InputModule.SelectFromList(menu);
+        public bool Run() {
+            while (true) {
+                GUI.ClearWindow();
+                PrintMenu();
+                int choice = InputModule.SelectFromList(menu);
+                switch (choice) {
+                    case 1: // "Manage products"
+                        ManageProducts();
+                        break;
+                    case 2: //"Manage categories"
+                        ManageCategories();
+                        break;
+                    case 3: //"Add product to startpage"
+                        AddToStartPage();
+                        break;
+                    case 4: //"Manage users"
+                        ManageUsers();
+                        break;
+                    case 5: //Statistics
+                        ShowStatistics();
+                        break;
+                    case 6: //Quit
+                        return true;
+                }
 
-            Console.ReadKey();
-            return true;
+            }
         }
 
-        public void PrintFooter()
-        {
+        private void ShowStatistics() {
+            List<string> optionmenu = new(){
+                "Low in stock",
+                "Surplus stock",
+                "Sales per month",
+                "Return"
+            };
+        }
 
+        private void ManageUsers() {
+            List<string> optionmenu = new(){
+                "Add",
+                "Delete",
+                "Alter",
+                "Return"
+            };
+        }
+
+        private void AddToStartPage() {
+            //Select from category
+            //select product
+            //set new category for product
+        }
+
+        private void ManageCategories() {
+            List<string> optionmenu = new(){
+                "Add",
+                "Delete",
+                "Alter",
+                "Return"
+            };
+        }
+
+        private void ManageProducts() {
+            List<string> optionmenu = new(){
+                "Add",
+                "Delete",
+                "Alter",
+                "Return"
+            };
         }
 
 

@@ -52,11 +52,19 @@ namespace TestWebbshopCodeFirst.UserInterface
             Console.WriteLine(chosen.LongDescription);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Price: " + chosen.Price);
+            Console.WriteLine("Price: " + chosen.Price * (1d + chosen.Vat/100)+"§");
             Console.ResetColor();
             Console.WriteLine();
             Console.WriteLine("Units in stock: " + chosen.UnitsInStock);
-           
+            Console.WriteLine();
+            if (chosen.Categories.Any()) {
+                Console.Write("In Categories: ");
+                foreach (Category cat in chosen.Categories) {
+                    Console.Write(cat.CategoryName);
+                }
+                Console.WriteLine();
+            }
+
         }
 
         internal static void PrintSelectedProducts<T>(List<T> products, string text = "") where T : IPrintable  

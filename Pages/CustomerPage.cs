@@ -139,7 +139,7 @@ namespace TestWebbshopCodeFirst.Pages {
         private bool ChooseCategory() {
             List<Category> categories;
             using (var db = new OurDbContext()) {
-                categories = db.Categories.ToList();
+                categories = db.Categories.Where(x => !x.CategoryName.Equals("Selected")).ToList();
             }
             Category? category = ItemSelector<Category>.GetItemFromList(categories);
             return new BrowseCategoryPage(LoggedInUser, category).Run();

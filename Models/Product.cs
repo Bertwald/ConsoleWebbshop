@@ -42,7 +42,7 @@ namespace TestWebbshopCodeFirst.Models
             (int left, int top) = Console.GetCursorPosition();
             Console.Write(exclamations[rand.Next(0, exclamations.Length)]);
             Console.SetCursorPosition(left, top+1);
-            Console.Write(Name + " " + Math.Round(Price * (1d + Vat / 100), 2));
+            Console.Write(Name + " " + Math.Round(Price * (1d + Vat / 100), 2)+"§");
             Console.ResetColor();
         }
 
