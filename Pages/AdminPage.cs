@@ -92,6 +92,53 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Alter",
                 "Return"
             };
+            while (true)
+            {
+
+                GUI.ClearWindow();
+                Category? chosenCategory;
+                GUI.PrintMenu("Category menu", optionmenu);
+                int choice = InputModule.SelectFromList(optionmenu);
+                switch (choice)
+                {
+                    case 1: // Add
+                        GUI.ClearWindow();
+                        Console.Write("Name: ");
+                        string name = InputModule.GetString();
+                        Console.WriteLine();                       
+                        Console.Write("Description: ");
+                        string description = InputModule.GetString();
+                        using (var db = new OurDbContext())
+                        {
+                            db.Add(new Category
+                            {
+                                CategoryName = name,                               
+                                Description = description                               
+                            });
+                            db.SaveChanges();
+                        }                        
+                        break;
+                    case 2: //Delete
+                        GUI.ClearWindow();
+                        chosenCategory = SelectCategoryFromDatabase();
+                        Console.WriteLine(chosenCategory.CategoryName);
+                        using (var db = new OurDbContext())
+                        {
+                            db.Remove(chosenCategory);
+                            db.SaveChanges();
+                        }
+                        break;
+                    case 3: //Alter
+                        GUI.ClearWindow();
+                        chosenCategory = SelectCategoryFromDatabase();
+                        Console.WriteLine($"CategoryName: {chosenCategory.CategoryName} Description: {chosenCategory.Description}");
+                        (string column, string value) = GetColumnValuePair();
+                        AlterItem(chosenCategory.Id, "categories", column, value);
+                        break;
+                    case 4:
+                        return;
+                }
+            }
         }
 
         private void ManageProducts() {
@@ -110,17 +157,22 @@ namespace TestWebbshopCodeFirst.Pages {
                 switch (choice) {
                     case 1: // Add
                         GUI.ClearWindow();
-                        Console.WriteLine("Name");
+                        Console.Write("Name: ");
                         string name = InputModule.GetString();
-                        Console.WriteLine("Price");
+                        Console.WriteLine();
+                        Console.Write("Price (vat excluded): ");
                         string price = InputModule.GetString();
-                        Console.WriteLine("Vat");
+                        Console.WriteLine();
+                        Console.Write("Vat: ");
                         string vat = InputModule.GetString();
-                        Console.WriteLine("Stock");
+                        Console.WriteLine();
+                        Console.Write("Stock: ");
                         string stock = InputModule.GetString();
-                        Console.WriteLine("Description");
+                        Console.WriteLine();
+                        Console.Write("Description: ");
                         string description = InputModule.GetString();
-                        Console.WriteLine("LongDescription");
+                        Console.WriteLine();
+                        Console.Write("LongDescription: ");
                         string longDescription = InputModule.GetString();
                         List<Category> categories = new();
                         using (var db = new OurDbContext()) {
@@ -162,13 +214,21 @@ namespace TestWebbshopCodeFirst.Pages {
                         break;
                     case 4:
                         return;
-
                 }
-
             }
-
         }
 
+
+        private static Category? SelectCategoryFromDatabase()
+        {
+            List<Category> categories;
+            using (var db = new OurDbContext())
+            {
+                categories = db.Categories.ToList();
+            }
+            Category chosenCategory = ItemSelector<Category>.GetItemFromList(categories);
+            return chosenCategory;
+        }
         private static Product? SelectProductFromDatabase() {
             List<Product> products;
             using (var db = new OurDbContext()) {

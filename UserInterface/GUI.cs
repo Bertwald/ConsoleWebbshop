@@ -45,17 +45,17 @@ namespace TestWebbshopCodeFirst.UserInterface
 
         internal static void PrintSelectedProduct(Product? chosen)
         {
-            Console.WriteLine($"{chosen.Name}");
+            Console.WriteLine($"Name: {chosen.Name}");
             Console.WriteLine();
-            Console.WriteLine(chosen.Description);
+            Console.WriteLine($"Description: {chosen.Description}");
             Console.WriteLine();
-            Console.WriteLine(chosen.LongDescription);
+            Console.WriteLine($"LongDescription: {chosen.LongDescription}");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Price: " + chosen.Price * (1d + chosen.Vat/100)+"§");
             Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine("Units in stock: " + chosen.UnitsInStock);
+            Console.WriteLine("UnitsInStock: " + chosen.UnitsInStock);
             Console.WriteLine();
             if (chosen.Categories.Any()) {
                 Console.Write("In Categories: ");
