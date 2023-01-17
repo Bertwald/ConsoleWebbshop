@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,10 @@ namespace TestWebbshopCodeFirst.Pages
                 {
                     Order = loggedInUser.ShoppingCart,
                     Product = product,
-                    Quantity = 1,
+                    Quantity = Math.Min(product.UnitsInStock, 1),
                     UnitPrice = product.Price * (1d + product.Vat / 100)
                 };
-                //product.OrderDetails.Add(newDetail);
                 details.Add(newDetail);
-                //loggedInUser.ShoppingCart.OrderDetails.Add(newDetail);
             }
         }
         private void CleanOrderDetails()
@@ -53,12 +52,12 @@ namespace TestWebbshopCodeFirst.Pages
                     CleanOrderDetails();
                     return false;
                 }
+                loggedInUser.ShoppingCart.OrderDetails = details;
                 Console.Clear();
                 PrintHeader();
                 PrintMenu();
                 PrintFooter();
 
-                loggedInUser.ShoppingCart.OrderDetails = details;
 
                 int choice = InputModule.SelectFromList(menu);
 
@@ -66,7 +65,6 @@ namespace TestWebbshopCodeFirst.Pages
                 {
                     case 1: //change amount
                         Console.WriteLine("Choose index to change quantity");
-                        //GUI.PrintMenu("Change quantity for:", loggedInUser.ShoppingCart.Products.Select(x => $"{x.Name} - {x.Description}" ).ToList());
                         GUI.PrintMenu("Change quantity for:", details.Select(x => $"{x.Product.Name} - {x.Product.Description}").ToList());
                         int index = InputModule.SelectFromList(details.Select(x => " ").ToList()) - 1;
                         OrderDetail chosenDetail = details[index];
