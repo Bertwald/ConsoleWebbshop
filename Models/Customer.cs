@@ -17,11 +17,8 @@ namespace TestWebbshopCodeFirst.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; }
-        [StringLength(255)]
+        public int UserId { get; set; }      
 
-        //TA BORT SHIPPINGADDRESSES
-        public string? ShippingAdresses { get; set; }
         [StringLength(20)]
         public string? CreditCardNumber { get; set; }
 

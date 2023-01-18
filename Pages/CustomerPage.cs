@@ -49,7 +49,7 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
         private void RetrieveSelectedItems() {
-            using (var db = new OurDbContext()) {
+            using (var db = new WebshopDbContext()) {
                 selectedProducts = db.Products
                                      .Where(p => p.Categories
                                                   .Where(category => category.Id == 10)
@@ -114,7 +114,7 @@ namespace TestWebbshopCodeFirst.Pages {
             switch (menuChoice) {
                 case 1:
                     List<Person> personalInformation;
-                    using (var db = new OurDbContext()) {
+                    using (var db = new WebshopDbContext()) {
                         personalInformation = db.Persons
                                         .Where(p => p.Id == LoggedInUser.Person.Id)
                                         .Include(p => p.Accounts)
@@ -126,7 +126,7 @@ namespace TestWebbshopCodeFirst.Pages {
                     break;
                 case 2:
                     List<Order> orders;
-                    using (var db = new OurDbContext())
+                    using (var db = new WebshopDbContext())
                     {
                         orders = db.Orders.Where(x => x.Custumer == LoggedInUser.GetCustomer()).Include(y => y.OrderDetails).ToList();
                     }
@@ -138,7 +138,7 @@ namespace TestWebbshopCodeFirst.Pages {
 
         private bool ChooseCategory() {
             List<Category> categories;
-            using (var db = new OurDbContext()) {
+            using (var db = new WebshopDbContext()) {
                 categories = db.Categories.Where(x => !x.CategoryName.Equals("Selected")).ToList();
             }
             Category? category = ItemSelector<Category>.GetItemFromList(categories);

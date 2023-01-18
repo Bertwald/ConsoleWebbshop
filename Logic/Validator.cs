@@ -13,7 +13,7 @@ namespace TestWebbshopCodeFirst.Logic
     {
         internal static UserData? ValidateUser(string userName, string passWord)
         {
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 if (db.Accounts.Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).Any()) {
                     Account account = db.Accounts.Include(x => x.Person).ThenInclude(x => x.Customers).Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).First();

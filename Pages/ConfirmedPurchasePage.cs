@@ -26,6 +26,7 @@ namespace TestWebbshopCodeFirst.Pages
             Console.SetCursorPosition(30, 6);
             Console.WriteLine("Your receipt will be sent to your e-mail address: " + loggedInUser.Person.MailAdress);
             PrintReturnPolicy();
+            PrintNi();
         }
 
         public void PrintMenu() { }
@@ -43,7 +44,7 @@ namespace TestWebbshopCodeFirst.Pages
 
             Order newOrder = CreateOrder();
             int affectedRows;
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 db.Attach(newOrder);
                 UpdateProductStock(newOrder);
@@ -114,12 +115,19 @@ namespace TestWebbshopCodeFirst.Pages
         private static void PrintReturnPolicy()
         {
             DateTime orderDate = DateTime.Now;
-            Console.SetCursorPosition(40, 20);
+            Console.SetCursorPosition(30, 20);
             Console.WriteLine("RETURN POLICY");
-            Console.SetCursorPosition(25, 21);
+            Console.SetCursorPosition(30, 21);
             Console.WriteLine("You have the right to regret your purchase to " + orderDate.AddDays(7).ToString("R"));
-            Console.SetCursorPosition(25, 22);
+            Console.SetCursorPosition(30, 22);
             Console.WriteLine("Please contact us to let us know that your order will be returned.");
+        }
+
+        private static void PrintNi()
+        {
+            Console.SetCursorPosition(30, 24);
+            Console.WriteLine("Now go out in the woods and get a shrubbery for the head Knight of Ni!");
+            
         }
     }
 }

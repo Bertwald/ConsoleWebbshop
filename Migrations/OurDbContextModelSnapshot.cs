@@ -10,7 +10,7 @@ using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.Migrations
 {
-    [DbContext(typeof(OurDbContext))]
+    [DbContext(typeof(WebshopDbContext))]
     partial class OurDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

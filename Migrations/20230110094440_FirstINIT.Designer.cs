@@ -11,7 +11,7 @@ using TestWebbshopCodeFirst.Models;
 
 namespace TestWebbshopCodeFirst.Migrations
 {
-    [DbContext(typeof(OurDbContext))]
+    [DbContext(typeof(WebshopDbContext))]
     [Migration("20230110094440_FirstINIT")]
     partial class FirstINIT
     {

@@ -12,7 +12,7 @@ namespace TestWebbshopCodeFirst.Logic {
     public class InsertTestData {
         internal static void InsertData() {
 
-            using (var shopDb = new OurDbContext()) {
+            using (var shopDb = new WebshopDbContext()) {
                 List<Person> people = UserManager.GetAllUsers();
                 List<Employee> employees = EmployeeManager.GetAllEmployees();
                 List<Customer> customers = CustomerManager.GetAllCustomers();
@@ -44,7 +44,7 @@ namespace TestWebbshopCodeFirst.Logic {
         }
 
         internal static void SetRandomChosen() {
-            using (var shopDb = new OurDbContext()) {
+            using (var shopDb = new WebshopDbContext()) {
                 var products = shopDb.Products.ToList();
                 var categories = shopDb.Categories.ToList();
                 //shopDb.Add(new Category() { CategoryName = "Selected", Description = "Recommended products" });
@@ -65,7 +65,7 @@ namespace TestWebbshopCodeFirst.Logic {
             }
         }
         internal static void CreateUserAccounts() {
-            using (var db = new OurDbContext()) {
+            using (var db = new WebshopDbContext()) {
                 //Generate CustomerAccounts
                 var users = db.Persons.Where(x => x.Customers.Any() && !x.Accounts.Any()).ToList();
                 List<Account> customers = AccountGenerator.GenerateAccountsFor(users, Privilege.Customer);

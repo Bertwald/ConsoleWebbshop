@@ -79,8 +79,8 @@ namespace TestWebbshopCodeFirst.UserInterface
             Console.SetCursorPosition(0, Console.GetCursorPosition().Top +2);
         }
 
-        internal static void SetWindowTitle<T>(T instance, Privilege privilege = Privilege.Visitor) {
-            Console.Title = instance.GetType().Name + " AS " + privilege;
+        internal static void SetWindowTitle() {
+            Console.Title = "The shop who says Ni!";
         }
 
         internal static void ShowShoppingCartItems(List<string> shoppingCart)

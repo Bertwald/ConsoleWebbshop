@@ -125,7 +125,7 @@ namespace TestWebbshopCodeFirst.Pages
                                 case 2: //Delete
                                     GUI.ClearWindow();
                                     chosen = SelectFromDatabase<Person>();
-                                    using (var db = new OurDbContext())
+                                    using (var db = new WebshopDbContext())
                                     {
                                         db.Remove(chosen);
                                         db.SaveChanges();
@@ -207,10 +207,6 @@ namespace TestWebbshopCodeFirst.Pages
                 }
             }
 
-
-
-
-
             //--------------------------------------------------------------------------------------------------------
             //--------------------------------------------------------------------------------------------------------
         }
@@ -218,7 +214,7 @@ namespace TestWebbshopCodeFirst.Pages
         private void ShowOrderHistory() {
             Customer cust = SelectFromDatabase<Customer>();
             List<Order> orders = new(); 
-            using(var db = new OurDbContext()) {
+            using(var db = new WebshopDbContext()) {
                 orders = db.Orders.Include(x => x.OrderDetails).Where(x => x.Custumer == cust).ToList();
             }
             foreach(var order in orders) {
@@ -231,7 +227,7 @@ namespace TestWebbshopCodeFirst.Pages
         {
             var chosenProduct = SelectFromDatabase<Product>();
             var chosenCategory = SelectFromDatabase<Category>();
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 db.Attach(chosenProduct);
                 chosenProduct.Categories.Add(chosenCategory);
@@ -263,7 +259,7 @@ namespace TestWebbshopCodeFirst.Pages
                         Console.WriteLine();
                         Console.Write("Description: ");
                         string description = InputModule.GetString();
-                        using (var db = new OurDbContext())
+                        using (var db = new WebshopDbContext())
                         {
                             db.Add(new Category
                             {
@@ -277,7 +273,7 @@ namespace TestWebbshopCodeFirst.Pages
                         GUI.ClearWindow();
                         chosenCategory = SelectFromDatabase<Category>(); //SelectCategoryFromDatabase();
                         Console.WriteLine(chosenCategory.CategoryName);
-                        using (var db = new OurDbContext())
+                        using (var db = new WebshopDbContext())
                         {
                             db.Remove(chosenCategory);
                             db.SaveChanges();
@@ -333,7 +329,7 @@ namespace TestWebbshopCodeFirst.Pages
                         Console.Write("LongDescription: ");
                         string longDescription = InputModule.GetString();
                         List<Category> categories = new();
-                        using (var db = new OurDbContext())
+                        using (var db = new WebshopDbContext())
                         {
                             do
                             {
@@ -361,7 +357,7 @@ namespace TestWebbshopCodeFirst.Pages
                         GUI.ClearWindow();
                         chosenProduct = SelectFromDatabase<Product>();
                         GUI.PrintSelectedProduct(chosenProduct);
-                        using (var db = new OurDbContext())
+                        using (var db = new WebshopDbContext())
                         {
                             db.Remove(chosenProduct);
                             db.SaveChanges();
@@ -386,7 +382,7 @@ namespace TestWebbshopCodeFirst.Pages
         private static T? SelectFromDatabase<T>() where T : class
         {
             List<T> objects;
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 objects = db.Set<T>().ToList();
             }

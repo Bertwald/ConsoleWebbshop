@@ -25,7 +25,7 @@ namespace TestWebbshopCodeFirst.Models
         public override string ToString()
         {
             string orderDetails;
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 var product = db.Products.Where(p => p.Id == ProductId).First();
                 orderDetails = $"Product: {product.Name} Unitprice: {UnitPrice} Quantity: {Quantity}";

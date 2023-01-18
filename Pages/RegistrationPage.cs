@@ -43,7 +43,7 @@ namespace TestWebbshopCodeFirst.Pages
             Console.Write("Please enter a password: ");
             var password = InputModule.GetString();
 
-            using (var db = new OurDbContext()) {
+            using (var db = new WebshopDbContext()) {
                 var newPerson = new Person {
                     BirthDate = birthDate,
                     FirstName = firstName,
@@ -56,8 +56,7 @@ namespace TestWebbshopCodeFirst.Pages
                     MailAdress = email
                 };
                 var newCustomer = new Customer {
-                    Person = newPerson,
-                    ShippingAdresses = newPerson.Address,
+                    Person = newPerson,                   
                     CreditCardNumber = creditCardNr
                 };
                 var newAccount = new Account {

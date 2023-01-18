@@ -39,7 +39,7 @@ namespace TestWebbshopCodeFirst.Logic
         internal static List<Product> GetMatchingProducts(string search)
         {
             List<Product> items = new List<Product>();
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
 
                 List<Product> products = db.Products
@@ -58,7 +58,7 @@ namespace TestWebbshopCodeFirst.Logic
         internal static List<Product> GetMatchingProductsInCategory(string search, Category category)
         {
             List<Product> items = new List<Product>();
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
 
                 List<Product> products = db.Products

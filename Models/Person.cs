@@ -79,8 +79,7 @@ namespace TestWebbshopCodeFirst.Models
                 personalInfo += "Customer information: " + Environment.NewLine;
                 foreach (Customer customer in Customers)
                 {
-                    personalInfo += "CreditCard number: " + customer.CreditCardNumber + Environment.NewLine;
-                    personalInfo += "Shipping Adress: " + customer.ShippingAdresses + Environment.NewLine;
+                    personalInfo += "CreditCard number: " + customer.CreditCardNumber + Environment.NewLine;                    
                 }
             }
             if (Employees.Any())

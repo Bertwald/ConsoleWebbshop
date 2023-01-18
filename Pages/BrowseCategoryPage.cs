@@ -36,7 +36,7 @@ namespace TestWebbshopCodeFirst.Pages
         public void PrintHeader()
         {
             GUI.PrintHeader(new List<string> { headerText });
-            using (var db = new OurDbContext())
+            using (var db = new WebshopDbContext())
             {
                 products = db.Products.Where(x => x.Categories.Contains(chosenCategory)).ToList();
                 GUI.PrintSelectedProducts(products, $"Our fantastic {chosenCategory}: ");
