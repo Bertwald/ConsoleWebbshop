@@ -22,7 +22,7 @@ namespace TestWebbshopCodeFirst.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TestWebbshopCodeFirst;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:grupp2admin.database.windows.net,1433;Initial Catalog=Webshopen;Persist Security Info=False;User ID=grupp2admin;Password=Admingrupp2;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
     }
