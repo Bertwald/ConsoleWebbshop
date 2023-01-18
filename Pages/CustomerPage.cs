@@ -145,12 +145,22 @@ namespace TestWebbshopCodeFirst.Pages {
             return new BrowseCategoryPage(LoggedInUser, category).Run();
         }
 
-        private static void Search() {
+        private void Search() {
             Console.Write("Search: ");
             var search = InputModule.GetString();
-            var result = ItemSelector<Product>.GetMatchingProducts(search);
-            GUI.PrintSelectedProducts(result, "Here is your search result for " + search);
-            GUI.Delay();
+            var result = ItemSelector<Product>.GetMatchingProducts(search);          
+            if (result.Any())
+            {
+                GUI.PrintSelectedProducts(result, "Your search result for " + search);
+                GUI.PrintMenu("Search Results", result.Select(x => x.ToString()).ToList());
+                var selectedProduct = ItemSelector<Product>.GetItemFromList(result);
+                new DetailedProductPage(LoggedInUser, selectedProduct).Run();
+            }
+            else
+            {
+                Console.WriteLine("Unfortunately we couldn't find any " + search);
+                GUI.Delay();
+            }
         }
 
         public void PrintFooter() {

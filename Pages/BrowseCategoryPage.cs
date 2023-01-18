@@ -28,7 +28,8 @@ namespace TestWebbshopCodeFirst.Pages
             LoggedInUser = user;
             this.chosenCategory = chosenCategory;
             headerText = $"{this.chosenCategory.CategoryName} : {this.chosenCategory.Description}";
-            if(LoggedInUser.Privilege == Privilege.Visitor) {
+            if (LoggedInUser.Privilege == Privilege.Visitor)
+            {
                 menu = menu.Take(3).ToList();
             }
         }
@@ -39,6 +40,7 @@ namespace TestWebbshopCodeFirst.Pages
             {
                 products = db.Products.Where(x => x.Categories.Contains(chosenCategory)).ToList();
                 GUI.PrintSelectedProducts(products, $"Our fantastic {chosenCategory}: ");
+                GUI.PrintMenu(chosenCategory.CategoryName, products.Select(x => x.ToString()).ToList());
             }
         }
         public void PrintMenu()
@@ -62,7 +64,8 @@ namespace TestWebbshopCodeFirst.Pages
                 {
                     case 1: // Show detailed information
                         bool back = ShowInfo();
-                        if (back){
+                        if (back)
+                        {
                             return false;
                         }
                         break;
@@ -88,25 +91,34 @@ namespace TestWebbshopCodeFirst.Pages
             return true;
         }
 
-   
-
-  
-
-        private void Search() {
+        private void Search()
+        {
             Console.Write("Search: ");
             var search = InputModule.GetString();
             var result = ItemSelector<Product>.GetMatchingProductsInCategory(search, chosenCategory);
-            GUI.PrintSelectedProducts(result, "Your search result for " + search);
-            GUI.Delay();
+            if (result.Any())
+            {
+                GUI.PrintSelectedProducts(result, "Your search result for " + search);
+                GUI.PrintMenu(chosenCategory.CategoryName, products.Select(x => x.ToString()).ToList());              
+                var selectedProduct = ItemSelector<Product>.GetItemFromList(result);
+                new DetailedProductPage(LoggedInUser, selectedProduct).Run();
+            }
+            else
+            {
+                Console.WriteLine("Unfortunately we couldn't find any " + search);
+                GUI.Delay();
+            }
         }
 
-        private bool ShowInfo() {
+        private bool ShowInfo()
+        {
             Product chosen = ItemSelector<Product>.GetItemFromList(products);
             return new DetailedProductPage(LoggedInUser, chosen).Run();
 
         }
 
-        private void AddToShoppingCart() {
+        private void AddToShoppingCart()
+        {
             Product chosen = ItemSelector<Product>.GetItemFromList(products);
             LoggedInUser.ShoppingCart.Products.Add(chosen);
             Console.WriteLine($"1 {chosen} has been added to your shopping cart");

@@ -16,7 +16,7 @@ namespace TestWebbshopCodeFirst.Pages
     {
 
         static readonly string connString = "data source=.\\SQLEXPRESS; initial catalog=TestWebbshopCodeFirst; persist security info=True; Integrated Security=True";
-
+        private string headerText;
         private List<string> menu = new()
             {
                 "Manage products",
@@ -29,7 +29,7 @@ namespace TestWebbshopCodeFirst.Pages
         public AdminPage(UserData user)
         {
             LoggedInUser = user;
-            //headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
+            headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }
         public UserData LoggedInUser { get; set; }
         public void PrintMenu()
@@ -42,6 +42,7 @@ namespace TestWebbshopCodeFirst.Pages
             while (true)
             {
                 GUI.ClearWindow();
+                Console.WriteLine(headerText);
                 PrintMenu();
                 int choice = InputModule.SelectFromList(menu);
                 switch (choice)
@@ -202,9 +203,14 @@ namespace TestWebbshopCodeFirst.Pages
 
         private void LinkCategories()
         {
-            //Select from category
-            //select product
-            //set new category for product
+            var chosenProduct = SelectFromDatabase<Product>();
+            var chosenCategory = SelectFromDatabase<Category>();
+            using (var db = new OurDbContext())
+            {
+                db.Attach(chosenProduct);
+                chosenProduct.Categories.Add(chosenCategory);
+                db.SaveChanges();
+            }
         }
 
         private void ManageCategories()
@@ -349,26 +355,7 @@ namespace TestWebbshopCodeFirst.Pages
         }
 
 
-        private static Category? SelectCategoryFromDatabase()
-        {
-            List<Category> categories;
-            using (var db = new OurDbContext())
-            {
-                categories = db.Categories.ToList();
-            }
-            Category chosenCategory = ItemSelector<Category>.GetItemFromList(categories);
-            return chosenCategory;
-        }
-        /*
-        private static Product? SelectProductFromDatabase() {
-            List<Product> products;
-            using (var db = new OurDbContext()) {
-                products = db.Products.ToList();
-            }
-            Product chosenProduct = ItemSelector<Product>.GetItemFromList(products);
-            return chosenProduct;
-        }
-        */
+
 
         private static T? SelectFromDatabase<T>() where T : class
         {
