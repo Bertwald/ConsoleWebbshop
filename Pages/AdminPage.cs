@@ -9,6 +9,8 @@ using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 using Dapper;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestWebbshopCodeFirst.Pages
 {
@@ -84,6 +86,7 @@ namespace TestWebbshopCodeFirst.Pages
                 "Person",
                 "Customer",
                 "Account",
+                "Show Order History",
                 "Return"
             };
 
@@ -178,8 +181,13 @@ namespace TestWebbshopCodeFirst.Pages
                                     chosen = SelectFromDatabase<Account>();
                                     GUI.ClearWindow();
                                     Console.WriteLine(chosen.ToString());
+                                    Console.WriteLine("Valid options for Privilege: " + string.Join(", " , Enum.GetNames(typeof(Privilege))));
                                     (string column, string value) = GetColumnValuePair();
-                                    AlterItem(chosen.Id, "Accounts", column, Enum.GetName(typeof(Privilege), int.Parse(value)));
+                                    if(column == "Privilege") {
+                                        int val = (int)Enum.Parse(typeof(Privilege), value);
+                                        value = val.ToString();
+                                    }
+                                    AlterItem(chosen.Id, "Accounts", column, value);
                                     break;
                                 case 2:
                                     return;
@@ -187,7 +195,13 @@ namespace TestWebbshopCodeFirst.Pages
                             break;
                         }
                         break;
-                    case 4: // Return
+                    case 4:
+                        GUI.ClearWindow();
+                        ShowOrderHistory();
+                        GUI.Delay();
+                        break;
+
+                    case 5: // Return
                         return;
                 }
             }
@@ -200,10 +214,24 @@ namespace TestWebbshopCodeFirst.Pages
             //--------------------------------------------------------------------------------------------------------
         }
 
+        private void ShowOrderHistory() {
+            Customer cust = SelectFromDatabase<Customer>();
+            List<Order> orders = new(); 
+            using(var db = new OurDbContext()) {
+                orders = db.Orders.Include(x => x.OrderDetails).Where(x => x.Custumer == cust).ToList();
+            }
+            foreach(var order in orders) {
+                Console.WriteLine(order.ToString());
+                Console.WriteLine(new string('-', 30));
+            }
+        }
+
         private void LinkCategories()
         {
             //Select from category
+
             //select product
+
             //set new category for product
         }
 
