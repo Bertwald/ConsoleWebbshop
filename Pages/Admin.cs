@@ -17,7 +17,7 @@ namespace TestWebbshopCodeFirst.Pages
     internal class Admin
     {
 
-        static readonly string connString = "data source=.\\SQLEXPRESS; initial catalog=TestWebbshopCodeFirst; persist security info=True; Integrated Security=True";
+        static readonly string connString = "Server=tcp:grupp2admin.database.windows.net,1433;Initial Catalog=Webshopen;Persist Security Info=False;User ID=grupp2admin;Password=Admingrupp2;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private string headerText;
         private List<string> menu = new()
             {
