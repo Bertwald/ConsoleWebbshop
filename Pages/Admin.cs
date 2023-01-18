@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class AdminPage
+    internal class Admin
     {
 
         static readonly string connString = "data source=.\\SQLEXPRESS; initial catalog=TestWebbshopCodeFirst; persist security info=True; Integrated Security=True";
@@ -28,7 +28,7 @@ namespace TestWebbshopCodeFirst.Pages
                 "Statistics",
                 "Quit"
             };
-        public AdminPage(UserData user)
+        public Admin(UserData user)
         {
             LoggedInUser = user;
             headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
@@ -120,7 +120,7 @@ namespace TestWebbshopCodeFirst.Pages
                             {
                                 case 1: // Add
                                     GUI.ClearWindow();
-                                    RegistrationPage.AddPerson();
+                                    Registration.AddPerson();
                                     break;
                                 case 2: //Delete
                                     GUI.ClearWindow();

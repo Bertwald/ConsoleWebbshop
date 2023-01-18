@@ -1,15 +1,16 @@
-﻿using TestWebbshopCodeFirst.Logic;
+﻿using TestWebbshopCodeFirst.Interfaces;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class ShippingPage : IPage
+    internal class Shipping : IPage
     {
         private List<string> menu = new List<string>() { "Choose shipping option", "Choose alternative address", "Continue to checkout", "Back to shopping cart" };
         private UserData loggedInUser;
 
-        public ShippingPage(UserData loggedInUser)
+        public Shipping(UserData loggedInUser)
         {
             this.loggedInUser = loggedInUser;
         }
@@ -39,7 +40,7 @@ namespace TestWebbshopCodeFirst.Pages
                         SetAlternativeShippingAddress();
                         break;
                     case 3: // continue to checkout
-                        exit = new CheckOutPage(loggedInUser).Run();
+                        exit = new CheckOut(loggedInUser).Run();
                         break;
                     case 4: // back to shoppingcart
                         return false;

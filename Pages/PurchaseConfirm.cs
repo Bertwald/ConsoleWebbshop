@@ -1,14 +1,15 @@
-﻿using TestWebbshopCodeFirst.Logic;
+﻿using TestWebbshopCodeFirst.Interfaces;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class ConfirmedPurchasePage : IPage
+    internal class PurchaseConfirm : IPage
     {
         private UserData loggedInUser;
 
-        public ConfirmedPurchasePage(UserData loggedInUser)
+        public PurchaseConfirm(UserData loggedInUser)
         {
             this.loggedInUser = loggedInUser;
         }
@@ -126,7 +127,10 @@ namespace TestWebbshopCodeFirst.Pages
         private static void PrintNi()
         {
             Console.SetCursorPosition(30, 24);
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Now go out in the woods and get a shrubbery for the head Knight of Ni!");
+            Console.ResetColor();
             
         }
     }

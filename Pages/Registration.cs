@@ -9,7 +9,7 @@ using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class RegistrationPage
+    internal class Registration
     {
         internal bool Run()
         {

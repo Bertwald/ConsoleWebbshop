@@ -80,7 +80,7 @@ namespace TestWebbshopCodeFirst.UserInterface
         }
 
         internal static void SetWindowTitle() {
-            Console.Title = "The shop who says Ni!";
+            Console.Title = "The shops who say Ni!";
         }
 
         internal static void ShowShoppingCartItems(List<string> shoppingCart)
@@ -89,7 +89,6 @@ namespace TestWebbshopCodeFirst.UserInterface
             {
                 Console.WriteLine(product);
             }
-            //GUI.Delay();
         }
     }
 }

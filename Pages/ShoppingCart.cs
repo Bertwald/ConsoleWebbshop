@@ -5,19 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Interfaces;
 using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class ShoppingCartPage : IPage
+    internal class ShoppingCart : IPage
     {
         private List<string> menu = new List<string>() { "Change amount", "Remove item", "Back one step", "Back to Customer Page", "Go to shipping option" };
         private UserData loggedInUser;
         private List<OrderDetail> details = new();
 
-        public ShoppingCartPage(UserData loggedInUser)
+        public ShoppingCart(UserData loggedInUser)
         {
             this.loggedInUser = loggedInUser;
 
@@ -98,7 +99,7 @@ namespace TestWebbshopCodeFirst.Pages
                         {
                              break;
                         }
-                        exit = new ShippingPage(loggedInUser).Run();
+                        exit = new Shipping(loggedInUser).Run();
                         break;
                 }
 

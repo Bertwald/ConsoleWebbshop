@@ -1,14 +1,16 @@
-﻿using TestWebbshopCodeFirst.Logic;
+﻿using TestWebbshopCodeFirst.Interfaces;
+using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
-namespace TestWebbshopCodeFirst.Pages {
-    internal class DetailedProductPage :IPage {
+namespace TestWebbshopCodeFirst.Pages
+{
+    internal class ProductDetail :IPage {
         private List<string> menu = new List<string>() { "Back one step", "Back to Customer Page", "Add to Cart"};
         private UserData loggedInUser;
         private Product? chosen;
 
-        public DetailedProductPage(UserData loggedInUser, Product? chosen) {
+        public ProductDetail(UserData loggedInUser, Product? chosen) {
             this.loggedInUser = loggedInUser;
             this.chosen = chosen;
             if(loggedInUser.Privilege == Privilege.Visitor) {

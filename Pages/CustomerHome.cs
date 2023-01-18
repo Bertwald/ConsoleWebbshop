@@ -7,9 +7,11 @@ using TestWebbshopCodeFirst.UserInterface;
 using TestWebbshopCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using TestWebbshopCodeFirst.Logic;
+using TestWebbshopCodeFirst.Interfaces;
 
-namespace TestWebbshopCodeFirst.Pages {
-    internal class CustomerPage : IPage {
+namespace TestWebbshopCodeFirst.Pages
+{
+    internal class CustomerHome : IPage {
         private List<string> menu = new()
             {
                 "Browse Inventory by category",
@@ -26,7 +28,7 @@ namespace TestWebbshopCodeFirst.Pages {
         public UserData LoggedInUser { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public CustomerPage(UserData user) {
+        public CustomerHome(UserData user) {
             LoggedInUser = user;
             SetHeaderText();
             if (user.Privilege == Logic.Privilege.Visitor) {
@@ -68,7 +70,6 @@ namespace TestWebbshopCodeFirst.Pages {
             GUI.PrintMenu(title, menu);
         }
         public bool Run() {
-            GUI.SetWindowTitle(this, LoggedInUser.Privilege);
             bool exit = false;
             while (!exit) {
                 GUI.ClearWindow();
@@ -90,7 +91,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         DisplayAccountInformation();
                         break;
                     case 5: //shoppingcart
-                        exit = new ShoppingCartPage(LoggedInUser).Run();
+                        exit = new ShoppingCart(LoggedInUser).Run();
                         break;
                 }
             }
@@ -142,7 +143,7 @@ namespace TestWebbshopCodeFirst.Pages {
                 categories = db.Categories.Where(x => !x.CategoryName.Equals("Selected")).ToList();
             }
             Category? category = ItemSelector<Category>.GetItemFromList(categories);
-            return new BrowseCategoryPage(LoggedInUser, category).Run();
+            return new CategoryList(LoggedInUser, category).Run();
         }
 
         private void Search() {
@@ -154,7 +155,7 @@ namespace TestWebbshopCodeFirst.Pages {
                 GUI.PrintSelectedProducts(result, "Your search result for " + search);
                 GUI.PrintMenu("Search Results", result.Select(x => x.ToString()).ToList());
                 var selectedProduct = ItemSelector<Product>.GetItemFromList(result);
-                new DetailedProductPage(LoggedInUser, selectedProduct).Run();
+                new ProductDetail(LoggedInUser, selectedProduct).Run();
             }
             else
             {

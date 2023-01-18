@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TestWebbshopCodeFirst.Interfaces;
 using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class CheckOutPage : IPage
+    internal class CheckOut : IPage
     {
         private UserData loggedInUser;
         private List<string> menu = new()
@@ -21,7 +22,7 @@ namespace TestWebbshopCodeFirst.Pages
                 "Back to start page"
             };
 
-        public CheckOutPage(UserData user)
+        public CheckOut(UserData user)
         {
             this.loggedInUser = user;
         }
@@ -88,7 +89,7 @@ namespace TestWebbshopCodeFirst.Pages
                         SetPayingOption();
                         break;
                     case 2: // confirm purchase
-                        exit = new ConfirmedPurchasePage(loggedInUser).Run();
+                        exit = new PurchaseConfirm(loggedInUser).Run();
                         break;
                     case 3: //back one step
                         return false;

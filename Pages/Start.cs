@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Interfaces;
 using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class StartPage : IPage
+    internal class Start : IPage
     {
         private List<string> menu = new()
             {
@@ -19,24 +20,25 @@ namespace TestWebbshopCodeFirst.Pages
                 "Quit"
             };
 
-        public StartPage()
+        public Start()
         {
             headerText = "Welcome to the shop";
         }
         private string headerText;
-        public Models.Person? LoggedInUser { get; set; }
+        public Person? LoggedInUser { get; set; }
         public void PrintHeader()
         {
-            UserInterface.GUI.PrintHeader(new List<string> { headerText });
+            GUI.PrintHeader(new List<string> { headerText });
         }
         public void PrintMenu()
         {
             string title = "Start menu";
 
-            UserInterface.GUI.PrintMenu(title, menu);
+            GUI.PrintMenu(title, menu);
         }
         public bool Run()
         {
+            GUI.SetWindowTitle();
             bool exit = false;
             while (!exit)
             {
@@ -49,15 +51,15 @@ namespace TestWebbshopCodeFirst.Pages
                 switch (choice)
                 {
                     case 1:
-                        exit = new LogInPage().Run();
+                        exit = new Login().Run();
                         break;
                     case 2:
-                        exit = new RegistrationPage().Run();
+                        exit = new Registration().Run();
                         break;
                     case 3:
                         //visitor
-                        UserData visitor = new UserData(new Account() { Username = "Just browsing clothes" }, new Person(), new Customer());
-                        exit = new CustomerPage(visitor).Run();
+                        UserData visitor = new UserData(new Account() { Username = "Sneaky Weasel" }, new Person(), new Customer());
+                        exit = new CustomerHome(visitor).Run();
                         break;
                     case 4:
                         return true;

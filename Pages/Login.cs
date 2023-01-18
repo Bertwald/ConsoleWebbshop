@@ -8,9 +8,9 @@ using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class LogInPage
+    internal class Login
     {      
-        public LogInPage()
+        public Login()
         {
             headerText = "Username and password:";
         }
@@ -41,9 +41,9 @@ namespace TestWebbshopCodeFirst.Pages
                     return false;
                 }
                 if(acp.Privilege == Logic.Privilege.Customer) {
-                    exit = new CustomerPage(acp).Run();
+                    exit = new CustomerHome(acp).Run();
                 } else { // Privilege.Admin
-                    exit = new AdminPage(acp).Run();
+                    exit = new Admin(acp).Run();
                 }
             }
             return false;

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestWebbshopCodeFirst.Interfaces;
 using TestWebbshopCodeFirst.Logic;
 using TestWebbshopCodeFirst.Models;
 using TestWebbshopCodeFirst.UserInterface;
 
 namespace TestWebbshopCodeFirst.Pages
 {
-    internal class BrowseCategoryPage : IPage
+    internal class CategoryList : IPage
     {
         private List<Product> products;
         private Category chosenCategory;
@@ -23,7 +24,7 @@ namespace TestWebbshopCodeFirst.Pages
                 "Show shopping cart",
             };
         public UserData LoggedInUser { get; set; }
-        public BrowseCategoryPage(UserData user, Category chosenCategory)
+        public CategoryList(UserData user, Category chosenCategory)
         {
             LoggedInUser = user;
             this.chosenCategory = chosenCategory;
@@ -78,7 +79,7 @@ namespace TestWebbshopCodeFirst.Pages
                         AddToShoppingCart();
                         break;
                     case 5: // Show Cart
-                        exit = new ShoppingCartPage(LoggedInUser).Run();
+                        exit = new ShoppingCart(LoggedInUser).Run();
 
                         //List<string> strings= new();
                         //strings.AddRange(LoggedInUser.ProductsAsStrings());
@@ -101,7 +102,7 @@ namespace TestWebbshopCodeFirst.Pages
                 GUI.PrintSelectedProducts(result, "Your search result for " + search);
                 GUI.PrintMenu(chosenCategory.CategoryName, products.Select(x => x.ToString()).ToList());              
                 var selectedProduct = ItemSelector<Product>.GetItemFromList(result);
-                new DetailedProductPage(LoggedInUser, selectedProduct).Run();
+                new ProductDetail(LoggedInUser, selectedProduct).Run();
             }
             else
             {
@@ -113,7 +114,7 @@ namespace TestWebbshopCodeFirst.Pages
         private bool ShowInfo()
         {
             Product chosen = ItemSelector<Product>.GetItemFromList(products);
-            return new DetailedProductPage(LoggedInUser, chosen).Run();
+            return new ProductDetail(LoggedInUser, chosen).Run();
 
         }
 

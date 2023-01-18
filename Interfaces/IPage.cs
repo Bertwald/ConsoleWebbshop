@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestWebbshopCodeFirst.Pages
+namespace TestWebbshopCodeFirst.Interfaces
 {
     public interface IPage
     {
@@ -13,6 +13,6 @@ namespace TestWebbshopCodeFirst.Pages
         void PrintMenu();
         bool Run();
         void PrintFooter();
-       
+
     }
 }
