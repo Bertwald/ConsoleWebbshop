@@ -19,7 +19,7 @@ namespace TestWebbshopCodeFirst.Pages {
             {
                 "Manage products",
                 "Manage categories",
-                "Add product to startpage",
+                "Set Product Categories",
                 "Manage users",
                 "Statistics",
                 "Quit"
@@ -46,7 +46,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         ManageCategories();
                         break;
                     case 3: //"Add product to startpage"
-                        AddToStartPage();
+                        LinkCategories();
                         break;
                     case 4: //"Manage users"
                         ManageUsers();
@@ -71,15 +71,83 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
         private void ManageUsers() {
+            List<string> objectMenu = new List<string>() {
+                "Person",
+                "Customer",
+                "Account",
+                "Return"
+            };
+
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
                 "Alter",
                 "Return"
             };
+
+            while (true) {
+                GUI.ClearWindow();
+                GUI.PrintMenu("Table to Alter", objectMenu);
+                int outerChoice = InputModule.SelectFromList(objectMenu);
+                //--------------------------------------------------------------------------------------------------------
+                //--------------------------------------------------------------------------------------------------------
+
+                switch (outerChoice) {
+                    case 1: //Add Person
+                        while (true) {
+
+                            GUI.ClearWindow();
+                            Person? chosen;
+                            GUI.PrintMenu("Action for Table", optionmenu);
+                            int choice = InputModule.SelectFromList(optionmenu);
+                            switch (choice) {
+                                case 1: // Add
+                                    GUI.ClearWindow();
+                                    RegistrationPage.AddPerson();
+                                    break;
+                                case 2: //Delete
+                                    GUI.ClearWindow();
+                                    chosen = SelectFromDatabase<Person>();
+                                    using (var db = new OurDbContext()) {
+                                        db.Remove(chosen);
+                                        db.SaveChanges();
+                                    }
+                                    break;
+                                case 3: //Alter
+                                    GUI.ClearWindow();
+                                    chosen = SelectFromDatabase<Person>();
+                                    //GUI.PrintSelectedProduct(chosen);
+                                    Console.WriteLine(chosen);
+                                    (string column, string value) = GetColumnValuePair();
+                                    AlterItem(chosen.Id, "Persons", column, value);
+                                    break;
+                                case 4:
+                                    return;
+                            }
+                            break;
+
+                        }
+                        break;
+                    case 2: // Customer
+
+                        break;
+                    case 3: // Account
+
+                        break;
+                    case 4: // Return
+                        return;
+                }
+            }
+
+
+
+
+
+            //--------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------
         }
 
-        private void AddToStartPage() {
+        private void LinkCategories() {
             //Select from category
             //select product
             //set new category for product
@@ -92,45 +160,40 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Alter",
                 "Return"
             };
-            while (true)
-            {
+            while (true) {
 
                 GUI.ClearWindow();
                 Category? chosenCategory;
                 GUI.PrintMenu("Category menu", optionmenu);
                 int choice = InputModule.SelectFromList(optionmenu);
-                switch (choice)
-                {
+                switch (choice) {
                     case 1: // Add
                         GUI.ClearWindow();
                         Console.Write("Name: ");
                         string name = InputModule.GetString();
-                        Console.WriteLine();                       
+                        Console.WriteLine();
                         Console.Write("Description: ");
                         string description = InputModule.GetString();
-                        using (var db = new OurDbContext())
-                        {
-                            db.Add(new Category
-                            {
-                                CategoryName = name,                               
-                                Description = description                               
+                        using (var db = new OurDbContext()) {
+                            db.Add(new Category {
+                                CategoryName = name,
+                                Description = description
                             });
                             db.SaveChanges();
-                        }                        
+                        }
                         break;
                     case 2: //Delete
                         GUI.ClearWindow();
-                        chosenCategory = SelectCategoryFromDatabase();
+                        chosenCategory = SelectFromDatabase<Category>(); //SelectCategoryFromDatabase();
                         Console.WriteLine(chosenCategory.CategoryName);
-                        using (var db = new OurDbContext())
-                        {
+                        using (var db = new OurDbContext()) {
                             db.Remove(chosenCategory);
                             db.SaveChanges();
                         }
                         break;
                     case 3: //Alter
                         GUI.ClearWindow();
-                        chosenCategory = SelectCategoryFromDatabase();
+                        chosenCategory = SelectFromDatabase<Category>();
                         Console.WriteLine($"CategoryName: {chosenCategory.CategoryName} Description: {chosenCategory.Description}");
                         (string column, string value) = GetColumnValuePair();
                         AlterItem(chosenCategory.Id, "categories", column, value);
@@ -198,7 +261,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         break;
                     case 2: //Delete
                         GUI.ClearWindow();
-                        chosenProduct = SelectProductFromDatabase();
+                        chosenProduct = SelectFromDatabase<Product>();
                         GUI.PrintSelectedProduct(chosenProduct);
                         using (var db = new OurDbContext()) {
                             db.Remove(chosenProduct);
@@ -207,7 +270,7 @@ namespace TestWebbshopCodeFirst.Pages {
                         break;
                     case 3: //Alter
                         GUI.ClearWindow();
-                        chosenProduct = SelectProductFromDatabase();
+                        chosenProduct = SelectFromDatabase<Product>();
                         GUI.PrintSelectedProduct(chosenProduct);
                         (string column, string value) = GetColumnValuePair();
                         AlterItem(chosenProduct.Id, "products", column, value);
@@ -219,16 +282,15 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
 
-        private static Category? SelectCategoryFromDatabase()
-        {
+        private static Category? SelectCategoryFromDatabase() {
             List<Category> categories;
-            using (var db = new OurDbContext())
-            {
+            using (var db = new OurDbContext()) {
                 categories = db.Categories.ToList();
             }
             Category chosenCategory = ItemSelector<Category>.GetItemFromList(categories);
             return chosenCategory;
         }
+        /*
         private static Product? SelectProductFromDatabase() {
             List<Product> products;
             using (var db = new OurDbContext()) {
@@ -236,6 +298,16 @@ namespace TestWebbshopCodeFirst.Pages {
             }
             Product chosenProduct = ItemSelector<Product>.GetItemFromList(products);
             return chosenProduct;
+        }
+        */
+
+        private static T? SelectFromDatabase<T>() where T : class {
+            List<T> objects;
+            using (var db = new OurDbContext()) {
+                objects = db.Set<T>().ToList();
+            }
+            T? chosen = ItemSelector<T>.GetItemFromList(objects);
+            return chosen;
         }
 
         private static (string, string) GetColumnValuePair() {

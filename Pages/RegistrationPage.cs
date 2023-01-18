@@ -13,6 +13,10 @@ namespace TestWebbshopCodeFirst.Pages
     {
         internal bool Run()
         {
+            return AddPerson();
+        }
+
+        internal static bool AddPerson() {
             Console.Write("Please enter your birthdate: ");
             var birthDate = InputModule.GetString();
             Console.Write("Please enter your firstname: ");
@@ -39,10 +43,8 @@ namespace TestWebbshopCodeFirst.Pages
             Console.Write("Please enter a password: ");
             var password = InputModule.GetString();
 
-            using (var db = new OurDbContext())
-            {
-                var newPerson = new Person
-                {
+            using (var db = new OurDbContext()) {
+                var newPerson = new Person {
                     BirthDate = birthDate,
                     FirstName = firstName,
                     LastName = lastName,
@@ -53,14 +55,12 @@ namespace TestWebbshopCodeFirst.Pages
                     Telephone = phoneNr,
                     MailAdress = email
                 };
-                var newCustomer = new Customer
-                {
+                var newCustomer = new Customer {
                     Person = newPerson,
                     ShippingAdresses = newPerson.Address,
-                    CreditCardNumber = creditCardNr                   
+                    CreditCardNumber = creditCardNr
                 };
-                var newAccount = new Account
-                {
+                var newAccount = new Account {
                     Username = userName,
                     Password = password,
                     Privilege = Logic.Privilege.Customer,
