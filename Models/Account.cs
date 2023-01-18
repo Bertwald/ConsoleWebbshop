@@ -22,5 +22,10 @@ namespace TestWebbshopCodeFirst.Models
         public Privilege Privilege { get; set; }
 
         public virtual Person Person { get; set; } = null!;
+
+        public override string ToString()
+        {
+            return "Username: " + Username + " Privilege: " + Privilege;
+        }
     }
 }

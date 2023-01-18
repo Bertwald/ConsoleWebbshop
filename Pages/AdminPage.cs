@@ -10,8 +10,10 @@ using TestWebbshopCodeFirst.UserInterface;
 using Dapper;
 using System.Net.Http.Headers;
 
-namespace TestWebbshopCodeFirst.Pages {
-    internal class AdminPage {
+namespace TestWebbshopCodeFirst.Pages
+{
+    internal class AdminPage
+    {
 
         static readonly string connString = "data source=.\\SQLEXPRESS; initial catalog=TestWebbshopCodeFirst; persist security info=True; Integrated Security=True";
 
@@ -24,21 +26,26 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Statistics",
                 "Quit"
             };
-        public AdminPage(UserData user) {
+        public AdminPage(UserData user)
+        {
             LoggedInUser = user;
             //headerText = $"Welcome {LoggedInUser.Privilege}: " + LoggedInUser.Username;
         }
         public UserData LoggedInUser { get; set; }
-        public void PrintMenu() {
+        public void PrintMenu()
+        {
             string title = "Admin deluxe menu";
             UserInterface.GUI.PrintMenu(title, menu);
         }
-        public bool Run() {
-            while (true) {
+        public bool Run()
+        {
+            while (true)
+            {
                 GUI.ClearWindow();
                 PrintMenu();
                 int choice = InputModule.SelectFromList(menu);
-                switch (choice) {
+                switch (choice)
+                {
                     case 1: // "Manage products"
                         ManageProducts();
                         break;
@@ -61,7 +68,8 @@ namespace TestWebbshopCodeFirst.Pages {
             }
         }
 
-        private void ShowStatistics() {
+        private void ShowStatistics()
+        {
             List<string> optionmenu = new(){
                 "Low in stock",
                 "Surplus stock",
@@ -70,7 +78,8 @@ namespace TestWebbshopCodeFirst.Pages {
             };
         }
 
-        private void ManageUsers() {
+        private void ManageUsers()
+        {
             List<string> objectMenu = new List<string>() {
                 "Person",
                 "Customer",
@@ -85,22 +94,26 @@ namespace TestWebbshopCodeFirst.Pages {
                 "Return"
             };
 
-            while (true) {
+            while (true)
+            {
                 GUI.ClearWindow();
                 GUI.PrintMenu("Table to Alter", objectMenu);
                 int outerChoice = InputModule.SelectFromList(objectMenu);
                 //--------------------------------------------------------------------------------------------------------
                 //--------------------------------------------------------------------------------------------------------
 
-                switch (outerChoice) {
-                    case 1: //Add Person
-                        while (true) {
+                switch (outerChoice)
+                {
+                    case 1: //Person
+                        while (true)
+                        {
 
                             GUI.ClearWindow();
                             Person? chosen;
                             GUI.PrintMenu("Action for Table", optionmenu);
                             int choice = InputModule.SelectFromList(optionmenu);
-                            switch (choice) {
+                            switch (choice)
+                            {
                                 case 1: // Add
                                     GUI.ClearWindow();
                                     RegistrationPage.AddPerson();
@@ -108,7 +121,8 @@ namespace TestWebbshopCodeFirst.Pages {
                                 case 2: //Delete
                                     GUI.ClearWindow();
                                     chosen = SelectFromDatabase<Person>();
-                                    using (var db = new OurDbContext()) {
+                                    using (var db = new OurDbContext())
+                                    {
                                         db.Remove(chosen);
                                         db.SaveChanges();
                                     }
@@ -116,8 +130,7 @@ namespace TestWebbshopCodeFirst.Pages {
                                 case 3: //Alter
                                     GUI.ClearWindow();
                                     chosen = SelectFromDatabase<Person>();
-                                    //GUI.PrintSelectedProduct(chosen);
-                                    Console.WriteLine(chosen);
+                                    chosen.PrintWithFields();
                                     (string column, string value) = GetColumnValuePair();
                                     AlterItem(chosen.Id, "Persons", column, value);
                                     break;
@@ -129,10 +142,50 @@ namespace TestWebbshopCodeFirst.Pages {
                         }
                         break;
                     case 2: // Customer
-
+                        while (true)
+                        {
+                            GUI.ClearWindow();
+                            Customer? chosen;
+                            GUI.PrintMenu("Action for Table", new List<string> { "Alter", "Return" });
+                            int choice = InputModule.SelectFromList(optionmenu);
+                            switch (choice)
+                            {
+                                case 1: //Alter
+                                    GUI.ClearWindow();
+                                    chosen = SelectFromDatabase<Customer>();
+                                    Console.WriteLine("Old CreditCardNumber: " + chosen.CreditCardNumber);
+                                    Console.WriteLine("New value: ");
+                                    string value = InputModule.GetString();
+                                    AlterItem(chosen.Id, "Customers", "CreditCardNumber", value);
+                                    break;
+                                case 2:
+                                    return;
+                            }
+                            break;
+                        }
                         break;
                     case 3: // Account
-
+                        while (true)
+                        {
+                            GUI.ClearWindow();
+                            Account? chosen;
+                            GUI.PrintMenu("Action for Table", new List<string> { "Alter", "Return" });
+                            int choice = InputModule.SelectFromList(optionmenu);
+                            switch (choice)
+                            {
+                                case 1: //Alter
+                                    GUI.ClearWindow();
+                                    chosen = SelectFromDatabase<Account>();
+                                    GUI.ClearWindow();
+                                    Console.WriteLine(chosen.ToString());
+                                    (string column, string value) = GetColumnValuePair();
+                                    AlterItem(chosen.Id, "Accounts", column, Enum.GetValues(typeof(Privilege)value));
+                                    break;
+                                case 2:
+                                    return;
+                            }
+                            break;
+                        }
                         break;
                     case 4: // Return
                         return;
@@ -147,26 +200,30 @@ namespace TestWebbshopCodeFirst.Pages {
             //--------------------------------------------------------------------------------------------------------
         }
 
-        private void LinkCategories() {
+        private void LinkCategories()
+        {
             //Select from category
             //select product
             //set new category for product
         }
 
-        private void ManageCategories() {
+        private void ManageCategories()
+        {
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
                 "Alter",
                 "Return"
             };
-            while (true) {
+            while (true)
+            {
 
                 GUI.ClearWindow();
                 Category? chosenCategory;
                 GUI.PrintMenu("Category menu", optionmenu);
                 int choice = InputModule.SelectFromList(optionmenu);
-                switch (choice) {
+                switch (choice)
+                {
                     case 1: // Add
                         GUI.ClearWindow();
                         Console.Write("Name: ");
@@ -174,8 +231,10 @@ namespace TestWebbshopCodeFirst.Pages {
                         Console.WriteLine();
                         Console.Write("Description: ");
                         string description = InputModule.GetString();
-                        using (var db = new OurDbContext()) {
-                            db.Add(new Category {
+                        using (var db = new OurDbContext())
+                        {
+                            db.Add(new Category
+                            {
                                 CategoryName = name,
                                 Description = description
                             });
@@ -186,7 +245,8 @@ namespace TestWebbshopCodeFirst.Pages {
                         GUI.ClearWindow();
                         chosenCategory = SelectFromDatabase<Category>(); //SelectCategoryFromDatabase();
                         Console.WriteLine(chosenCategory.CategoryName);
-                        using (var db = new OurDbContext()) {
+                        using (var db = new OurDbContext())
+                        {
                             db.Remove(chosenCategory);
                             db.SaveChanges();
                         }
@@ -204,20 +264,23 @@ namespace TestWebbshopCodeFirst.Pages {
             }
         }
 
-        private void ManageProducts() {
+        private void ManageProducts()
+        {
             List<string> optionmenu = new(){
                 "Add",
                 "Delete",
                 "Alter",
                 "Return"
             };
-            while (true) {
+            while (true)
+            {
 
                 GUI.ClearWindow();
                 Product? chosenProduct;
                 GUI.PrintMenu("Product menu", optionmenu);
                 int choice = InputModule.SelectFromList(optionmenu);
-                switch (choice) {
+                switch (choice)
+                {
                     case 1: // Add
                         GUI.ClearWindow();
                         Console.Write("Name: ");
@@ -238,15 +301,18 @@ namespace TestWebbshopCodeFirst.Pages {
                         Console.Write("LongDescription: ");
                         string longDescription = InputModule.GetString();
                         List<Category> categories = new();
-                        using (var db = new OurDbContext()) {
-                            do {
+                        using (var db = new OurDbContext())
+                        {
+                            do
+                            {
                                 GUI.ClearWindow();
                                 List<Category> categoryChoices = (db.Categories.ToList());
                                 categoryChoices.Add(new Category { CategoryName = "Break" });
                                 categories.Add(ItemSelector<Category>.GetItemFromList(categoryChoices));
                             } while (categories.Last().CategoryName != "Break");
                             categories.RemoveAll(x => x.CategoryName == "Break");
-                            db.Add(new Product {
+                            db.Add(new Product
+                            {
                                 Name = name,
                                 Price = double.Parse(price),
                                 Vat = double.Parse(vat),
@@ -263,7 +329,8 @@ namespace TestWebbshopCodeFirst.Pages {
                         GUI.ClearWindow();
                         chosenProduct = SelectFromDatabase<Product>();
                         GUI.PrintSelectedProduct(chosenProduct);
-                        using (var db = new OurDbContext()) {
+                        using (var db = new OurDbContext())
+                        {
                             db.Remove(chosenProduct);
                             db.SaveChanges();
                         }
@@ -282,9 +349,11 @@ namespace TestWebbshopCodeFirst.Pages {
         }
 
 
-        private static Category? SelectCategoryFromDatabase() {
+        private static Category? SelectCategoryFromDatabase()
+        {
             List<Category> categories;
-            using (var db = new OurDbContext()) {
+            using (var db = new OurDbContext())
+            {
                 categories = db.Categories.ToList();
             }
             Category chosenCategory = ItemSelector<Category>.GetItemFromList(categories);
@@ -301,16 +370,19 @@ namespace TestWebbshopCodeFirst.Pages {
         }
         */
 
-        private static T? SelectFromDatabase<T>() where T : class {
+        private static T? SelectFromDatabase<T>() where T : class
+        {
             List<T> objects;
-            using (var db = new OurDbContext()) {
+            using (var db = new OurDbContext())
+            {
                 objects = db.Set<T>().ToList();
             }
             T? chosen = ItemSelector<T>.GetItemFromList(objects);
             return chosen;
         }
 
-        private static (string, string) GetColumnValuePair() {
+        private static (string, string) GetColumnValuePair()
+        {
             Console.Write("Choose a column to alter: ");
             string column = InputModule.GetString();
             Console.Write("Enter the new value: ");
@@ -318,12 +390,14 @@ namespace TestWebbshopCodeFirst.Pages {
             return (column, value);
         }
 
-        public static bool AlterItem(int id, string tableName, string column, string newValue) {
+        public static bool AlterItem(int id, string tableName, string column, string newValue)
+        {
             int affectedRow = 0;
 
             string sql = $"UPDATE [{tableName}] SET [{column}] = '{newValue}' WHERE Id = {id}";
 
-            using (var connection = new SqlConnection(connString)) {
+            using (var connection = new SqlConnection(connString))
+            {
                 affectedRow = connection.Execute(sql);
             }
             return affectedRow > 0;

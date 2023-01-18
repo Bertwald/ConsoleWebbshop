@@ -42,8 +42,22 @@ namespace TestWebbshopCodeFirst.Models
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
 
-        public void Print() {
+
+        public void Print()
+        {
             Console.WriteLine(GetPersonalInfo());
+        }
+        public void PrintWithFields()
+        {     
+                Console.WriteLine($"BirtDate: {BirthDate} {Environment.NewLine} " +
+                    $"FirstName: {FirstName} { Environment.NewLine} " +
+                    $"LastName: { LastName} { Environment.NewLine}" +
+                    $"Address: {Address} { Environment.NewLine}" +
+                    $"PostalCode:  { PostalCode} {Environment.NewLine }" +
+                    $"City: {City } {Environment.NewLine} " +
+                    $"Country: {Country} {Environment.NewLine} " +
+                    $"Telephone: {Telephone}  {Environment.NewLine} " +
+                    $"MailAdress: {MailAdress} {Environment.NewLine}");            
         }
         public string GetPersonalInfo()
         {
@@ -57,27 +71,33 @@ namespace TestWebbshopCodeFirst.Models
         }
         public override string ToString()
         {
-            
+
             string personalInfo = GetPersonalInfo();
 
-            if (Customers.Any()) {
+            if (Customers.Any())
+            {
                 personalInfo += "Customer information: " + Environment.NewLine;
-                foreach(Customer customer in Customers) {
+                foreach (Customer customer in Customers)
+                {
                     personalInfo += "CreditCard number: " + customer.CreditCardNumber + Environment.NewLine;
                     personalInfo += "Shipping Adress: " + customer.ShippingAdresses + Environment.NewLine;
                 }
             }
-            if (Employees.Any()) {
+            if (Employees.Any())
+            {
                 personalInfo += "Employee information: " + Environment.NewLine;
-                foreach (Employee employee in Employees) {
+                foreach (Employee employee in Employees)
+                {
                     personalInfo += "HireDate: " + employee.HireDate + Environment.NewLine;
                 }
             }
-            if (Accounts.Any()) {
+            if (Accounts.Any())
+            {
                 personalInfo += "Account information: " + Environment.NewLine;
-                foreach (Account account in Accounts ) {
+                foreach (Account account in Accounts)
+                {
                     personalInfo += "Username: " + account.Username + " with ";
-                    personalInfo += "privilege: " + account.Privilege + Environment.NewLine;
+                    personalInfo += "Privilege: " + account.Privilege + Environment.NewLine;
                 }
             }
 

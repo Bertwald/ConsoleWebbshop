@@ -27,5 +27,10 @@ namespace TestWebbshopCodeFirst.Models
 
         public virtual Person Person { get; set; } = null!;
         public virtual ICollection<Order> Orders { get; set; }
+
+        public override string ToString()
+        {
+            return "User Id: " + UserId;
+        }
     }
 }
