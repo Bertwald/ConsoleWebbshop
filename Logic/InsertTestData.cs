@@ -72,23 +72,16 @@ namespace TestWebbshopCodeFirst.Logic {
                 //Generate boss accounts
                 users = db.Persons.Where(x => x.Employees.Any() && !x.Accounts.Any()).ToList();
                 List<Account> admins = AccountGenerator.GenerateAccountsFor(users, Privilege.Admin);
-                Account user = new() {
-                    Username = "Cust",
-                    Password = "Cust",
-                    Privilege = Privilege.Customer,
-                    Person = db.Persons
-                    .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
-                    .First()
-                };
+               
                 Account admin = new() {
-                    Username = "Admin",
-                    Password = "Admin",
+                    Username = "king",
+                    Password = "holygrail",
                     Privilege = Privilege.Admin,
                     Person = db.Persons
-                    .Where(x => x.FirstName == "Christina" && x.LastName == "Holm")
+                    .Where(x => x.FirstName == "Arthur" && x.LastName == "King of britain")
                     .First()
                 };
-                customers.Add(user);
+                
                 customers.Add(admin);
 
                 db.AddRange(customers);

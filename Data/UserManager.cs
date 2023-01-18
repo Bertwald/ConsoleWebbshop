@@ -20,7 +20,7 @@ namespace TestWebbshopCodeFirst.Data
                     new Person() { BirthDate = "19650306-1342", FirstName  = "Maria", LastName = "Claesson", Address = "Ringvägen 7", City = "Nyköping", PostalCode = 61165, Country = "Sweden",  Telephone = "0765872154", MailAdress = "maria.claesson@gmail.com"  },
                     new Person() { BirthDate = "19831112-1367", FirstName = "Ida", LastName = "Spjut", Address = "Aspvägen 3", City = "Umeå", PostalCode = 90354, Country = "Sweden", Telephone = "0706582347", MailAdress = "idaspjut@hotmail.com"},
                     new Person() { BirthDate = "19921220-1538", FirstName = "Felix", LastName = "Persson", Address = "Bergagatan 5", City = "Norrköping", PostalCode = 60375, Country = "Sweden", Telephone = "0739852417", MailAdress = "felixp@gmail.com"},
-                    new Person() { BirthDate = "19810112-1284", FirstName = "Christina", LastName = "Holm", Address = "Banjovägen 5", City = "Västerås", PostalCode = 72594, Country = "Sweden", Telephone = "0705419863", MailAdress = "c.holm@hotmail.com"},
+                    new Person() { BirthDate = "19750112-1284", FirstName = "Arthur", LastName = "King of britain", Address = "Big Castle 1", City = "London", PostalCode = 72594, Country = "Great Britain", Telephone = "0705419863", MailAdress = "arthur@king.com"},
                 };
             }
 
