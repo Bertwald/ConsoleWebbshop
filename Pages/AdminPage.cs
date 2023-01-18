@@ -179,7 +179,7 @@ namespace TestWebbshopCodeFirst.Pages
                                     GUI.ClearWindow();
                                     Console.WriteLine(chosen.ToString());
                                     (string column, string value) = GetColumnValuePair();
-                                    AlterItem(chosen.Id, "Accounts", column, Enum.GetValues(typeof(Privilege)value));
+                                    AlterItem(chosen.Id, "Accounts", column, Enum.GetName(typeof(Privilege), int.Parse(value)));
                                     break;
                                 case 2:
                                     return;
