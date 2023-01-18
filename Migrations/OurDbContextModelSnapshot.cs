@@ -105,10 +105,6 @@ namespace TestWebbshopCodeFirst.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ShippingAdresses")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
