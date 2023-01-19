@@ -24,7 +24,7 @@ namespace TestWebbshopCodeFirst.Pages
                 "Manage products",
                 "Manage categories",
                 "Set Product Categories",
-                "Manage users",
+                "Manage users",  
                 "Statistics",
                 "Quit"
             };
@@ -61,11 +61,15 @@ namespace TestWebbshopCodeFirst.Pages
                     case 4: //"Manage users"
                         ManageUsers();
                         break;
-                    case 5: //Statistics
-                        ShowStatistics();
+                    case 5:
+                        GUI.ClearWindow();
+                        ShowLowInStock();                       
+                        Console.WriteLine("--------------------------------------");
+                        BestSellingProduct();
+                        GUI.Delay();
                         break;
                     case 6: //Quit
-                        return true;
+                        return true;                                      
                 }
 
             }
@@ -412,7 +416,36 @@ namespace TestWebbshopCodeFirst.Pages
             return affectedRow > 0;
         }
 
+        internal static void ShowLowInStock()
+        {
+            using (var db = new WebshopDbContext())
+            {
+                var products = db.Products.Where(p => p.UnitsInStock < 5).OrderByDescending(x => x.UnitsInStock);
+                Console.WriteLine("Products that have fewer than 5 in stock: ");
+                foreach (var p in products)
+                {
+                    Console.WriteLine(p.Name + " " + p.UnitsInStock);
+                }
+            }
+        }
 
+        internal static void BestSellingProduct()
+        {
+            using (var db = new WebshopDbContext())
+            {
+                var bestSeller = db.OrderDetails
+                    .Include(p => p.Product)                                
+                    .GroupBy(p => p.Product.Name) 
+                    .Select(group => new { productname = group.Key, total = group.Sum(x => x.Quantity) })
+                    .OrderByDescending(p => p.total)
+                    .Take(3); 
+                Console.WriteLine("Our best selling products: ");
+                foreach (var b in bestSeller)
+                {
+                    Console.WriteLine(b.productname + " " + b.total + " pieces sold");                
+                }
+            }
+        }
 
     }
 }

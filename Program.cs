@@ -8,6 +8,7 @@ namespace TestWebbshopCodeFirst {
             Console.CursorVisible = false;
             new Start().Run();
 
+
             //InsertTestData.InsertData();
             //InsertTestData.SetRandomChosen();
             //InsertTestData.CreateUserAccounts();
