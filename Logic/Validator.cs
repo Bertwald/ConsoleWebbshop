@@ -18,15 +18,14 @@ namespace TestWebbshopCodeFirst.Logic
                 if (db.Accounts.Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).Any()) {
                     Account account = db.Accounts.Include(x => x.Person).ThenInclude(x => x.Customers).Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).First();
                     Person person = account.Person;
-                    Customer? customer = person.Customers.FirstOrDefault();  //db.Customers.Where(x => x.Person.Equals(person)).FirstOrDefault();
+                    Customer? customer = person.Customers.FirstOrDefault(); 
                     if(customer == null) {
                         customer = new Customer();
                     }
                     return new UserData(account, person, customer);
                 } else {
                     return null;
-                }
-                //var loggedInUser = db.Accounts.Where(u => u.Username.Equals(userName) && u.Password.Equals(passWord)).Single();             
+                }                           
             }
         }
     }
